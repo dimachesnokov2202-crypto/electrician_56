@@ -62,8 +62,8 @@
                 <a href="tel:+79015932642" class="hidden md:inline-flex items-center gap-1.5 text-xs font-bold text-white hover:text-amber-400 transition">
                     +7 (901) 593-26-42
                 </a>
-                <button type="button" onclick="openOrderModal('Срочный аварийный выезд 24/7', [], 0, true)" class="bg-red-600 hover:bg-red-500 text-white font-bold px-3 py-2 rounded-xl text-xs transition shrink-0">
-                    Авария 24/7
+                <button type="button" onclick="openOrderModal('Срочный выезд (от 1 500 ₽)', [], 0, true)" class="bg-red-600 hover:bg-red-500 text-white font-bold px-3 py-2 rounded-xl text-xs transition shrink-0">
+                    Срочный выезд
                 </button>
                 <button type="button" onclick="openOrderModal('Вызов мастеров')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-3.5 py-2 rounded-xl text-xs transition shrink-0">
                     Вызвать
@@ -101,7 +101,10 @@
                     </div>
                     <div id="master-availability-pill" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold">
                         <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                        <span id="master-availability-text">Свободны на этой неделе • Выезд 24/7</span>
+                        <span id="master-availability-text">Свободны на этой неделе • Выезд 09:00–21:00</span>
+                    </div>
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-500/15 border border-red-500/30 text-red-300 text-xs font-bold">
+                        <span>🚨 Срочный выезд (09:00–21:00) — от 1 500 ₽ в зависимости от сложности</span>
                     </div>
                 </div>
                 <h1 class="font-heading font-black text-3xl sm:text-5xl leading-tight">
@@ -111,19 +114,25 @@
                     Выполняют <strong>Чесноков Дмитрий Сергеевич</strong> и <strong>Чесноков Сергей Викторович</strong>. Разводка кабелем ВВГнг-LS, сборка щитов 220/380 В, контур заземления, диагностика и аварийный выезд. Заявки приходят напрямую в Telegram.
                 </p>
 
-                <div class="flex flex-wrap gap-2">
-                    <button type="button" onclick="openTaskPreset('Собрать распределительный щит 220/380 В')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition">
-                        Сборка щита 220/380 В
-                    </button>
-                    <button type="button" onclick="openTaskPreset('Электромонтаж квартиры / дома под ключ')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition">
-                        Разводка под ключ
-                    </button>
-                    <button type="button" onclick="openTaskPreset('Монтаж контура заземления и ввод 15 кВт')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition">
-                        Заземление и ввод
-                    </button>
-                    <button type="button" onclick="openTaskPreset('Поиск неисправности / аварийный ремонт')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition">
-                        Диагностика и ремонт
-                    </button>
+                <div class="space-y-2">
+                    <div class="text-xs text-slate-400 font-semibold">Отметьте нужные задачи (можно выбрать несколько сразу):</div>
+                    <div class="flex flex-wrap gap-2" id="hero-multi-tasks">
+                        <button type="button" data-task="Сборка щита 220/380 В" onclick="toggleHeroMultiTask(this)" class="hero-task-chip px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition">
+                            + Сборка щита 220/380 В
+                        </button>
+                        <button type="button" data-task="Разводка квартиры / дома под ключ" onclick="toggleHeroMultiTask(this)" class="hero-task-chip px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition">
+                            + Разводка под ключ
+                        </button>
+                        <button type="button" data-task="Монтаж заземления и ввод 15 кВт" onclick="toggleHeroMultiTask(this)" class="hero-task-chip px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition">
+                            + Заземление и ввод
+                        </button>
+                        <button type="button" data-task="Срочный выезд / диагностика (от 1 500 ₽)" onclick="toggleHeroMultiTask(this)" class="hero-task-chip px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition">
+                            + Срочный выезд / диагностика
+                        </button>
+                        <button type="button" data-task="Витая пара / слаботочка (по договорённости)" onclick="toggleHeroMultiTask(this)" class="hero-task-chip px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-xs font-semibold text-slate-200 transition">
+                            + Витая пара / интернет
+                        </button>
+                    </div>
                 </div>
 
                 <div class="grid sm:grid-cols-2 gap-4 pt-2">
@@ -306,8 +315,8 @@
                     <h3 class="font-heading font-bold text-base text-amber-400">4. Статус занятости бригады на сайте</h3>
                     <p class="text-xs text-slate-400">Отображается на главном экране, чтобы клиенты сразу видели актуальную запись.</p>
                     <select id="owner-availability-select" onchange="saveMasterAvailability()" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-semibold">
-                        <option value="Свободны на этой неделе • Выезд 24/7">Свободны на этой неделе • Выезд 24/7</option>
-                        <option value="Берём объекты со следующей недели • Авария 24/7">Берём объекты со следующей недели • Авария 24/7</option>
+                        <option value="Свободны на этой неделе • Выезд 09:00–21:00">Свободны на этой неделе • Выезд 09:00–21:00</option>
+                        <option value="Берём объекты со следующей недели • Срочный выезд">Берём объекты со следующей недели • Срочный выезд</option>
                         <option value="Плотный график • Уточняйте окна по телефону">Плотный график • Уточняйте окна по телефону</option>
                     </select>
                 </div>
@@ -371,6 +380,28 @@
                             </button>
                             <button type="button" data-wall="wood" class="tk-wall-btn px-4 py-3 rounded-xl bg-slate-900 text-slate-200 border border-slate-700 text-xs sm:text-sm font-semibold transition text-left">
                                 Дерево / каркас
+                            </button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">3. Дополнительные работы (можно выбрать несколько)</label>
+                        <div class="grid sm:grid-cols-2 gap-2.5" id="tk-extras-group">
+                            <button type="button" data-extra-id="ground" data-extra-name="Контур заземления" data-extra-min="8000" data-extra-max="9500" onclick="toggleTurnkeyExtra(this)" class="tk-extra-btn text-left px-3.5 py-2.5 rounded-xl bg-white hover:bg-amber-50 border border-slate-300 text-xs font-semibold text-slate-800 transition flex items-center justify-between gap-2">
+                                <span>+ Контур заземления</span>
+                                <span class="text-amber-600 font-bold">+8 500 ₽</span>
+                            </button>
+                            <button type="button" data-extra-id="input380" data-extra-name="Ввод 380 В / трубостойка" data-extra-min="7000" data-extra-max="8500" onclick="toggleTurnkeyExtra(this)" class="tk-extra-btn text-left px-3.5 py-2.5 rounded-xl bg-white hover:bg-amber-50 border border-slate-300 text-xs font-semibold text-slate-800 transition flex items-center justify-between gap-2">
+                                <span>+ Ввод 380 В / трубостойка</span>
+                                <span class="text-amber-600 font-bold">+7 500 ₽</span>
+                            </button>
+                            <button type="button" data-extra-id="warmfloor" data-extra-name="Тёплый пол + терморегулятор" data-extra-min="2500" data-extra-max="3500" onclick="toggleTurnkeyExtra(this)" class="tk-extra-btn text-left px-3.5 py-2.5 rounded-xl bg-white hover:bg-amber-50 border border-slate-300 text-xs font-semibold text-slate-800 transition flex items-center justify-between gap-2">
+                                <span>+ Тёплый пол</span>
+                                <span class="text-amber-600 font-bold">+2 500 ₽</span>
+                            </button>
+                            <button type="button" data-extra-id="utp" data-extra-name="Витая пара / интернет (по договорённости)" data-extra-min="0" data-extra-max="0" onclick="toggleTurnkeyExtra(this)" class="tk-extra-btn text-left px-3.5 py-2.5 rounded-xl bg-white hover:bg-amber-50 border border-slate-300 text-xs font-semibold text-slate-800 transition flex items-center justify-between gap-2">
+                                <span>+ Витая пара / ТВ</span>
+                                <span class="text-sky-600 font-bold">по договорённости</span>
                             </button>
                         </div>
                     </div>
@@ -595,9 +626,16 @@
                         <strong id="cable-current-val" class="text-amber-400 font-bold">15,9 А</strong>
                     </div>
 
-                    <button type="button" onclick="sendCableCalculationToModal()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition text-sm">
-                        Отправить расчёт мастерам
-                    </button>
+                    <div id="cable-saved-lines" class="hidden space-y-1.5 border-t border-slate-800 pt-3 text-xs"></div>
+
+                    <div class="flex flex-col sm:flex-row gap-2.5">
+                        <button type="button" onclick="addCableLineToList()" class="px-4 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold border border-slate-700 transition text-xs sm:text-sm">
+                            + Добавить линию в список
+                        </button>
+                        <button type="button" onclick="sendCableCalculationToModal()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition text-xs sm:text-sm">
+                            Отправить расчёт мастерам
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -608,12 +646,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
                 <div>
-                    <span class="text-amber-600 font-bold text-xs sm:text-sm uppercase tracking-wider">Портфолио</span>
+                    <span class="text-amber-600 font-bold text-xs sm:text-sm uppercase tracking-wider">Реальные объекты • Оренбург и п. Покровка</span>
                     <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-1.5">Примеры выполненных работ</h2>
+                    <p class="text-slate-600 mt-1.5 text-sm">Переключайте «ДО / ПОСЛЕ» на карточках или выберите направление работ, чтобы посмотреть подходящие объекты.</p>
                 </div>
-                <div class="flex flex-wrap gap-2">
+                <div class="flex flex-wrap gap-2" id="portfolio-filters">
                     <button type="button" data-filter="all" class="pf-filter-btn tab-active px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-300 text-xs font-bold transition">
-                        Все объекты
+                        Все объекты (4)
                     </button>
                     <button type="button" data-filter="house" class="pf-filter-btn px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-300 text-xs font-bold transition">
                         Дома и 380 В
@@ -621,97 +660,184 @@
                     <button type="button" data-filter="flat" class="pf-filter-btn px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-300 text-xs font-bold transition">
                         Квартиры
                     </button>
+                    <button type="button" data-filter="shield" class="pf-filter-btn px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-300 text-xs font-bold transition">
+                        Щиты и витая пара
+                    </button>
                 </div>
             </div>
 
-            <div class="grid md:grid-cols-3 gap-6">
-                <article data-category="house" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+            <div class="grid md:grid-cols-2 gap-6">
+                <!-- Объект 1 -->
+                <article data-category="house shield" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
                     <div>
-                        <div class="relative bg-slate-900 text-white p-5 h-52 flex flex-col justify-between">
-                            <div class="flex items-center justify-between">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-amber-400 text-[11px] font-bold">п. Покровка • Дом 125 м²</span>
-                                <div class="inline-flex rounded-lg bg-slate-950 p-0.5 border border-slate-700">
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-2.5 py-1 rounded-md text-[11px] font-bold text-slate-400 hover:text-white transition">ДО</button>
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-2.5 py-1 rounded-md text-[11px] font-bold transition">ПОСЛЕ</button>
+                        <div class="relative bg-slate-950 text-white p-6 min-h-[210px] flex flex-col justify-between">
+                            <div class="flex items-center justify-between gap-2 flex-wrap">
+                                <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-amber-400 text-xs font-bold">п. Покровка • Коттедж 128 м²</span>
+                                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-700">
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">ДО</button>
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-3 py-1 rounded-lg text-xs font-bold transition">ПОСЛЕ</button>
                                 </div>
                             </div>
-                            <div class="ba-view-after space-y-1.5">
-                                <div class="text-emerald-400 text-xs font-bold">Щит 380 В, УЗО, реле напряжения и заземление</div>
-                                <p class="text-xs text-slate-300 leading-relaxed">Собрали распределительный щит с групповой защитой, выполнили контур заземления и развели линии по этажам.</p>
+                            <div class="ba-view-after space-y-2 mt-4">
+                                <div class="text-emerald-400 text-xs font-extrabold uppercase tracking-wider">Результат: Щит 380 В на 36 модулей + контур заземления</div>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    Собрали вводной и распределительный щиты с реле контроля напряжения по каждой фазе, УЗО на мокрые зоны, вывели контур заземления и развели силовые линии + витую пару по комнатам.
+                                </p>
                             </div>
-                            <div class="ba-view-before hidden space-y-1.5">
-                                <div class="text-red-400 text-xs font-bold">Временный ввод без защиты</div>
-                                <p class="text-xs text-slate-300 leading-relaxed">Временный ввод без защиты от скачков напряжения, отсутствие заземления и неразделённые линии нагрузки.</p>
+                            <div class="ba-view-before hidden space-y-2 mt-4">
+                                <div class="text-red-400 text-xs font-extrabold uppercase tracking-wider">Исходное состояние: Голые стены и временный щиток</div>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    На участке был только вводной кабель от опоры без заземления, защиты от обрыва нуля и распределения нагрузки по этажам.
+                                </p>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="font-heading font-bold text-lg text-slate-900 mb-2">Щит 380 В, заземление и разводка в доме</h3>
-                            <p class="text-xs text-slate-600 leading-relaxed">Разводка кабелем ВВГнг-LS, монтаж 58 точек, сборка распределительного щита и проверка работы защиты.</p>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-heading font-bold text-lg text-slate-900">Электромонтаж дома 128 м² «под ключ» + 380 В</h3>
+                            <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">62 точки</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Кабель ВВГнг-LS</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Заземление</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-700">Витая пара (по договорённости)</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs">
-                        <span class="text-slate-500">Срок: <strong class="text-slate-900">4 дня</strong></span>
-                        <span class="font-heading font-extrabold text-base text-amber-600">54 000 ₽</span>
+                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
+                        <div class="text-xs text-slate-500">
+                            Срок: <strong class="text-slate-900">4 дня</strong> • <strong class="font-heading font-extrabold text-base text-amber-600">56 000 ₽</strong>
+                        </div>
+                        <button type="button" onclick="openTaskPreset('Нужен расчёт как в примере: Дом 380 В и разводка под ключ')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white text-xs font-bold transition">
+                            Хочу так же
+                        </button>
                     </div>
                 </article>
 
-                <article data-category="flat" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                <!-- Объект 2 -->
+                <article data-category="flat shield" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
                     <div>
-                        <div class="relative bg-slate-900 text-white p-5 h-52 flex flex-col justify-between">
-                            <div class="flex items-center justify-between">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-amber-400 text-[11px] font-bold">г. Оренбург • Квартира 64 м²</span>
-                                <div class="inline-flex rounded-lg bg-slate-950 p-0.5 border border-slate-700">
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-2.5 py-1 rounded-md text-[11px] font-bold text-slate-400 hover:text-white transition">ДО</button>
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-2.5 py-1 rounded-md text-[11px] font-bold transition">ПОСЛЕ</button>
+                        <div class="relative bg-slate-950 text-white p-6 min-h-[210px] flex flex-col justify-between">
+                            <div class="flex items-center justify-between gap-2 flex-wrap">
+                                <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-amber-400 text-xs font-bold">г. Оренбург • 2-комн. квартира 64 м²</span>
+                                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-700">
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">ДО</button>
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-3 py-1 rounded-lg text-xs font-bold transition">ПОСЛЕ</button>
                                 </div>
                             </div>
-                            <div class="ba-view-after space-y-1.5">
-                                <div class="text-emerald-400 text-xs font-bold">Аккуратная трассировка и опрессовка коробок</div>
-                                <p class="text-xs text-slate-300 leading-relaxed">Отдельные линии на духовку, варочную панель, посудомойку, бойлер и кондиционеры, проходные выключатели и щит на 24 модуля.</p>
+                            <div class="ba-view-after space-y-2 mt-4">
+                                <div class="text-emerald-400 text-xs font-extrabold uppercase tracking-wider">Результат: Отдельные группы на кухню + слаботочный узел</div>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    Вывели отдельные линии под варочную панель, духовку, посудомойку и сплит-системы. Проложили витую пару к рабочему месту и ТВ-зонам, аккуратно уложили трассы по потолку.
+                                </p>
                             </div>
-                            <div class="ba-view-before hidden space-y-1.5">
-                                <div class="text-red-400 text-xs font-bold">Черновая коробка без разводки</div>
-                                <p class="text-xs text-slate-300 leading-relaxed">Только вводной кабель в прихожей; требовалась разводка под натяжные потолки и кухонный гарнитур.</p>
+                            <div class="ba-view-before hidden space-y-2 mt-4">
+                                <div class="text-red-400 text-xs font-extrabold uppercase tracking-wider">Исходное состояние: Черновая отделка от застройщика</div>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    Минимальный щиток на 4 автомата у входа и нехватка розеток на кухне и в спальне.
+                                </p>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="font-heading font-bold text-lg text-slate-900 mb-2">Электромонтаж «под ключ» в квартире</h3>
-                            <p class="text-xs text-slate-600 leading-relaxed">46 подрозетников, опрессовка соединений медными гильзами, монтаж щита и проверка всех групп под нагрузкой.</p>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-heading font-bold text-lg text-slate-900">Разводка в новостройке + интернет-линии</h3>
+                            <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">48 точек</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Щит 24 мод.</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Проходные выключатели</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-700">Витая пара (по договорённости)</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs">
-                        <span class="text-slate-500">Срок: <strong class="text-slate-900">3 дня</strong></span>
-                        <span class="font-heading font-extrabold text-base text-amber-600">41 500 ₽</span>
+                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
+                        <div class="text-xs text-slate-500">
+                            Срок: <strong class="text-slate-900">3 дня</strong> • <strong class="font-heading font-extrabold text-base text-amber-600">42 000 ₽</strong>
+                        </div>
+                        <button type="button" onclick="openTaskPreset('Нужен расчёт как в примере: Разводка 2-комн. квартиры в новостройке')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white text-xs font-bold transition">
+                            Хочу так же
+                        </button>
                     </div>
                 </article>
 
+                <!-- Объект 3 -->
                 <article data-category="flat" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
                     <div>
-                        <div class="relative bg-slate-900 text-white p-5 h-52 flex flex-col justify-between">
-                            <div class="flex items-center justify-between">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-amber-400 text-[11px] font-bold">г. Оренбург • Квартира 48 м²</span>
-                                <div class="inline-flex rounded-lg bg-slate-950 p-0.5 border border-slate-700">
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-2.5 py-1 rounded-md text-[11px] font-bold text-slate-400 hover:text-white transition">ДО</button>
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-2.5 py-1 rounded-md text-[11px] font-bold transition">ПОСЛЕ</button>
+                        <div class="relative bg-slate-950 text-white p-6 min-h-[210px] flex flex-col justify-between">
+                            <div class="flex items-center justify-between gap-2 flex-wrap">
+                                <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-amber-400 text-xs font-bold">г. Оренбург • Вторичка 48 м²</span>
+                                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-700">
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">ДО</button>
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-3 py-1 rounded-lg text-xs font-bold transition">ПОСЛЕ</button>
                                 </div>
                             </div>
-                            <div class="ba-view-after space-y-1.5">
-                                <div class="text-emerald-400 text-xs font-bold">Полная замена на медь + защита от перенапряжений</div>
-                                <p class="text-xs text-slate-300 leading-relaxed">Новый вводной кабель, штробление с пылесосом, установка 34 розеток/выключателей и аккуратный распределительный щит.</p>
+                            <div class="ba-view-after space-y-2 mt-4">
+                                <div class="text-emerald-400 text-xs font-extrabold uppercase tracking-wider">Результат: Полная замена алюминия на медь с пылеудалением</div>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    Выполнили штробление со строительным пылесосом, перенесли розетки под новую кухню, установили современный щит с маркировкой всех линий и подключили освещение.
+                                </p>
                             </div>
-                            <div class="ba-view-before hidden space-y-1.5">
-                                <div class="text-red-400 text-xs font-bold">Старый алюминий и выбивание автоматов</div>
-                                <p class="text-xs text-slate-300 leading-relaxed">Хрупкие алюминиевые провода без заземления и нагрев в точках подключения бытовой техники.</p>
+                            <div class="ba-view-before hidden space-y-2 mt-4">
+                                <div class="text-red-400 text-xs font-extrabold uppercase tracking-wider">Исходное состояние: Старая проводка с греющимися скрутками</div>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    При одновременном включении стиральной машины и чайника выбивало пробки, не было заземляющего проводника.
+                                </p>
                             </div>
                         </div>
-                        <div class="p-6">
-                            <h3 class="font-heading font-bold text-lg text-slate-900 mb-2">Замена проводки во вторичном жилье</h3>
-                            <p class="text-xs text-slate-600 leading-relaxed">Перенос розеток на удобную высоту, замена щитка, монтаж светильников и розеток после отделочных работ.</p>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-heading font-bold text-lg text-slate-900">Замена старой проводки во вторичном жилье</h3>
+                            <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">34 точки</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Штробление с пылесосом</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Реле напряжения</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs">
-                        <span class="text-slate-500">Срок: <strong class="text-slate-900">2,5 дня</strong></span>
-                        <span class="font-heading font-extrabold text-base text-amber-600">33 000 ₽</span>
+                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
+                        <div class="text-xs text-slate-500">
+                            Срок: <strong class="text-slate-900">2,5 дня</strong> • <strong class="font-heading font-extrabold text-base text-amber-600">33 500 ₽</strong>
+                        </div>
+                        <button type="button" onclick="openTaskPreset('Нужен расчёт как в примере: Замена проводки во вторичной квартире')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white text-xs font-bold transition">
+                            Хочу так же
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Объект 4 -->
+                <article data-category="house shield" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="relative bg-slate-950 text-white p-6 min-h-[210px] flex flex-col justify-between">
+                            <div class="flex items-center justify-between gap-2 flex-wrap">
+                                <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-amber-400 text-xs font-bold">п. Покровка • Участок + Баня / Гараж</span>
+                                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-700">
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">ДО</button>
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-3 py-1 rounded-lg text-xs font-bold transition">ПОСЛЕ</button>
+                                </div>
+                            </div>
+                            <div class="ba-view-after space-y-2 mt-4">
+                                <div class="text-emerald-400 text-xs font-extrabold uppercase tracking-wider">Результат: Подземный ввод в ПНД + резерв под генератор</div>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    Смонтировали трубостойку, завели кабель под землёй в гофре ПНД в дом и баню, поставили перекидной рубильник для генератора и вывели уличное освещение.
+                                </p>
+                            </div>
+                            <div class="ba-view-before hidden space-y-2 mt-4">
+                                <div class="text-red-400 text-xs font-extrabold uppercase tracking-wider">Исходное состояние: Питание через удлинитель от соседа</div>
+                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                                    Требовался полноценный ввод 15 кВт с опоры, защита насоса скважины и освещение двора.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="p-6 space-y-3">
+                            <h3 class="font-heading font-bold text-lg text-slate-900">Трубостойка 15 кВт, ввод в баню и генератор</h3>
+                            <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Трубостойка 380 В</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Резервный ввод</span>
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Уличный свет</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
+                        <div class="text-xs text-slate-500">
+                            Срок: <strong class="text-slate-900">1,5 дня</strong> • <strong class="font-heading font-extrabold text-base text-amber-600">24 500 ₽</strong>
+                        </div>
+                        <button type="button" onclick="openTaskPreset('Нужен расчёт как в примере: Трубостойка, ввод в баню и генератор')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white text-xs font-bold transition">
+                            Хочу так же
+                        </button>
                     </div>
                 </article>
             </div>
@@ -821,6 +947,10 @@
                             <div class="font-heading font-bold text-slate-900">СНТ, гаражи, бани и хозпостройки</div>
                             <p class="text-xs text-slate-600 mt-1">Прокладка линий, сборка защитных щитков, уличное освещение, подключение насосов и автоматики ворот.</p>
                         </div>
+                        <div class="p-4 rounded-2xl bg-red-50 border border-red-200">
+                            <div class="font-heading font-bold text-red-900">Срочный выезд с 09:00 до 21:00 — от 1 500 ₽</div>
+                            <p class="text-xs text-red-800 mt-1">Если пропал свет, выбивает автомат или пахнет проводкой — отключите вводной автомат в щитке и позвоните нам. Точная стоимость зависит от сложности неисправности.</p>
+                        </div>
                     </div>
                 </div>
 
@@ -886,7 +1016,7 @@
                     </button>
                     <div class="faq-content px-6">
                         <p class="pb-5 text-slate-600 text-sm sm:text-base leading-relaxed">
-                            Да, работаем по всему г. Оренбургу, п. Покровке и ближайшим посёлкам/СНТ. Аварийный выезд возможен в любое время суток.
+                            Да, работаем по всему г. Оренбургу, п. Покровке и ближайшим посёлкам/СНТ. Работаем и выезжаем ежедневно с 09:00 до 21:00. Стоимость срочного выезда — от 1 500 ₽ в зависимости от сложности работы.
                         </p>
                     </div>
                 </div>
@@ -953,7 +1083,7 @@
                         </div>
                         <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-4">
                             <span class="text-xs text-slate-400 block mb-1">Режим работы</span>
-                            <span class="font-semibold text-white">Ежедневно 08:00–21:00 (Аварийный 24/7)</span>
+                            <span class="font-semibold text-white">Ежедневно с 09:00 до 21:00 (Срочный выезд от 1 500 ₽)</span>
                         </div>
                     </div>
 
@@ -1265,17 +1395,52 @@
             'garage': 'Кабель ВВГнг-LS ~90–140 м • Гофра ~90 м • Подрозетники/боксы ~14 шт. • Щит 12–18 мод.'
         };
 
+        let selectedTurnkeyExtras = [];
+
+        function toggleTurnkeyExtra(btn) {
+            const id = btn.dataset.extraId;
+            const existsIdx = selectedTurnkeyExtras.findIndex(e => e.id === id);
+            if (existsIdx >= 0) {
+                selectedTurnkeyExtras.splice(existsIdx, 1);
+                btn.classList.remove('bg-amber-500', 'text-slate-950', 'border-amber-500');
+                btn.classList.add('bg-white', 'text-slate-800', 'border-slate-300');
+            } else {
+                selectedTurnkeyExtras.push({
+                    id,
+                    name: btn.dataset.extraName,
+                    min: Number(btn.dataset.extraMin) || 0,
+                    max: Number(btn.dataset.extraMax) || 0
+                });
+                btn.classList.remove('bg-white', 'text-slate-800', 'border-slate-300');
+                btn.classList.add('bg-amber-500', 'text-slate-950', 'border-amber-500');
+            }
+            updateTurnkeyCalculator();
+        }
+
         function updateTurnkeyCalculator() {
             const obj = turnkeyObjects[currentObjKey] || turnkeyObjects['1room'];
             const wall = turnkeyWalls[currentWallKey] || turnkeyWalls['gasblock'];
 
-            const minPrice = Math.round((obj.min * wall.mult) / 500) * 500;
-            const maxPrice = Math.round((obj.max * wall.mult) / 500) * 500;
+            let extraMin = 0;
+            let extraMax = 0;
+            let hasNegotiableExtra = false;
+            selectedTurnkeyExtras.forEach(ex => {
+                extraMin += ex.min;
+                extraMax += ex.max;
+                if (ex.min === 0 && ex.max === 0) hasNegotiableExtra = true;
+            });
 
-            document.getElementById('tk-price-range').textContent = `${minPrice.toLocaleString('ru-RU')} – ${maxPrice.toLocaleString('ru-RU')} ₽`;
+            const minPrice = Math.round((obj.min * wall.mult + extraMin) / 500) * 500;
+            const maxPrice = Math.round((obj.max * wall.mult + extraMax) / 500) * 500;
+
+            document.getElementById('tk-price-range').textContent =
+                `${minPrice.toLocaleString('ru-RU')} – ${maxPrice.toLocaleString('ru-RU')} ₽${hasNegotiableExtra ? ' + доп.' : ''}`;
             document.getElementById('tk-duration').textContent = `Срок: ${obj.days}`;
+            const extrasNote = selectedTurnkeyExtras.length
+                ? ` Дополнительно: ${selectedTurnkeyExtras.map(e => e.name).join(', ')}.`
+                : '';
             document.getElementById('tk-summary-desc').textContent =
-                `${obj.label} • Стены: ${wall.label}. Включает разметку, прокладку кабеля ВВГнг-LS, подрозетники и сборку щита.`;
+                `${obj.label} • Стены: ${wall.label}. Включает разметку, прокладку кабеля ВВГнг-LS, подрозетники и сборку щита.${extrasNote}`;
             const matEl = document.getElementById('tk-materials-text');
             if (matEl) {
                 matEl.textContent = turnkeyMaterials[currentObjKey] || turnkeyMaterials['1room'];
@@ -1312,15 +1477,15 @@
             const obj = turnkeyObjects[currentObjKey];
             const wall = turnkeyWalls[currentWallKey];
             const rangeText = document.getElementById('tk-price-range').textContent;
-            openOrderModal(
-                'Заявка по расчёту «Под ключ»',
-                [
-                    `Объект: ${obj.label}`,
-                    `Материал стен: ${wall.label}`,
-                    `Ориентировочная стоимость: ${rangeText}`
-                ],
-                0
-            );
+            const lines = [
+                `Объект: ${obj.label}`,
+                `Материал стен: ${wall.label}`
+            ];
+            if (selectedTurnkeyExtras.length) {
+                lines.push(`Дополнительные работы: ${selectedTurnkeyExtras.map(e => e.name).join(', ')}`);
+            }
+            lines.push(`Ориентировочная стоимость: ${rangeText}`);
+            openOrderModal('Заявка по расчёту «Под ключ»', lines, 0);
         });
 
         const DEFAULT_PRICE_CATALOG = {
@@ -1361,17 +1526,17 @@
                 { id: 'f10', name: 'Подключение вытяжки / водонагревателя / сплит-системы', unit: 'шт.', price: 950, qty: 0 }
             ],
             lowcurrent: [
-                { id: 'lc1', name: 'Прокладка кабеля витая пара (UTP) / ТВ-кабеля', unit: 'м.п.', price: 90, qty: 0 },
-                { id: 'lc2', name: 'Установка интернет-розетки RJ-45 / ТВ-розетки', unit: 'шт.', price: 350, qty: 0 },
-                { id: 'lc3', name: 'Обжим коннектора RJ-45 и проверка линии', unit: 'шт.', price: 200, qty: 0 },
+                { id: 'lc1', name: 'Прокладка кабеля витая пара (UTP) / ТВ-кабеля', unit: 'м.п.', price: 0, negotiable: true, priceLabel: 'По договорённости', qty: 0 },
+                { id: 'lc2', name: 'Установка интернет-розетки RJ-45 / ТВ-розетки', unit: 'шт.', price: 0, negotiable: true, priceLabel: 'По договорённости', qty: 0 },
+                { id: 'lc3', name: 'Обжим коннектора RJ-45 и тестирование линии', unit: 'шт.', price: 0, negotiable: true, priceLabel: 'По договорённости', qty: 0 },
                 { id: 'lc4', name: 'Монтаж и подключение видеодомофона / вызывной панели', unit: 'компл.', price: 2800, qty: 0 },
                 { id: 'lc5', name: 'Установка и подключение камеры видеонаблюдения', unit: 'шт.', price: 1800, qty: 0 },
-                { id: 'lc6', name: 'Сборка слаботочного щита (роутер, патч-панель, БП)', unit: 'усл.', price: 2500, qty: 0 }
+                { id: 'lc6', name: 'Сборка слаботочного щита (роутер, патч-панель, БП)', unit: 'усл.', price: 0, negotiable: true, priceLabel: 'По договорённости', qty: 0 }
             ],
             diagnostic: [
+                { id: 'd3', name: 'Срочный выезд (09:00–21:00, цена зависит от сложности работы)', unit: 'усл.', price: 1500, pricePrefix: 'от ', qty: 0 },
                 { id: 'd1', name: 'Диагностика электропроводки и поиск неисправности', unit: 'усл.', price: 1200, qty: 0 },
                 { id: 'd2', name: 'Поиск обрыва кабеля или места короткого замыкания', unit: 'усл.', price: 1800, qty: 0 },
-                { id: 'd3', name: 'Срочный аварийный выезд по Оренбургу / Покровке', unit: 'усл.', price: 1500, qty: 0 },
                 { id: 'd4', name: 'Протяжка контактов и ревизия электрощита', unit: 'усл.', price: 1000, qty: 0 },
                 { id: 'd5', name: 'Замена сгоревшего автомата / УЗО / оплавленной розетки', unit: 'шт.', price: 500, qty: 0 }
             ],
@@ -1585,10 +1750,17 @@
                 const tr = document.createElement('tr');
                 tr.className = activeRow ? 'bg-amber-50/70 transition' : 'hover:bg-slate-50 transition';
 
+                const unitPriceDisplay = item.negotiable
+                    ? `<span class="text-sky-700 font-bold text-xs">${escapeHtml(item.priceLabel || 'По договорённости')}</span>`
+                    : `${escapeHtml(item.pricePrefix || '')}${formatRub(item.price)}`;
+                const rowTotalDisplay = item.negotiable
+                    ? (item.qty > 0 ? '<span class="text-sky-700 text-xs font-bold">По договорённости</span>' : '—')
+                    : `${item.qty > 0 && item.pricePrefix ? escapeHtml(item.pricePrefix) : ''}${formatRub(rowTotal)}`;
+
                 tr.innerHTML = `
                     <td class="py-4 px-4 sm:px-6 font-medium text-slate-800">${escapeHtml(item.name)}</td>
                     <td class="py-4 px-3 text-center text-slate-500 text-xs sm:text-sm">${escapeHtml(item.unit)}</td>
-                    <td class="py-4 px-3 text-right font-bold text-slate-900 whitespace-nowrap">${formatRub(item.price)}</td>
+                    <td class="py-4 px-3 text-right font-bold text-slate-900 whitespace-nowrap">${unitPriceDisplay}</td>
                     <td class="py-4 px-4 sm:px-6">
                         <div class="flex items-center justify-center gap-2">
                             <button type="button" onclick="adjustPriceQty('${item.id}', -1)" class="w-8 h-8 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold flex items-center justify-center transition active:scale-90" aria-label="Уменьшить количество">&minus;</button>
@@ -1596,7 +1768,7 @@
                             <button type="button" onclick="adjustPriceQty('${item.id}', 1)" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white font-bold flex items-center justify-center transition active:scale-90" aria-label="Увеличить количество">+</button>
                         </div>
                     </td>
-                    <td class="py-4 px-4 sm:px-6 text-right font-bold ${activeRow ? 'text-amber-600' : 'text-slate-400'} hidden md:table-cell whitespace-nowrap">${formatRub(rowTotal)}</td>
+                    <td class="py-4 px-4 sm:px-6 text-right font-bold ${activeRow ? 'text-amber-600' : 'text-slate-400'} hidden md:table-cell whitespace-nowrap">${rowTotalDisplay}</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -1648,9 +1820,14 @@
             for (const category of Object.keys(priceCatalog)) {
                 priceCatalog[category].forEach(item => {
                     if (item.qty > 0) {
-                        const sum = item.qty * item.price;
-                        total += sum;
-                        lines.push(`${item.name} — ${item.qty} ${item.unit} (${formatRub(sum)})`);
+                        if (item.negotiable) {
+                            lines.push(`${item.name} — ${item.qty} ${item.unit} (по договорённости)`);
+                        } else {
+                            const sum = item.qty * item.price;
+                            total += sum;
+                            const pref = item.pricePrefix || '';
+                            lines.push(`${item.name} — ${item.qty} ${item.unit} (${pref}${formatRub(sum)})`);
+                        }
                     }
                 });
             }
@@ -1706,22 +1883,72 @@
             document.getElementById('cable-breaker-val').textContent = `${breaker} А`;
         }
 
+        let savedCableLines = [];
+
+        function addCableLineToList() {
+            const kw = document.getElementById('cable-power-kw').value;
+            const meters = document.getElementById('cable-length-m').value;
+            const voltage = document.getElementById('cable-voltage').value;
+            const section = document.getElementById('cable-section-val').textContent;
+            const breaker = document.getElementById('cable-breaker-val').textContent;
+            savedCableLines.push(`${currentCablePresetName} (${kw} кВт, ${voltage} В, ${meters} м) → кабель ${section}, автомат ${breaker}`);
+            renderSavedCableLines();
+            showNotification('Линия добавлена', 'Можно подобрать следующую группу и отправить весь список сразу.');
+        }
+
+        function removeSavedCableLine(idx) {
+            savedCableLines.splice(idx, 1);
+            renderSavedCableLines();
+        }
+
+        function renderSavedCableLines() {
+            const box = document.getElementById('cable-saved-lines');
+            if (!box) return;
+            if (!savedCableLines.length) {
+                box.classList.add('hidden');
+                box.innerHTML = '';
+                return;
+            }
+            box.classList.remove('hidden');
+            box.innerHTML = `<div class="text-slate-400 font-semibold">Добавленные линии (${savedCableLines.length}):</div>` +
+                savedCableLines.map((line, idx) => `
+                    <div class="flex items-center justify-between gap-2 bg-slate-900 border border-slate-800 rounded-xl px-3 py-2 text-slate-200">
+                        <span>${idx + 1}. ${escapeHtml(line)}</span>
+                        <button type="button" onclick="removeSavedCableLine(${idx})" class="text-red-400 hover:text-red-300 font-bold shrink-0">×</button>
+                    </div>
+                `).join('');
+        }
+
         function sendCableCalculationToModal() {
             const kw = document.getElementById('cable-power-kw').value;
             const meters = document.getElementById('cable-length-m').value;
             const voltage = document.getElementById('cable-voltage').value;
             const section = document.getElementById('cable-section-val').textContent;
             const breaker = document.getElementById('cable-breaker-val').textContent;
+            const currentLine = `${currentCablePresetName} (${kw} кВт, ${voltage} В, ${meters} м) → кабель ${section}, автомат ${breaker}`;
 
-            openOrderModal(
-                'Подбор кабеля и автомата',
-                [
-                    `Нагрузка: ${currentCablePresetName} (${kw} кВт, ${voltage} В)`,
-                    `Длина линии: ${meters} м`,
-                    `Рекомендуемый кабель: ${section} (медь), автомат: ${breaker}`
-                ],
-                0
-            );
+            const lines = savedCableLines.length ? [...savedCableLines] : [currentLine];
+            openOrderModal('Подбор кабеля и автомата', lines, 0);
+        }
+
+        function toggleHeroMultiTask(btn) {
+            const heroTextarea = document.querySelector('#hero-form textarea[name="task"]');
+            const isSelected = btn.classList.contains('bg-amber-500');
+            if (isSelected) {
+                btn.classList.remove('bg-amber-500', 'text-slate-950', 'border-amber-500');
+                btn.classList.add('bg-slate-900', 'text-slate-200', 'border-slate-700');
+                btn.textContent = `+ ${btn.textContent.replace(/^[✓+]\s*/, '')}`;
+            } else {
+                btn.classList.remove('bg-slate-900', 'text-slate-200', 'border-slate-700');
+                btn.classList.add('bg-amber-500', 'text-slate-950', 'border-amber-500');
+                btn.textContent = `✓ ${btn.textContent.replace(/^[✓+]\s*/, '')}`;
+            }
+
+            if (heroTextarea) {
+                const activeTasks = Array.from(document.querySelectorAll('#hero-multi-tasks .hero-task-chip.bg-amber-500'))
+                    .map(el => el.dataset.task);
+                heroTextarea.value = activeTasks.length ? `Выбранные задачи: ${activeTasks.join('; ')}.` : '';
+            }
         }
 
         function toggleBeforeAfter(btn, state) {
@@ -1752,7 +1979,8 @@
                 btn.classList.add('tab-active');
                 const filter = btn.dataset.filter;
                 document.querySelectorAll('.pf-card').forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
+                    const cats = (card.dataset.category || '').split(/\s+/);
+                    if (filter === 'all' || cats.includes(filter)) {
                         card.classList.remove('hidden');
                     } else {
                         card.classList.add('hidden');
@@ -2575,7 +2803,7 @@
         }
 
         function applyMasterAvailability() {
-            const saved = localStorage.getItem(AVAILABILITY_KEY) || 'Свободны на этой неделе • Выезд 24/7';
+            const saved = localStorage.getItem(AVAILABILITY_KEY) || 'Свободны на этой неделе • Выезд 09:00–21:00';
             const textEl = document.getElementById('master-availability-text');
             if (textEl) textEl.textContent = saved;
             const selEl = document.getElementById('owner-availability-select');
@@ -2597,10 +2825,15 @@
             Object.keys(priceCatalog).forEach(cat => {
                 priceCatalog[cat].forEach(item => {
                     if (item.qty > 0) {
-                        const sum = item.qty * item.price;
-                        total += sum;
                         count += 1;
-                        lines.push(`${count}. ${item.name} — ${item.qty} ${item.unit} × ${item.price} ₽ = ${sum} ₽`);
+                        if (item.negotiable) {
+                            lines.push(`${count}. ${item.name} — ${item.qty} ${item.unit} (по договорённости)`);
+                        } else {
+                            const sum = item.qty * item.price;
+                            total += sum;
+                            const pref = item.pricePrefix || '';
+                            lines.push(`${count}. ${item.name} — ${item.qty} ${item.unit} × ${pref}${item.price} ₽ = ${pref}${sum} ₽`);
+                        }
                     }
                 });
             });

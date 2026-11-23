@@ -1855,15 +1855,12 @@
                 showNotification('Журнал пуст', 'Нет заявок для экспорта.');
                 return;
             }
-            const escCsv = val => `"${String(val || '').replace(/"/g, '""').replace(/
-?
-/g, ' ')}"`;
+            const escCsv = val => `"${String(val || '').replace(/"/g, '""').replace(/\r?\n/g, ' ')}"`;
             const header = ['Дата/время', 'Имя', 'Телефон', 'Район', 'Раздел', 'Задача', 'Расчёт'].map(escCsv).join(';');
             const rows = list.map(item => [
                 item.time, item.name, item.phone, item.district, item.subject, item.task, item.estimateText
             ].map(escCsv).join(';'));
-            const csvContent = '﻿' + [header, ...rows].join('
-');
+            const csvContent = '\uFEFF' + [header, ...rows].join('\n');
             const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');

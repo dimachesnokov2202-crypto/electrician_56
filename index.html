@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ЭЛЕКТРОМОНТАЖ 56 — Оренбург и п. Покровка | Чесноков Д.С. и Чесноков С.В.</title>
+    <meta name="description" content="Электромонтажные работы в Оренбурге и п. Покровке без посредников. Мастера: Чесноков Дмитрий Сергеевич и Чесноков Сергей Викторович. Гарантия 5 лет, ГОСТ и ПУЭ.">
+
+    <!-- Подключение Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Подключение шрифтов Inter и Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Библиотека генерации QR-кода для перехода к отзывам -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script>
+        // Настройка темы Tailwind CSS
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Manrope', 'sans-serif'],
+                    },
+                    colors: {
+                        slate: {
+                            850: '#152033',
+                            900: '#0F172A',
+                            950: '#090D16',
+                        }
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        /* Активное состояние кнопок вкладок и калькулятора */
+        .tab-active {
+            background-color: #0F172A;
+            color: #FBBF24;
+            border-color: #F59E0B;
+            box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+        }
+
+        /* Плавное раскрытие аккордеона FAQ */
+        .faq-content {
+            transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        .faq-item.open .faq-content {
+            max-height: 400px;
+            opacity: 1;
+        }
+        .faq-item.open .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Инженерная сетка на фоне первого экрана */
+        .engineering-grid {
+            background-image:
+                linear-gradient(to right, rgba(245, 158, 11, 0.07) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(245, 158, 11, 0.07) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* Скрытие стрелок в числовых полях */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-amber-400 selection:text-slate-950">
+
+    <!-- Верхняя панель аварийного выезда -->
+    <div class="bg-amber-500 text-slate-950 text-xs sm:text-sm font-semibold py-2 px-4">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-center sm:text-left">
+            <div class="flex items-center justify-center sm:justify-start gap-2">
+                <span class="inline-flex h-2 w-2 rounded-full bg-slate-950 animate-ping"></span>
+                <span>Аварийный выезд электрика по г. Оренбургу и п. Покровка — <strong>от 30 минут</strong> (24/7)</span>
+            </div>
+            <button type="button" onclick="openOrderModal('СРОЧНЫЙ АВАРИЙНЫЙ ВЫЕЗД (24/7)', [], 0, true)" class="underline hover:no-underline font-extrabold tracking-tight p-1">
+                Вызвать срочно &rarr;
+            </button>
+        </div>
+    </div>
+
+    <!-- Шапка сайта -->
+    <header class="sticky top-0 z-40 bg-slate-950/95 backdrop-blur-md border-b border-slate-800 text-white shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Логотип -->
+                <a href="#" class="flex items-center gap-3 group shrink-0">
+                    <div class="w-11 h-11 rounded-xl bg-amber-500 flex items-center justify-center text-slate-950 shadow-lg shadow-amber-500/20 group-hover:bg-amber-400 transition">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-heading font-extrabold text-base sm:text-lg tracking-tight block leading-none">ЭЛЕКТРОМОНТАЖ <span class="text-amber-400">56</span></span>
+                        <span class="text-[11px] text-slate-400 tracking-wider uppercase block mt-1">Оренбург • п. Покровка</span>
+                    </div>
+                </a>
+
+                <!-- Навигация на десктопе -->
+                <nav class="hidden xl:flex items-center gap-5 text-sm font-medium text-slate-300">
+                    <a href="#masters" class="hover:text-amber-400 transition">Мастера</a>
+                    <a href="#calculator" class="hover:text-amber-400 transition">Калькулятор и прайс</a>
+                    <a href="#private-house" class="hover:text-amber-400 transition">Частный дом</a>
+                    <a href="#portfolio" class="hover:text-amber-400 transition">Портфолио</a>
+                    <a href="#reviews" class="hover:text-amber-400 transition">Отзывы</a>
+                    <a href="#faq" class="hover:text-amber-400 transition">FAQ</a>
+                    <a href="#contacts" class="hover:text-amber-400 transition">Контакты</a>
+                </nav>
+
+                <!-- Телефоны, мессенджеры и кнопка заявки на десктопе/планшете -->
+                <div class="hidden md:flex items-center gap-4">
+                    <div class="text-right">
+                        <div class="flex items-center gap-2.5">
+                            <a href="tel:+79015932642" class="font-heading font-bold text-sm lg:text-base hover:text-amber-400 transition whitespace-nowrap">+7 (901) 593-26-42</a>
+                            <span class="text-slate-600">|</span>
+                            <a href="tel:+79017100137" class="font-heading font-bold text-sm lg:text-base hover:text-amber-400 transition whitespace-nowrap">+7 (901) 710-01-37</a>
+                        </div>
+                        <div class="flex items-center justify-end gap-3 mt-1 text-[11px]">
+                            <span class="text-emerald-400 flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                                Напрямую без посредников
+                            </span>
+                            <a data-tg-link href="https://t.me/sevennightss" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline font-semibold">Telegram</a>
+                            <a data-vk-link href="https://vk.ru/id557901626" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">ВКонтакте</a>
+                        </div>
+                    </div>
+                    <button type="button" onclick="openOrderModal('Вызов мастеров на замер')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl transition shadow-md shadow-amber-500/20 active:scale-95 text-sm shrink-0">
+                        Вызвать мастера
+                    </button>
+                </div>
+
+                <!-- Мобильная кнопка меню -->
+                <button type="button" id="mobile-menu-btn" class="xl:hidden p-3 rounded-xl text-slate-300 hover:text-white hover:bg-slate-800 border border-slate-800 transition" aria-label="Открыть меню">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Мобильное меню -->
+        <div id="mobile-menu" class="hidden xl:hidden bg-slate-900 border-t border-slate-800 px-4 pt-3 pb-6 space-y-2 shadow-2xl">
+            <a href="#masters" class="mobile-link block py-2.5 px-2 text-slate-200 hover:text-amber-400 font-medium">Мастера и допуски</a>
+            <a href="#calculator" class="mobile-link block py-2.5 px-2 text-slate-200 hover:text-amber-400 font-medium">Калькулятор «Под ключ» и прайс</a>
+            <a href="#private-house" class="mobile-link block py-2.5 px-2 text-slate-200 hover:text-amber-400 font-medium">Частный дом (15 кВт, заземление, АВР)</a>
+            <a href="#portfolio" class="mobile-link block py-2.5 px-2 text-slate-200 hover:text-amber-400 font-medium">Портфолио работ</a>
+            <a href="#reviews" class="mobile-link block py-2.5 px-2 text-slate-200 hover:text-amber-400 font-medium">Отзывы клиентов</a>
+            <a href="#faq" class="mobile-link block py-2.5 px-2 text-slate-200 hover:text-amber-400 font-medium">Частые вопросы (FAQ)</a>
+            <a href="#contacts" class="mobile-link block py-2.5 px-2 text-slate-200 hover:text-amber-400 font-medium">Контакты и заявка</a>
+
+            <div class="pt-3 border-t border-slate-800 space-y-3">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <a href="tel:+79015932642" class="flex items-center justify-between bg-slate-850 px-3.5 py-3 rounded-xl border border-slate-700">
+                        <span class="text-xs text-slate-400">Чесноков Д.С.</span>
+                        <span class="font-heading font-bold text-sm text-amber-400">+7 (901) 593-26-42</span>
+                    </a>
+                    <a href="tel:+79017100137" class="flex items-center justify-between bg-slate-850 px-3.5 py-3 rounded-xl border border-slate-700">
+                        <span class="text-xs text-slate-400">Чесноков С.В.</span>
+                        <span class="font-heading font-bold text-sm text-amber-400">+7 (901) 710-01-37</span>
+                    </a>
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <a data-tg-link href="https://t.me/sevennightss" target="_blank" rel="noopener noreferrer" class="bg-[#229ED9] text-white font-semibold py-3 rounded-xl text-center text-sm">Telegram</a>
+                    <a data-vk-link href="https://vk.ru/id557901626" target="_blank" rel="noopener noreferrer" class="bg-[#0077FF] text-white font-semibold py-3 rounded-xl text-center text-sm">ВКонтакте</a>
+                </div>
+                <button type="button" onclick="openOrderModal('Вызов мастеров (мобильное меню)')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3.5 rounded-xl text-center text-sm">
+                    Оставить заявку на выезд
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Главный экран (HERO) -->
+    <section class="relative bg-slate-950 text-white overflow-hidden engineering-grid">
+        <div class="absolute -top-32 -right-32 w-[460px] h-[460px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+            <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+                <!-- Левая колонка -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div class="inline-flex flex-wrap items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900 border border-slate-700 text-amber-400 text-xs sm:text-sm font-semibold">
+                        <svg class="w-4 h-4 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/></svg>
+                        г. Оренбург, п. Покровка и пригород • Выезд на замер 0 ₽
+                    </div>
+
+                    <h1 class="font-heading font-extrabold text-3xl sm:text-5xl lg:text-[46px] leading-[1.15] tracking-tight">
+                        Электромонтаж в Оренбурге и п. Покровке <span class="text-amber-400">напрямую от мастеров</span>
+                    </h1>
+
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed max-w-2xl">
+                        Работаем вдвоём без посредников и наценок фирм: <strong class="text-white">Чесноков Дмитрий Сергеевич</strong> и <strong class="text-white">Чесноков Сергей Викторович</strong>. Монтаж строго по ПУЭ и ГОСТ с гарантией <strong class="text-amber-400">5 лет</strong>.
+                    </p>
+
+                    <!-- Карточки мастеров на первом экране -->
+                    <div class="grid sm:grid-cols-2 gap-3.5">
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex items-center gap-3.5">
+                            <div class="w-11 h-11 rounded-xl bg-amber-500 text-slate-950 font-heading font-extrabold text-base flex items-center justify-center shrink-0">ДС</div>
+                            <div>
+                                <div class="font-heading font-bold text-sm text-white">Чесноков Дмитрий Сергеевич</div>
+                                <div class="text-xs text-amber-300 font-medium">Монтаж • Заземление • Свет</div>
+                                <a href="tel:+79015932642" class="font-heading font-extrabold text-base text-amber-400 hover:underline block mt-0.5">+7 (901) 593-26-42</a>
+                            </div>
+                        </div>
+                        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 flex items-center gap-3.5">
+                            <div class="w-11 h-11 rounded-xl bg-amber-500 text-slate-950 font-heading font-extrabold text-base flex items-center justify-center shrink-0">СВ</div>
+                            <div>
+                                <div class="font-heading font-bold text-sm text-white">Чесноков Сергей Викторович</div>
+                                <div class="text-xs text-amber-300 font-medium">Щиты • Проекты • 380 В</div>
+                                <a href="tel:+79017100137" class="font-heading font-extrabold text-base text-amber-400 hover:underline block mt-0.5">+7 (901) 710-01-37</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки навигации и вызова -->
+                    <div class="flex flex-col sm:flex-row gap-3.5 pt-1">
+                        <a href="#calculator" class="inline-flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-6 py-4 rounded-xl transition shadow-lg shadow-amber-500/20 text-sm sm:text-base">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                            Рассчитать стоимость работ
+                        </a>
+                        <button type="button" onclick="openOrderModal('СРОЧНЫЙ ВЫЗОВ: Аварийный электрик', [], 0, true)" class="inline-flex items-center justify-center gap-2 bg-red-600/20 hover:bg-red-600/30 text-red-300 border border-red-500/40 font-bold px-6 py-4 rounded-xl transition text-sm sm:text-base">
+                            <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                            Аварийный выезд от 30 мин
+                        </button>
+                    </div>
+
+                    <!-- Преимущества -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-800/80 text-xs">
+                        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+                            <span class="text-amber-400 font-heading font-extrabold text-base block">III–IV гр.</span>
+                            <span class="text-slate-400">Допуск до 1000 В</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+                            <span class="text-amber-400 font-heading font-extrabold text-base block">5 лет</span>
+                            <span class="text-slate-400">Гарантия на монтаж</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+                            <span class="text-amber-400 font-heading font-extrabold text-base block">Без пыли</span>
+                            <span class="text-slate-400">Штроборез + пылесос</span>
+                        </div>
+                        <div class="bg-slate-900/60 p-3 rounded-xl border border-slate-800">
+                            <span class="text-amber-400 font-heading font-extrabold text-base block">ГОСТ / ПУЭ</span>
+                            <span class="text-slate-400">Опрессовка и сварка</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Правая колонка: форма быстрой заявки -->
+                <div class="lg:col-span-5">
+                    <div class="bg-slate-900 border border-slate-700/90 rounded-2xl p-6 sm:p-7 shadow-2xl relative">
+                        <div class="absolute -top-3.5 right-6 bg-amber-500 text-slate-950 text-xs font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow">
+                            Расчёт по фото или плану
+                        </div>
+                        <h2 class="font-heading font-bold text-xl sm:text-2xl text-white mb-1.5">Быстрая заявка на выезд</h2>
+                        <p class="text-slate-400 text-xs sm:text-sm mb-5">Опишите задачу или прикрепите фото щитка — сориентируем по стоимости и срокам.</p>
+
+                        <form id="hero-form" class="space-y-3.5">
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Ваше имя *</label>
+                                <input type="text" name="name" required placeholder="Например, Александр" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm">
+                            </div>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-300 mb-1">Телефон *</label>
+                                    <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-300 mb-1">Район выезда</label>
+                                    <select name="district" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-500 transition text-sm">
+                                        <option value="г. Оренбург">г. Оренбург</option>
+                                        <option value="п. Покровка">п. Покровка</option>
+                                        <option value="Пригород Оренбурга">Пригород</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Задача (кратко)</label>
+                                <input type="text" name="task" placeholder="Разводка квартиры, сборка щита, заземление, свет..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1">Фото щитка или чертежа (необязательно)</label>
+                                <label class="flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-xl bg-slate-950 border border-dashed border-slate-700 hover:border-amber-500 cursor-pointer transition text-xs text-slate-400">
+                                    <span class="file-label truncate">Выбрать изображение (JPG, PNG)...</span>
+                                    <span class="bg-slate-800 text-amber-400 px-2.5 py-1 rounded-lg font-semibold shrink-0">Прикрепить</span>
+                                    <input type="file" name="photo" accept="image/*" class="hidden photo-input">
+                                </label>
+                            </div>
+                            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition shadow-lg shadow-amber-500/20 text-sm sm:text-base">
+                                Отправить заявку мастерам
+                            </button>
+                            <div class="flex items-center justify-center gap-4 pt-1 text-xs text-slate-400">
+                                <span>Написать напрямую:</span>
+                                <a data-tg-link href="https://t.me/sevennightss" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:underline font-semibold">Telegram</a>
+                                <a data-vk-link href="https://vk.ru/id557901626" target="_blank" rel="noopener noreferrer" class="text-blue-400 hover:underline font-semibold">ВКонтакте</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Раздел о мастерах -->
+    <section id="masters" class="py-16 sm:py-20 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-4">
+                <div>
+                    <span class="text-amber-600 font-bold text-xs sm:text-sm uppercase tracking-wider">Личная ответственность за каждый объект</span>
+                    <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-1.5">Мастера ЭЛЕКТРОМОНТАЖ 56</h2>
+                </div>
+                <p class="text-slate-600 text-sm sm:text-base max-w-xl">
+                    Работаем вдвоём без посредников: проектируем схемы, выполняем штробление с пылесосом, собираем щиты и сдаём объекты в Оренбурге и п. Покровке.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6 sm:gap-8">
+                <!-- Мастер 1: Чесноков Дмитрий Сергеевич -->
+                <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-2xl bg-amber-500 text-slate-950 font-heading font-extrabold text-xl flex items-center justify-center shrink-0">ДС</div>
+                                <div>
+                                    <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">Монтаж • Заземление • Свет</span>
+                                    <h3 class="font-heading font-extrabold text-xl sm:text-2xl text-white">Чесноков Дмитрий Сергеевич</h3>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+                                Допуск III–IV гр. до 1000 В
+                            </span>
+                        </div>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-5">
+                            Отвечает за электромонтаж в квартирах и домах, устройство контуров заземления, прокладку кабельных трасс, опрессовку/сварку соединений в распределительных коробках и монтаж систем освещения.
+                        </p>
+                        <div class="flex flex-wrap gap-2 text-xs text-slate-300 mb-6">
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-850 border border-slate-700">Монтаж • Заземление • Свет</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-850 border border-slate-700">Разводка кабеля и точек</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-850 border border-slate-700">Освещение и чистовой монтаж</span>
+                        </div>
+                    </div>
+                    <div class="pt-5 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Прямой телефон мастера:</span>
+                            <a href="tel:+79015932642" class="font-heading font-extrabold text-xl text-amber-400 hover:text-amber-300 transition">+7 (901) 593-26-42</a>
+                        </div>
+                        <button type="button" onclick="openOrderModal('Заявка для мастера: Чесноков Дмитрий Сергеевич (Монтаж • Заземление • Свет)')" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-white font-semibold text-sm transition">
+                            Заказать выезд
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Мастер 2: Чесноков Сергей Викторович -->
+                <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-lg flex flex-col justify-between">
+                    <div>
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+                            <div class="flex items-center gap-4">
+                                <div class="w-14 h-14 rounded-2xl bg-amber-500 text-slate-950 font-heading font-extrabold text-xl flex items-center justify-center shrink-0">СВ</div>
+                                <div>
+                                    <span class="text-xs text-amber-400 font-bold uppercase tracking-wider">Щиты • Проекты • 380 В</span>
+                                    <h3 class="font-heading font-extrabold text-xl sm:text-2xl text-white">Чесноков Сергей Викторович</h3>
+                                </div>
+                            </div>
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-xs font-bold">
+                                Допуск III–IV гр. до 1000 В
+                            </span>
+                        </div>
+                        <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-5">
+                            Отвечает за расчёт нагрузок и схемы электроснабжения, сборку распределительных и вводных щитов любой сложности, подключение трёхфазных сетей 380 В, реле контроля напряжения, УЗО и АВР.
+                        </p>
+                        <div class="flex flex-wrap gap-2 text-xs text-slate-300 mb-6">
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-850 border border-slate-700">Щиты • Проекты • 380 В</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-850 border border-slate-700">Вводные щиты 15 кВт</span>
+                            <span class="px-3 py-1.5 rounded-lg bg-slate-850 border border-slate-700">Реле напряжения и АВР</span>
+                        </div>
+                    </div>
+                    <div class="pt-5 border-t border-slate-800 flex flex-wrap items-center justify-between gap-4">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Прямой телефон мастера:</span>
+                            <a href="tel:+79017100137" class="font-heading font-extrabold text-xl text-amber-400 hover:text-amber-300 transition">+7 (901) 710-01-37</a>
+                        </div>
+                        <button type="button" onclick="openOrderModal('Заявка для мастера: Чесноков Сергей Викторович (Щиты • Проекты • 380 В)')" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-amber-500 hover:text-slate-950 text-white font-semibold text-sm transition">
+                            Заказать выезд
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Экспресс-калькулятор «Под ключ» и детальный прайс-лист -->
+    <section id="calculator" class="py-16 sm:py-24 bg-slate-100 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-amber-600 font-bold text-sm uppercase tracking-wider">Живой расчёт стоимости</span>
+                <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-2 mb-3">Калькулятор «Под ключ» и прайс-лист</h2>
+                <p class="text-slate-600 text-base">Выберите тип жилья и материал стен для мгновенного расчёта пакета работ или соберите смету по отдельным позициям прайса.</p>
+            </div>
+
+            <!-- Экспресс-калькулятор «Под ключ» -->
+            <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 lg:p-10 shadow-xl border border-slate-800 mb-14">
+                <div class="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-slate-800">
+                    <div>
+                        <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">Экспресс-калькулятор</span>
+                        <h3 class="font-heading font-extrabold text-xl sm:text-2xl">Расчёт стоимости электромонтажа «под ключ»</h3>
+                    </div>
+                    <span class="text-xs text-slate-400">Сумма пересчитывается сразу при нажатии кнопок</span>
+                </div>
+
+                <div class="grid lg:grid-cols-12 gap-8 items-center">
+                    <div class="lg:col-span-7 space-y-6">
+                        <!-- Тип жилья / объекта -->
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">1. Выберите тип жилья / объекта:</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5" id="turnkey-object-buttons">
+                                <button type="button" data-obj="1room" class="tk-obj-btn tab-active px-3.5 py-3 rounded-xl border border-slate-700 bg-slate-850 text-left transition">
+                                    <span class="font-heading font-bold text-sm block">1-комн. квартира</span>
+                                    <span class="text-[11px] opacity-80">~ 35–42 м² • 25–30 точек</span>
+                                </button>
+                                <button type="button" data-obj="2room" class="tk-obj-btn px-3.5 py-3 rounded-xl border border-slate-700 bg-slate-850 text-slate-200 hover:border-amber-400 text-left transition">
+                                    <span class="font-heading font-bold text-sm block">2-комн. квартира</span>
+                                    <span class="text-[11px] opacity-80">~ 50–62 м² • 35–45 точек</span>
+                                </button>
+                                <button type="button" data-obj="3room" class="tk-obj-btn px-3.5 py-3 rounded-xl border border-slate-700 bg-slate-850 text-slate-200 hover:border-amber-400 text-left transition">
+                                    <span class="font-heading font-bold text-sm block">3-комн. квартира</span>
+                                    <span class="text-[11px] opacity-80">~ 70–85 м² • 50–65 точек</span>
+                                </button>
+                                <button type="button" data-obj="house" class="tk-obj-btn px-3.5 py-3 rounded-xl border border-slate-700 bg-slate-850 text-slate-200 hover:border-amber-400 text-left transition">
+                                    <span class="font-heading font-bold text-sm block">Частный дом / Коттедж</span>
+                                    <span class="text-[11px] opacity-80">~ 100–130 м² • 220/380 В</span>
+                                </button>
+                                <button type="button" data-obj="garage" class="tk-obj-btn px-3.5 py-3 rounded-xl border border-slate-700 bg-slate-850 text-slate-200 hover:border-amber-400 text-left transition">
+                                    <span class="font-heading font-bold text-sm block">Гараж / Баня / Хозблок</span>
+                                    <span class="text-[11px] opacity-80">Щиток, свет, силовые линии</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Материал стен -->
+                        <div>
+                            <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2.5">2. Выберите материал стен:</label>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5" id="turnkey-wall-buttons">
+                                <button type="button" data-wall="gasblock" class="tk-wall-btn tab-active px-3 py-3 rounded-xl border border-slate-700 bg-slate-850 text-center text-xs sm:text-sm font-semibold transition">
+                                    Газоблок / Пеноблок
+                                </button>
+                                <button type="button" data-wall="brick" class="tk-wall-btn px-3 py-3 rounded-xl border border-slate-700 bg-slate-850 text-slate-200 hover:border-amber-400 text-center text-xs sm:text-sm font-semibold transition">
+                                    Кирпич / Блок
+                                </button>
+                                <button type="button" data-wall="concrete" class="tk-wall-btn px-3 py-3 rounded-xl border border-slate-700 bg-slate-850 text-slate-200 hover:border-amber-400 text-center text-xs sm:text-sm font-semibold transition">
+                                    Бетон / Монолит
+                                </button>
+                                <button type="button" data-wall="wood" class="tk-wall-btn px-3 py-3 rounded-xl border border-slate-700 bg-slate-850 text-slate-200 hover:border-amber-400 text-center text-xs sm:text-sm font-semibold transition">
+                                    Дерево / Каркас
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Результат экспресс-расчёта -->
+                    <div class="lg:col-span-5 bg-slate-850 border border-slate-700 rounded-2xl p-6 space-y-4">
+                        <div class="flex items-center justify-between text-xs text-slate-400">
+                            <span>Ориентировочная стоимость работ:</span>
+                            <span id="tk-duration" class="text-emerald-400 font-semibold">Срок: 2–3 дня</span>
+                        </div>
+                        <div>
+                            <div id="tk-price-range" class="font-heading font-extrabold text-3xl sm:text-4xl text-amber-400">28 000 – 34 000 ₽</div>
+                            <p id="tk-summary-desc" class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+                                1-комн. квартира (~35–42 м²) • Стены: газоблок / пеноблок. Включает разметку, прокладку кабеля ВВГнг-LS, подрозетники и сборку щита.
+                            </p>
+                        </div>
+                        <button type="button" id="send-turnkey-btn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition shadow-lg shadow-amber-500/20 text-sm">
+                            Зафиксировать расчёт и вызвать мастеров
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Детальный прайс-лист с расчётом сметы -->
+            <div>
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <h3 class="font-heading font-extrabold text-2xl text-slate-900">Детальный прайс-лист работ</h3>
+                    <span class="text-xs sm:text-sm text-slate-500">Укажите количество позиций для подсчёта сметы</span>
+                </div>
+
+                <!-- Вкладки категорий прайса -->
+                <div class="flex flex-wrap gap-2 sm:gap-3 mb-6" id="price-tabs">
+                    <button type="button" data-category="rough" class="price-tab tab-active px-4 sm:px-5 py-3 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-slate-900 transition">
+                        Черновой монтаж и кабель
+                    </button>
+                    <button type="button" data-category="panels" class="price-tab px-4 sm:px-5 py-3 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-slate-900 transition">
+                        Щиты и автоматика
+                    </button>
+                    <button type="button" data-category="finish" class="price-tab px-4 sm:px-5 py-3 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-slate-900 transition">
+                        Чистовая электрика и свет
+                    </button>
+                    <button type="button" data-category="house" class="price-tab px-4 sm:px-5 py-3 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-slate-900 transition">
+                        Частный дом и участок
+                    </button>
+                </div>
+
+                <!-- Таблица прайса -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-900 text-white text-xs uppercase tracking-wider">
+                                    <th class="py-4 px-4 sm:px-6 font-semibold">Наименование работ</th>
+                                    <th class="py-4 px-3 font-semibold text-center w-20">Ед.</th>
+                                    <th class="py-4 px-3 font-semibold text-right w-28">Цена</th>
+                                    <th class="py-4 px-4 sm:px-6 font-semibold text-center w-36">Кол-во</th>
+                                    <th class="py-4 px-4 sm:px-6 font-semibold text-right w-32 hidden md:table-cell">Сумма</th>
+                                </tr>
+                            </thead>
+                            <tbody id="price-table-body" class="divide-y divide-slate-200 text-sm sm:text-base">
+                                <!-- Строки заполняются скриптом -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Итоговая строка сметы -->
+                <div class="mt-6 bg-slate-900 text-white rounded-2xl p-6 sm:p-7 shadow-xl flex flex-col lg:flex-row items-center justify-between gap-6 border border-slate-800">
+                    <div class="flex flex-col sm:flex-row items-center gap-5 sm:gap-8 text-center sm:text-left">
+                        <div>
+                            <span class="text-slate-400 text-xs uppercase tracking-wider block">Позиций в смете</span>
+                            <span id="calc-items-count" class="font-heading font-extrabold text-2xl text-white">0 поз.</span>
+                        </div>
+                        <div class="hidden sm:block w-px h-10 bg-slate-700"></div>
+                        <div>
+                            <span class="text-slate-400 text-xs uppercase tracking-wider block">Итого по выбранным работам</span>
+                            <div class="flex items-baseline justify-center sm:justify-start gap-2">
+                                <span id="calc-total-price" class="font-heading font-extrabold text-3xl sm:text-4xl text-amber-400">0 ₽</span>
+                                <span class="text-xs text-slate-400">(без материалов)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+                        <button type="button" id="reset-calc-btn" class="w-full sm:w-auto px-5 py-3.5 rounded-xl border border-slate-700 text-slate-300 hover:text-white hover:bg-slate-800 text-sm font-semibold transition">
+                            Очистить смету
+                        </button>
+                        <button type="button" id="send-estimate-btn" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-7 py-3.5 rounded-xl transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2 text-sm sm:text-base">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>
+                            Отправить смету на расчёт
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Услуги для частных домов (трубостойки 15 кВт, заземление, АВР) -->
+    <section id="private-house" class="py-16 sm:py-24 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mb-12">
+                <span class="text-amber-600 font-bold text-xs sm:text-sm uppercase tracking-wider">Для частных домов и участков</span>
+                <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-2 mb-3">Трубостойки 15 кВт, заземление и АВР</h2>
+                <p class="text-slate-600 text-base">Выполняем наружный и внутренний электромонтаж в п. Покровке, Оренбурге и пригороде под ключ с соблюдением нормативов ПУЭ и требований сетевых компаний.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 sm:gap-8">
+                <div class="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 hover:border-amber-400 transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-lg bg-slate-900 text-amber-400 font-heading font-bold text-xs">15 кВт • 380 В</span>
+                            <span class="font-heading font-extrabold text-slate-900 text-base">от 7 500 ₽</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mb-2.5">Трубостойки и вводные щиты 15 кВт</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-5">
+                            Установка и бетонирование металлической трубостойки на участке, сборка пылевлагозащищённого щита IP65, установка вводного автомата, селективного УЗО и повторного заземления.
+                        </p>
+                    </div>
+                    <button type="button" onclick="openOrderModal('Заказ: Трубостойка и щит учёта 15 кВт (380 В)')" class="text-sm font-bold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1.5 text-left">
+                        Заказать трубостойку 15 кВт <span>&rarr;</span>
+                    </button>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 hover:border-amber-400 transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-lg bg-slate-900 text-amber-400 font-heading font-bold text-xs">Электробезопасность</span>
+                            <span class="font-heading font-extrabold text-slate-900 text-base">от 8 500 ₽</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mb-2.5">Контур заземления дома и участка</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-5">
+                            Монтаж глубинного штыревого или треугольного контура заземления с выводом полосы на цоколь дома и контрольным замером сопротивления для корректной работы УЗО и защиты техники.
+                        </p>
+                    </div>
+                    <button type="button" onclick="openOrderModal('Заказ: Монтаж контура заземления')" class="text-sm font-bold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1.5 text-left">
+                        Заказать контур заземления <span>&rarr;</span>
+                    </button>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 hover:border-amber-400 transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-lg bg-slate-900 text-amber-400 font-heading font-bold text-xs">Резервное питание</span>
+                            <span class="font-heading font-extrabold text-slate-900 text-base">от 4 500 ₽</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mb-2.5">Подключение генератора и автоматика АВР</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-5">
+                            Монтаж перекидного рубильника или блока автоматического ввода резерва (АВР), силового разъёма на улице и балансировка приоритетных линий дома (котёл, насос, свет, холодильник).
+                        </p>
+                    </div>
+                    <button type="button" onclick="openOrderModal('Заказ: Подключение генератора / блок АВР')" class="text-sm font-bold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1.5 text-left">
+                        Заказать подключение АВР <span>&rarr;</span>
+                    </button>
+                </div>
+
+                <div class="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200 hover:border-amber-400 transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-3 py-1 rounded-lg bg-slate-900 text-amber-400 font-heading font-bold text-xs">Ввод кабеля</span>
+                            <span class="font-heading font-extrabold text-slate-900 text-base">от 350 ₽ / м.п.</span>
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 mb-2.5">Подземный ввод бронированным кабелем и СИП</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-5">
+                            Прокладка кабеля ВБШв / АВБШв в трубе ПНД от опоры или трубостойки к дому, бане или гаражу, а также воздушные вводы СИП с соблюдением безопасных габаритов и креплений.
+                        </p>
+                    </div>
+                    <button type="button" onclick="openOrderModal('Заказ: Ввод кабеля в дом / баню / гараж')" class="text-sm font-bold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1.5 text-left">
+                        Рассчитать ввод кабеля <span>&rarr;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Портфолио работ -->
+    <section id="portfolio" class="py-16 sm:py-24 bg-slate-100 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-10 gap-6">
+                <div>
+                    <span class="text-amber-600 font-bold text-xs sm:text-sm uppercase tracking-wider">Практика и качество</span>
+                    <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-1.5">Портфолио выполненных работ</h2>
+                </div>
+                <div class="flex flex-wrap gap-2" id="portfolio-filters">
+                    <button type="button" data-filter="all" class="pf-filter-btn tab-active px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 transition">Все объекты</button>
+                    <button type="button" data-filter="house" class="pf-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-slate-900 transition">Частные дома</button>
+                    <button type="button" data-filter="flat" class="pf-filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold border border-slate-300 bg-white text-slate-700 hover:border-slate-900 transition">Квартиры</button>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-7" id="portfolio-grid">
+                <article data-category="house" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="relative bg-slate-900 text-white p-5 h-52 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-amber-400 text-[11px] font-bold">п. Покровка • Дом 125 м²</span>
+                                <div class="inline-flex rounded-lg bg-slate-950 p-0.5 border border-slate-700">
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-2.5 py-1 rounded-md text-[11px] font-bold text-slate-400 hover:text-white transition">ДО</button>
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-2.5 py-1 rounded-md text-[11px] font-bold transition">ПОСЛЕ</button>
+                                </div>
+                            </div>
+                            <div class="ba-view-after space-y-1.5">
+                                <div class="text-emerald-400 text-xs font-bold">Собран щит 380 В и подключено заземление</div>
+                                <p class="text-xs text-slate-300 leading-relaxed">Реле контроля напряжения по фазам, группы УЗО, перекидной рубильник под генератор и подробная маркировка каждой линии.</p>
+                            </div>
+                            <div class="ba-view-before hidden space-y-1.5">
+                                <div class="text-red-400 text-xs font-bold">Исходное состояние объекта</div>
+                                <p class="text-xs text-slate-300 leading-relaxed">Временный ввод без защиты от скачков напряжения, отсутствие заземления и неразделённые линии нагрузки.</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading font-bold text-lg text-slate-900 mb-2">Щит 380 В, заземление и разводка в доме</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Разводка кабелем ВВГнг-LS, монтаж 58 точек, сборка распределительного щита и проверка работы защиты.</p>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs">
+                        <span class="text-slate-500">Срок: <strong class="text-slate-900">4 дня</strong></span>
+                        <span class="font-heading font-extrabold text-base text-amber-600">54 000 ₽</span>
+                    </div>
+                </article>
+
+                <article data-category="flat" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="relative bg-slate-900 text-white p-5 h-52 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-amber-400 text-[11px] font-bold">г. Оренбург • Квартира 64 м²</span>
+                                <div class="inline-flex rounded-lg bg-slate-950 p-0.5 border border-slate-700">
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-2.5 py-1 rounded-md text-[11px] font-bold text-slate-400 hover:text-white transition">ДО</button>
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-2.5 py-1 rounded-md text-[11px] font-bold transition">ПОСЛЕ</button>
+                                </div>
+                            </div>
+                            <div class="ba-view-after space-y-1.5">
+                                <div class="text-emerald-400 text-xs font-bold">Аккуратная трассировка и опрессовка коробок</div>
+                                <p class="text-xs text-slate-300 leading-relaxed">Отдельные линии на духовку, варочную панель, посудомойку, бойлер и кондиционеры, проходные выключатели и щит на 24 модуля.</p>
+                            </div>
+                            <div class="ba-view-before hidden space-y-1.5">
+                                <div class="text-red-400 text-xs font-bold">Черновая коробка без разводки</div>
+                                <p class="text-xs text-slate-300 leading-relaxed">Только вводной кабель в прихожей; требовалась разводка под натяжные потолки и кухонный гарнитур.</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading font-bold text-lg text-slate-900 mb-2">Электромонтаж «под ключ» в квартире</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">46 подрозетников, опрессовка соединений медными гильзами, монтаж щита и проверка всех групп под нагрузкой.</p>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs">
+                        <span class="text-slate-500">Срок: <strong class="text-slate-900">3 дня</strong></span>
+                        <span class="font-heading font-extrabold text-base text-amber-600">41 500 ₽</span>
+                    </div>
+                </article>
+
+                <article data-category="flat" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
+                    <div>
+                        <div class="relative bg-slate-900 text-white p-5 h-52 flex flex-col justify-between">
+                            <div class="flex items-center justify-between">
+                                <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-amber-400 text-[11px] font-bold">г. Оренбург • Квартира 48 м²</span>
+                                <div class="inline-flex rounded-lg bg-slate-950 p-0.5 border border-slate-700">
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-2.5 py-1 rounded-md text-[11px] font-bold text-slate-400 hover:text-white transition">ДО</button>
+                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-2.5 py-1 rounded-md text-[11px] font-bold transition">ПОСЛЕ</button>
+                                </div>
+                            </div>
+                            <div class="ba-view-after space-y-1.5">
+                                <div class="text-emerald-400 text-xs font-bold">Полная замена на медь + защита от перенапряжений</div>
+                                <p class="text-xs text-slate-300 leading-relaxed">Новый вводной кабель, штробление с пылесосом, установка 34 розеток/выключателей и аккуратный распределительный щит.</p>
+                            </div>
+                            <div class="ba-view-before hidden space-y-1.5">
+                                <div class="text-red-400 text-xs font-bold">Старый алюминий и выбивание автоматов</div>
+                                <p class="text-xs text-slate-300 leading-relaxed">Хрупкие алюминиевые провода без заземления и нагрев в точках подключения бытовой техники.</p>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading font-bold text-lg text-slate-900 mb-2">Замена проводки во вторичном жилье</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed">Перенос розеток на удобную высоту, замена щитка, монтаж светильников и розеток после отделочных работ.</p>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between text-xs">
+                        <span class="text-slate-500">Срок: <strong class="text-slate-900">2,5 дня</strong></span>
+                        <span class="font-heading font-extrabold text-base text-amber-600">33 000 ₽</span>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Блок отзывов с сохранением в localStorage -->
+    <section id="reviews" class="py-16 sm:py-24 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-6">
+                <div>
+                    <span class="text-amber-600 font-bold text-xs sm:text-sm uppercase tracking-wider">Реальные впечатления клиентов</span>
+                    <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-1.5">Отзывы клиентов</h2>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <div id="reviews-summary-badge" class="hidden items-center gap-2.5 bg-slate-50 px-4 py-2.5 rounded-xl border border-slate-200">
+                        <svg class="w-5 h-5 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <span id="reviews-count-text" class="font-bold text-slate-900 text-sm"></span>
+                    </div>
+                    <button type="button" onclick="openQrModal()" class="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold px-4 py-2.5 rounded-xl transition text-xs sm:text-sm">
+                        <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+                        QR-код для перехода к отзыву
+                    </button>
+                </div>
+            </div>
+
+            <!-- Состояние при отсутствии отзывов -->
+            <div id="reviews-empty-state" class="bg-slate-50 rounded-2xl p-8 sm:p-10 border border-dashed border-slate-300 text-center max-w-3xl mx-auto mb-10">
+                <p class="font-heading font-bold text-lg text-slate-900 mb-1.5">Отзывов пока нет — добавьте первый отзыв ниже</p>
+                <p class="text-slate-600 text-sm">Добавленные отзывы сохраняются в браузере (localStorage) и отправляются мастерам в Telegram при настроенном боте.</p>
+            </div>
+
+            <!-- Список отзывов -->
+            <div id="reviews-grid" class="hidden grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10"></div>
+
+            <!-- Форма добавления отзыва -->
+            <div class="max-w-3xl mx-auto bg-slate-50 rounded-3xl p-6 sm:p-8 border border-slate-200">
+                <h3 class="font-heading font-bold text-xl sm:text-2xl text-slate-900 mb-1.5">Добавить отзыв</h3>
+                <p class="text-slate-500 text-sm mb-5">Оставьте оценку и комментарий о выполненной работе.</p>
+
+                <form id="add-review-form" class="space-y-4">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Ваше имя *</label>
+                            <input type="text" id="review-author" required placeholder="Например, Сергей" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-amber-500 transition text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Район и объект *</label>
+                            <input type="text" id="review-object" required placeholder="п. Покровка, частный дом" class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-amber-500 transition text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Оценка (1–5 звёзд)</label>
+                        <div class="flex items-center gap-2" id="star-rating-picker">
+                            <button type="button" data-rating="1" class="star-btn p-1 text-amber-400 hover:scale-110 transition" aria-label="1 звезда">
+                                <svg class="w-7 h-7 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </button>
+                            <button type="button" data-rating="2" class="star-btn p-1 text-amber-400 hover:scale-110 transition" aria-label="2 звезды">
+                                <svg class="w-7 h-7 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </button>
+                            <button type="button" data-rating="3" class="star-btn p-1 text-amber-400 hover:scale-110 transition" aria-label="3 звезды">
+                                <svg class="w-7 h-7 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </button>
+                            <button type="button" data-rating="4" class="star-btn p-1 text-amber-400 hover:scale-110 transition" aria-label="4 звезды">
+                                <svg class="w-7 h-7 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </button>
+                            <button type="button" data-rating="5" class="star-btn p-1 text-amber-400 hover:scale-110 transition" aria-label="5 звёзд">
+                                <svg class="w-7 h-7 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </button>
+                        </div>
+                        <input type="hidden" id="review-rating-value" value="5">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Текст отзыва *</label>
+                        <textarea id="review-text" rows="3" required placeholder="Расскажите, какие работы выполняли Дмитрий и Сергей..." class="w-full px-4 py-3 rounded-xl bg-white border border-slate-300 text-slate-900 focus:outline-none focus:border-amber-500 transition text-sm"></textarea>
+                    </div>
+
+                    <button type="submit" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-6 py-3.5 rounded-xl transition text-sm shadow-md shadow-amber-500/15">
+                        Опубликовать отзыв
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Часто задаваемые вопросы (FAQ) -->
+    <section id="faq" class="py-16 sm:py-24 bg-slate-100 border-b border-slate-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-amber-600 font-bold text-xs sm:text-sm uppercase tracking-wider">Ответы на частые вопросы</span>
+                <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-1.5">Вопросы и ответы (FAQ)</h2>
+            </div>
+
+            <div class="space-y-4" id="faq-accordion">
+                <div class="faq-item open bg-white border border-slate-200 rounded-2xl overflow-hidden">
+                    <button type="button" class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between gap-4 font-heading font-bold text-slate-900 text-base sm:text-lg hover:bg-slate-50 transition">
+                        <span>Какая гарантия действует на выполненные работы?</span>
+                        <svg class="faq-icon w-5 h-5 text-amber-600 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="pb-5 text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Предоставляем гарантию <strong>5 лет</strong> на все электромонтажные работы, сборку распределительных щитов и коммутацию в распределительных коробках.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white border border-slate-200 rounded-2xl overflow-hidden">
+                    <button type="button" class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between gap-4 font-heading font-bold text-slate-900 text-base sm:text-lg hover:bg-slate-50 transition">
+                        <span>Выезжаете ли в п. Покровку и пригород Оренбурга?</span>
+                        <svg class="faq-icon w-5 h-5 text-amber-600 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="pb-5 text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Да, работаем по всему г. Оренбургу, п. Покровке и ближайшим посёлкам/СНТ. Аварийный выезд возможен в любое время суток.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="faq-item bg-white border border-slate-200 rounded-2xl overflow-hidden">
+                    <button type="button" class="faq-trigger w-full px-6 py-5 text-left flex items-center justify-between gap-4 font-heading font-bold text-slate-900 text-base sm:text-lg hover:bg-slate-50 transition">
+                        <span>Как рассчитывается стоимость: пакетно или по позициям?</span>
+                        <svg class="faq-icon w-5 h-5 text-amber-600 shrink-0 transition-transform duration-300" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content px-6">
+                        <p class="pb-5 text-slate-600 text-sm sm:text-base leading-relaxed">
+                            Вы можете воспользоваться экспресс-калькулятором «под ключ» по типу жилья и материалу стен либо набрать точную смету в прайс-листе. Финальную смету согласуем после осмотра объекта или по плану/фото.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Контакты, форма обратной связи и подвал -->
+    <footer id="contacts" class="bg-slate-950 text-white pt-16 sm:pt-20 pb-10 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-12 pb-14 border-b border-slate-800">
+                <!-- Контакты мастеров -->
+                <div class="lg:col-span-6 space-y-6">
+                    <div>
+                        <span class="text-amber-400 font-bold text-xs sm:text-sm uppercase tracking-wider">Контакты без посредников</span>
+                        <h2 class="font-heading font-extrabold text-3xl sm:text-4xl mt-1.5">Свяжитесь с нами напрямую</h2>
+                        <p class="text-slate-400 text-base mt-3 max-w-lg">
+                            Звоните по любому телефону или пишите в Telegram / ВКонтакте. Работаем в г. Оренбурге и п. Покровке.
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4">
+                        <div class="flex items-center justify-between gap-4 flex-wrap">
+                            <div>
+                                <span class="text-xs text-slate-400 block">Чесноков Дмитрий Сергеевич</span>
+                                <a href="tel:+79015932642" class="font-heading font-extrabold text-xl sm:text-2xl text-white hover:text-amber-400 transition">+7 (901) 593-26-42</a>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-amber-400 text-xs font-bold">Монтаж • Заземление • Свет</span>
+                        </div>
+                        <div class="pt-4 border-t border-slate-800 flex items-center justify-between gap-4 flex-wrap">
+                            <div>
+                                <span class="text-xs text-slate-400 block">Чесноков Сергей Викторович</span>
+                                <a href="tel:+79017100137" class="font-heading font-extrabold text-xl sm:text-2xl text-white hover:text-amber-400 transition">+7 (901) 710-01-37</a>
+                            </div>
+                            <span class="px-2.5 py-1 rounded-lg bg-slate-800 text-amber-400 text-xs font-bold">Щиты • Проекты • 380 В</span>
+                        </div>
+                    </div>
+
+                    <div class="grid sm:grid-cols-2 gap-4 text-sm">
+                        <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-4">
+                            <span class="text-xs text-slate-400 block mb-1">Регион работы</span>
+                            <span class="font-semibold text-white">г. Оренбург, п. Покровка и пригород</span>
+                        </div>
+                        <div class="bg-slate-900/70 border border-slate-800 rounded-xl p-4">
+                            <span class="text-xs text-slate-400 block mb-1">Режим работы</span>
+                            <span class="font-semibold text-white">Ежедневно 08:00–21:00 (Аварийный 24/7)</span>
+                        </div>
+                    </div>
+
+                    <!-- Кнопки Telegram и ВКонтакте -->
+                    <div class="flex flex-wrap gap-3 pt-1">
+                        <a data-tg-link href="https://t.me/sevennightss" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2.5 bg-[#229ED9] hover:bg-[#1e8cc0] text-white font-bold px-5 py-3.5 rounded-xl transition text-sm">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                            Написать в Telegram
+                        </a>
+                        <a data-vk-link href="https://vk.ru/id557901626" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2.5 bg-[#0077FF] hover:bg-[#0066dd] text-white font-bold px-5 py-3.5 rounded-xl transition text-sm">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.08 14.27h-1.46c-.55 0-.72-.44-1.71-1.44-.86-.83-1.24-.94-1.45-.94-.3 0-.38.08-.38.49v1.31c0 .35-.11.56-1.04.56-1.54 0-3.25-.93-4.45-2.67-1.81-2.54-2.3-4.45-2.3-4.84 0-.21.08-.41.49-.41h1.46c.37 0 .51.17.65.56.71 2.06 1.91 3.86 2.4 3.86.18 0 .27-.08.27-.55v-2.14c-.06-.99-.58-1.08-.58-1.43 0-.17.14-.34.37-.34h2.29c.31 0 .42.17.42.53v2.89c0 .31.14.42.23.42.18 0 .34-.11.68-.45 1.05-1.18 1.8-2.99 1.8-2.99.1-.21.27-.41.64-.41h1.46c.44 0 .53.22.44.53-.18.84-1.95 3.33-1.95 3.33-.15.25-.21.36 0 .64.15.21.66.65 1 1.04.62.71 1.1 1.3 1.23 1.71.13.41-.08.62-.49.62z"/></svg>
+                            ВКонтакте
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Форма обратной связи -->
+                <div class="lg:col-span-6">
+                    <div class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-xl">
+                        <h3 class="font-heading font-bold text-xl sm:text-2xl text-white mb-1.5">Форма обратной связи</h3>
+                        <p class="text-slate-400 text-sm mb-6">Отправьте заявку на выезд или расчёт стоимости в Telegram.</p>
+
+                        <form id="footer-contact-form" class="space-y-4">
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-300 mb-1.5">Ваше имя *</label>
+                                    <input type="text" name="name" required placeholder="Иван" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-300 mb-1.5">Телефон *</label>
+                                    <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm">
+                                </div>
+                            </div>
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-300 mb-1.5">Район выезда</label>
+                                    <select name="district" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-amber-500 transition text-sm">
+                                        <option value="г. Оренбург">г. Оренбург</option>
+                                        <option value="п. Покровка">п. Покровка</option>
+                                        <option value="Пригород">Пригород Оренбурга</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-medium text-slate-300 mb-1.5">Фото щитка или плана</label>
+                                    <label class="flex items-center justify-between gap-2 px-3.5 py-3 rounded-xl bg-slate-950 border border-dashed border-slate-700 hover:border-amber-500 cursor-pointer transition text-xs text-slate-400">
+                                        <span class="file-label truncate">Прикрепить фото...</span>
+                                        <span class="text-amber-400 font-bold shrink-0">+ Файл</span>
+                                        <input type="file" name="photo" accept="image/*" class="hidden photo-input">
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-medium text-slate-300 mb-1.5">Описание задачи</label>
+                                <textarea name="task" rows="3" placeholder="Например: собрать щит 380 В в п. Покровке, разводка квартиры в Оренбурге..." class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 transition text-sm"></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition shadow-lg shadow-amber-500/20 text-sm sm:text-base">
+                                Отправить заявку в Telegram
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Нижняя строка подвала -->
+            <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400 text-center md:text-left">
+                <div>
+                    <span class="font-heading font-bold text-slate-200 text-sm block sm:inline">ЭЛЕКТРОМОНТАЖ 56 — Чесноков Д.С. и Чесноков С.В.</span>
+                    <span class="hidden sm:inline mx-2">•</span>
+                    <span>г. Оренбург и п. Покровка © 2026</span>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a href="tel:+79015932642" class="text-slate-300 hover:text-amber-400 font-medium">+7 (901) 593-26-42</a>
+                    <span>•</span>
+                    <a href="tel:+79017100137" class="text-slate-300 hover:text-amber-400 font-medium">+7 (901) 710-01-37</a>
+                    <span>•</span>
+                    <button type="button" onclick="openSetupModal()" class="text-amber-400 hover:underline font-semibold">
+                        Настройка Telegram-бота
+                    </button>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Модальное окно заявки и расчёта -->
+    <div id="order-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div class="bg-white text-slate-900 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+            <button type="button" onclick="closeOrderModal()" class="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition" aria-label="Закрыть">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div class="flex items-center gap-3 mb-4">
+                <div id="modal-icon-box" class="w-11 h-11 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center shrink-0">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <div>
+                    <h3 id="modal-title" class="font-heading font-extrabold text-xl text-slate-900">Вызвать мастеров</h3>
+                    <p class="text-xs text-slate-500">Чесноков Д.С. и Чесноков С.В. • Оренбург и п. Покровка</p>
+                </div>
+            </div>
+
+            <div id="modal-estimate-box" class="hidden mb-4 p-3.5 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-700 max-h-40 overflow-y-auto"></div>
+
+            <form id="modal-order-form" class="space-y-4">
+                <input type="hidden" id="modal-subject" value="Вызов мастеров">
+                <input type="hidden" id="modal-estimate-text" value="">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Ваше имя *</label>
+                    <input type="text" name="name" required placeholder="Как к вам обращаться?" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white transition text-sm">
+                </div>
+                <div class="grid sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Телефон *</label>
+                        <input type="tel" name="phone" required placeholder="+7 (___) ___-__-__" class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white transition text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 mb-1.5">Район</label>
+                        <select name="district" class="w-full px-3.5 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white transition text-sm">
+                            <option value="г. Оренбург">г. Оренбург</option>
+                            <option value="п. Покровка">п. Покровка</option>
+                            <option value="Пригород">Пригород</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Прикрепить фото щитка или плана (необязательно)</label>
+                    <label class="flex items-center justify-between gap-2 px-4 py-2.5 rounded-xl bg-slate-50 border border-dashed border-slate-300 hover:border-amber-500 cursor-pointer transition text-xs text-slate-600">
+                        <span class="file-label truncate">Выбрать файл изображения...</span>
+                        <span class="bg-slate-900 text-amber-400 px-2.5 py-1 rounded-lg font-bold shrink-0">Фото</span>
+                        <input type="file" name="photo" accept="image/*" class="hidden photo-input">
+                    </label>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1.5">Комментарий или адрес</label>
+                    <textarea name="task" rows="2" placeholder="Укажите адрес или удобное время для связи..." class="w-full px-4 py-3 rounded-xl bg-slate-50 border border-slate-300 text-slate-900 focus:outline-none focus:border-amber-500 focus:bg-white transition text-sm"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition shadow-md shadow-amber-500/20 text-sm sm:text-base">
+                    Отправить заявку
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно QR-кода -->
+    <div id="qr-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
+        <div class="bg-white text-slate-900 rounded-3xl max-w-sm w-full p-6 sm:p-8 shadow-2xl relative text-center">
+            <button type="button" onclick="closeQrModal()" class="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition" aria-label="Закрыть">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+            <h3 class="font-heading font-extrabold text-xl text-slate-900 mb-2">Переход к отзывам</h3>
+            <p class="text-xs text-slate-500 mb-5">Отсканируйте QR-код камерой смартфона, чтобы открыть раздел отзывов.</p>
+            <div id="qrcode-container" class="flex items-center justify-center p-4 bg-slate-50 rounded-2xl border border-slate-200 mx-auto w-fit mb-4"></div>
+            <p class="text-[11px] text-slate-400">ЭЛЕКТРОМОНТАЖ 56 • Оренбург и п. Покровка</p>
+        </div>
+    </div>
+
+    <!-- Модальное окно настройки Telegram-бота -->
+    <div id="setup-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm">
+        <div class="bg-slate-900 text-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-slate-700 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+            <button type="button" onclick="closeSetupModal()" class="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition" aria-label="Закрыть">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">Настройка Telegram</span>
+            <h3 class="font-heading font-extrabold text-2xl text-white mb-2">Подключение TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID</h3>
+            <p class="text-slate-300 text-sm mb-4 leading-relaxed">
+                Укажите токен бота и ваш Chat ID в объекте <code class="text-amber-400 bg-slate-950 px-1.5 py-0.5 rounded">CONFIG</code> в коде файла <code class="text-amber-400 bg-slate-950 px-1.5 py-0.5 rounded">index.html</code> либо сохраните их в браузере для проверки отправки заявок и отзывов.
+            </p>
+
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2 text-xs sm:text-sm text-slate-300 mb-5">
+                <p>1. Создайте бота через <strong class="text-amber-400">@BotFather</strong> командой <code>/newbot</code> и скопируйте <strong>HTTP API Token</strong>.</p>
+                <p>2. Напишите созданному боту и нажмите <strong>Start</strong>.</p>
+                <p>3. Узнайте свой числовой ID через <strong class="text-amber-400">@userinfobot</strong> и впишите его в <code>TELEGRAM_CHAT_ID</code>.</p>
+            </div>
+
+            <div class="bg-slate-850 border border-slate-700 rounded-2xl p-4 sm:p-5 space-y-3">
+                <div class="font-heading font-bold text-sm text-white">Сохранить и отправить тестовое сообщение:</div>
+                <div class="grid sm:grid-cols-2 gap-3">
+                    <input type="text" id="setup-token-input" placeholder="TELEGRAM_BOT_TOKEN" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500">
+                    <input type="text" id="setup-chatid-input" placeholder="TELEGRAM_CHAT_ID" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500">
+                </div>
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <span id="setup-status-text" class="text-xs text-slate-400">Используются значения из CONFIG</span>
+                    <button type="button" onclick="saveAndTestTelegram()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs transition">
+                        Сохранить и протестировать
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Уведомление без использования alert() -->
+    <div id="notification-box" class="fixed bottom-5 right-5 z-50 hidden max-w-sm w-full bg-slate-900 text-white p-4 rounded-2xl shadow-2xl border border-slate-700 flex items-start gap-3.5">
+        <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <div class="flex-1">
+            <h4 id="notif-title" class="font-heading font-bold text-sm text-white">Готово</h4>
+            <p id="notif-text" class="text-xs text-slate-300 mt-1 leading-relaxed"></p>
+        </div>
+        <button type="button" onclick="hideNotification()" class="text-slate-400 hover:text-white p-1" aria-label="Закрыть уведомление">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+    </div>
+
+    <script>
+        /* =========================================================================
+           1. КОНФИГУРАЦИЯ TELEGRAM И МЕССЕНДЖЕРОВ
+           ========================================================================= */
+        const CONFIG = {
+            TELEGRAM_BOT_TOKEN: '',
+            TELEGRAM_CHAT_ID: '',
+            TELEGRAM_LINK: 'https://t.me/sevennightss',
+            VK_LINK: 'https://vk.ru/id557901626'
+        };
+
+        // Применяем ссылки на Telegram и ВКонтакте ко всем элементам с атрибутами data-tg-link / data-vk-link
+        function applySocialLinks() {
+            document.querySelectorAll('[data-tg-link]').forEach(link => {
+                if (CONFIG.TELEGRAM_LINK) link.href = CONFIG.TELEGRAM_LINK;
+            });
+            document.querySelectorAll('[data-vk-link]').forEach(link => {
+                if (CONFIG.VK_LINK) link.href = CONFIG.VK_LINK;
+            });
+        }
+
+        // Возвращает актуальные токен и ID чата из CONFIG или сохранённых в localStorage
+        function getTelegramCredentials() {
+            const savedToken = localStorage.getItem('electro56_tg_token') || '';
+            const savedChatId = localStorage.getItem('electro56_tg_chat_id') || '';
+            return {
+                token: (CONFIG.TELEGRAM_BOT_TOKEN || savedToken).trim(),
+                chatId: (CONFIG.TELEGRAM_CHAT_ID || savedChatId).trim()
+            };
+        }
+
+        // Экранирование HTML для безопасной отправки в Telegram с parse_mode: HTML
+        function escapeHtml(value) {
+            const div = document.createElement('div');
+            div.textContent = String(value || '');
+            return div.innerHTML;
+        }
+
+        // Отправка текста или фотографии в Telegram Bot API
+        async function sendToTelegram(htmlMessage, photoFile = null) {
+            const { token, chatId } = getTelegramCredentials();
+            if (!token || !chatId) {
+                return { ok: true, demo: true };
+            }
+
+            try {
+                if (photoFile && photoFile.size > 0) {
+                    const formData = new FormData();
+                    formData.append('chat_id', chatId);
+                    formData.append('photo', photoFile);
+                    formData.append('caption', htmlMessage.slice(0, 1020));
+                    formData.append('parse_mode', 'HTML');
+
+                    const response = await fetch(`https://api.telegram.org/bot${token}/sendPhoto`, {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
+                    return { ok: Boolean(data.ok), demo: false, error: data.description };
+                }
+
+                const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: htmlMessage,
+                        parse_mode: 'HTML'
+                    })
+                });
+                const data = await response.json();
+                return { ok: Boolean(data.ok), demo: false, error: data.description };
+            } catch (error) {
+                return { ok: false, demo: false, error: error && error.message ? error.message : 'Ошибка сети' };
+            }
+        }
+
+        /* =========================================================================
+           2. ЭКСПРЕСС-КАЛЬКУЛЯТОР «ПОД КЛЮЧ»
+           ========================================================================= */
+        const turnkeyObjects = {
+            '1room': { label: '1-комн. квартира (~35–42 м²)', min: 28000, max: 34000, days: '2–3 дня' },
+            '2room': { label: '2-комн. квартира (~50–62 м²)', min: 38000, max: 46000, days: '3–4 дня' },
+            '3room': { label: '3-комн. квартира (~70–85 м²)', min: 50000, max: 62000, days: '4–5 дней' },
+            'house': { label: 'Частный дом / Коттедж (~100–130 м²)', min: 55000, max: 72000, days: '4–6 дней' },
+            'garage': { label: 'Гараж / Баня / Хозблок', min: 12000, max: 18000, days: '1–2 дня' }
+        };
+
+        const turnkeyWalls = {
+            'gasblock': { label: 'газоблок / пеноблок', mult: 1.0 },
+            'brick': { label: 'кирпич / блок', mult: 1.12 },
+            'concrete': { label: 'бетон / монолит', mult: 1.25 },
+            'wood': { label: 'дерево / каркас', mult: 1.15 }
+        };
+
+        let currentObjKey = '1room';
+        let currentWallKey = 'gasblock';
+
+        function formatRub(amount) {
+            return Math.round(Number(amount) || 0).toLocaleString('ru-RU') + ' ₽';
+        }
+
+        function updateTurnkeyCalculator() {
+            const obj = turnkeyObjects[currentObjKey] || turnkeyObjects['1room'];
+            const wall = turnkeyWalls[currentWallKey] || turnkeyWalls['gasblock'];
+
+            const minPrice = Math.round((obj.min * wall.mult) / 500) * 500;
+            const maxPrice = Math.round((obj.max * wall.mult) / 500) * 500;
+
+            document.getElementById('tk-price-range').textContent = `${minPrice.toLocaleString('ru-RU')} – ${maxPrice.toLocaleString('ru-RU')} ₽`;
+            document.getElementById('tk-duration').textContent = `Срок: ${obj.days}`;
+            document.getElementById('tk-summary-desc').textContent =
+                `${obj.label} • Стены: ${wall.label}. Включает разметку, прокладку кабеля ВВГнг-LS, подрозетники и сборку щита.`;
+        }
+
+        document.querySelectorAll('.tk-obj-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tk-obj-btn').forEach(b => {
+                    b.classList.remove('tab-active');
+                    b.classList.add('text-slate-200');
+                });
+                btn.classList.add('tab-active');
+                btn.classList.remove('text-slate-200');
+                currentObjKey = btn.dataset.obj;
+                updateTurnkeyCalculator();
+            });
+        });
+
+        document.querySelectorAll('.tk-wall-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tk-wall-btn').forEach(b => {
+                    b.classList.remove('tab-active');
+                    b.classList.add('text-slate-200');
+                });
+                btn.classList.add('tab-active');
+                btn.classList.remove('text-slate-200');
+                currentWallKey = btn.dataset.wall;
+                updateTurnkeyCalculator();
+            });
+        });
+
+        document.getElementById('send-turnkey-btn').addEventListener('click', () => {
+            const obj = turnkeyObjects[currentObjKey];
+            const wall = turnkeyWalls[currentWallKey];
+            const rangeText = document.getElementById('tk-price-range').textContent;
+            openOrderModal(
+                'Заявка по расчёту «Под ключ»',
+                [
+                    `Объект: ${obj.label}`,
+                    `Материал стен: ${wall.label}`,
+                    `Ориентировочная стоимость: ${rangeText}`
+                ],
+                0
+            );
+        });
+
+        /* =========================================================================
+           3. ДЕТАЛЬНЫЙ ПРАЙС-ЛИСТ И РАСЧЁТ СМЕТЫ
+           ========================================================================= */
+        const priceCatalog = {
+            rough: [
+                { id: 'r1', name: 'Штробление стен (газоблок / пеноблок)', unit: 'м.п.', price: 200, qty: 0 },
+                { id: 'r2', name: 'Штробление стен (кирпич / блок)', unit: 'м.п.', price: 250, qty: 0 },
+                { id: 'r3', name: 'Штробление стен (бетон / монолит)', unit: 'м.п.', price: 380, qty: 0 },
+                { id: 'r4', name: 'Прокладка кабеля ВВГнг-LS в гофре', unit: 'м.п.', price: 120, qty: 0 },
+                { id: 'r5', name: 'Прокладка кабеля в штробе / открыто', unit: 'м.п.', price: 95, qty: 0 },
+                { id: 'r6', name: 'Сверление отверстия под подрозетник (кирпич/блок)', unit: 'шт.', price: 220, qty: 0 },
+                { id: 'r7', name: 'Сверление отверстия под подрозетник (бетон)', unit: 'шт.', price: 380, qty: 0 },
+                { id: 'r8', name: 'Установка и расключение распредкоробки', unit: 'шт.', price: 550, qty: 0 }
+            ],
+            panels: [
+                { id: 'p1', name: 'Монтаж накладного щита (до 24 модулей)', unit: 'шт.', price: 2000, qty: 0 },
+                { id: 'p2', name: 'Монтаж встраиваемого щита (до 36 модулей)', unit: 'шт.', price: 3800, qty: 0 },
+                { id: 'p3', name: 'Установка и подключение автомата защиты', unit: 'шт.', price: 400, qty: 0 },
+                { id: 'p4', name: 'Установка УЗО / дифавтомата / реле напряжения', unit: 'шт.', price: 650, qty: 0 },
+                { id: 'p5', name: 'Маркировка линий и составление схемы щита', unit: 'усл.', price: 1000, qty: 0 }
+            ],
+            finish: [
+                { id: 'f1', name: 'Установка розетки 220 В / выключателя', unit: 'шт.', price: 300, qty: 0 },
+                { id: 'f2', name: 'Установка проходного выключателя', unit: 'шт.', price: 420, qty: 0 },
+                { id: 'f3', name: 'Подключение варочной панели / духового шкафа', unit: 'шт.', price: 1200, qty: 0 },
+                { id: 'f4', name: 'Монтаж точечного светильника', unit: 'шт.', price: 400, qty: 0 },
+                { id: 'f5', name: 'Сборка и подвес люстры', unit: 'шт.', price: 1200, qty: 0 }
+            ],
+            house: [
+                { id: 'h1', name: 'Трубостойка и вводной щит 15 кВт (380 В)', unit: 'компл.', price: 7500, qty: 0 },
+                { id: 'h2', name: 'Монтаж контура заземления', unit: 'компл.', price: 8500, qty: 0 },
+                { id: 'h3', name: 'Прокладка бронированного кабеля в ПНД', unit: 'м.п.', price: 450, qty: 0 },
+                { id: 'h4', name: 'Воздушный ввод СИП от опоры', unit: 'м.п.', price: 350, qty: 0 },
+                { id: 'h5', name: 'Подключение генератора / реверсивный рубильник', unit: 'усл.', price: 4500, qty: 0 },
+                { id: 'h6', name: 'Монтаж и настройка блока АВР', unit: 'усл.', price: 8000, qty: 0 }
+            ]
+        };
+
+        let currentPriceCategory = 'rough';
+
+        function findPriceItem(itemId) {
+            for (const category of Object.keys(priceCatalog)) {
+                const found = priceCatalog[category].find(item => item.id === itemId);
+                if (found) return found;
+            }
+            return null;
+        }
+
+        function updateEstimateSummary() {
+            let totalSum = 0;
+            let totalPositions = 0;
+
+            for (const category of Object.keys(priceCatalog)) {
+                priceCatalog[category].forEach(item => {
+                    if (item.qty > 0) {
+                        totalSum += item.qty * item.price;
+                        totalPositions += 1;
+                    }
+                });
+            }
+
+            document.getElementById('calc-items-count').textContent = `${totalPositions} поз.`;
+            document.getElementById('calc-total-price').textContent = formatRub(totalSum);
+        }
+
+        function renderPriceTable() {
+            const tbody = document.getElementById('price-table-body');
+            const items = priceCatalog[currentPriceCategory] || [];
+            tbody.innerHTML = '';
+
+            items.forEach(item => {
+                const rowTotal = item.qty * item.price;
+                const activeRow = item.qty > 0;
+                const tr = document.createElement('tr');
+                tr.className = activeRow ? 'bg-amber-50/70 transition' : 'hover:bg-slate-50 transition';
+
+                tr.innerHTML = `
+                    <td class="py-4 px-4 sm:px-6 font-medium text-slate-800">${escapeHtml(item.name)}</td>
+                    <td class="py-4 px-3 text-center text-slate-500 text-xs sm:text-sm">${escapeHtml(item.unit)}</td>
+                    <td class="py-4 px-3 text-right font-bold text-slate-900 whitespace-nowrap">${formatRub(item.price)}</td>
+                    <td class="py-4 px-4 sm:px-6">
+                        <div class="flex items-center justify-center gap-2">
+                            <button type="button" onclick="adjustPriceQty('${item.id}', -1)" class="w-8 h-8 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold flex items-center justify-center transition active:scale-90" aria-label="Уменьшить количество">&minus;</button>
+                            <input type="number" min="0" max="999" value="${item.qty}" onchange="setPriceQty('${item.id}', this.value)" class="w-12 text-center font-bold text-slate-900 bg-white border border-slate-300 rounded-lg py-1 text-sm focus:outline-none focus:border-amber-500">
+                            <button type="button" onclick="adjustPriceQty('${item.id}', 1)" class="w-8 h-8 rounded-lg bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white font-bold flex items-center justify-center transition active:scale-90" aria-label="Увеличить количество">+</button>
+                        </div>
+                    </td>
+                    <td class="py-4 px-4 sm:px-6 text-right font-bold ${activeRow ? 'text-amber-600' : 'text-slate-400'} hidden md:table-cell whitespace-nowrap">${formatRub(rowTotal)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            updateEstimateSummary();
+        }
+
+        function adjustPriceQty(itemId, delta) {
+            const item = findPriceItem(itemId);
+            if (!item) return;
+            item.qty = Math.max(0, (parseInt(item.qty, 10) || 0) + delta);
+            renderPriceTable();
+        }
+
+        function setPriceQty(itemId, rawValue) {
+            const item = findPriceItem(itemId);
+            if (!item) return;
+            item.qty = Math.max(0, parseInt(rawValue, 10) || 0);
+            renderPriceTable();
+        }
+
+        document.querySelectorAll('.price-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.price-tab').forEach(t => t.classList.remove('tab-active'));
+                tab.classList.add('tab-active');
+                currentPriceCategory = tab.dataset.category;
+                renderPriceTable();
+            });
+        });
+
+        document.getElementById('reset-calc-btn').addEventListener('click', () => {
+            for (const category of Object.keys(priceCatalog)) {
+                priceCatalog[category].forEach(item => {
+                    item.qty = 0;
+                });
+            }
+            renderPriceTable();
+            showNotification('Смета очищена', 'Количество всех позиций сброшено на 0.');
+        });
+
+        document.getElementById('send-estimate-btn').addEventListener('click', () => {
+            const lines = [];
+            let total = 0;
+
+            for (const category of Object.keys(priceCatalog)) {
+                priceCatalog[category].forEach(item => {
+                    if (item.qty > 0) {
+                        const sum = item.qty * item.price;
+                        total += sum;
+                        lines.push(`${item.name} — ${item.qty} ${item.unit} (${formatRub(sum)})`);
+                    }
+                });
+            }
+
+            openOrderModal('Отправка сметы из прайс-листа', lines, total);
+        });
+
+        /* =========================================================================
+           4. ПОРТФОЛИО: ФИЛЬТРАЦИЯ И ПЕРЕКЛЮЧЕНИЕ «ДО / ПОСЛЕ»
+           ========================================================================= */
+        function toggleBeforeAfter(btn, state) {
+            const card = btn.closest('.pf-card');
+            if (!card) return;
+
+            card.querySelectorAll('.ba-btn').forEach(b => {
+                b.classList.remove('bg-amber-500', 'text-slate-950');
+                b.classList.add('text-slate-400');
+            });
+            btn.classList.add('bg-amber-500', 'text-slate-950');
+            btn.classList.remove('text-slate-400');
+
+            const beforeView = card.querySelector('.ba-view-before');
+            const afterView = card.querySelector('.ba-view-after');
+            if (state === 'before') {
+                afterView.classList.add('hidden');
+                beforeView.classList.remove('hidden');
+            } else {
+                beforeView.classList.add('hidden');
+                afterView.classList.remove('hidden');
+            }
+        }
+
+        document.querySelectorAll('.pf-filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.pf-filter-btn').forEach(b => b.classList.remove('tab-active'));
+                btn.classList.add('tab-active');
+                const filter = btn.dataset.filter;
+                document.querySelectorAll('.pf-card').forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        /* =========================================================================
+           5. МОДАЛЬНЫЕ ОКНА, ФОРМЫ И ОТПРАВКА В TELEGRAM
+           ========================================================================= */
+        const orderModal = document.getElementById('order-modal');
+        const modalEstimateBox = document.getElementById('modal-estimate-box');
+
+        function openOrderModal(titleText, estimateLines = [], totalSum = 0, isUrgent = false) {
+            document.getElementById('modal-title').textContent = titleText;
+            document.getElementById('modal-subject').value = titleText;
+
+            const iconBox = document.getElementById('modal-icon-box');
+            if (isUrgent) {
+                iconBox.classList.remove('bg-amber-500', 'text-slate-950');
+                iconBox.classList.add('bg-red-600', 'text-white');
+            } else {
+                iconBox.classList.add('bg-amber-500', 'text-slate-950');
+                iconBox.classList.remove('bg-red-600', 'text-white');
+            }
+
+            if (estimateLines.length > 0) {
+                modalEstimateBox.classList.remove('hidden');
+                let html = `<div class="font-bold text-slate-900 mb-1">Выбранные позиции:</div><ul class="list-disc pl-4 space-y-1 text-slate-600">${estimateLines.map(line => `<li>${escapeHtml(line)}</li>`).join('')}</ul>`;
+                if (totalSum > 0) {
+                    html += `<div class="mt-2 pt-2 border-t border-slate-300 font-bold text-slate-900 flex justify-between"><span>Итого по смете:</span><span class="text-amber-600">${formatRub(totalSum)}</span></div>`;
+                }
+                modalEstimateBox.innerHTML = html;
+                document.getElementById('modal-estimate-text').value =
+                    estimateLines.join('\n') + (totalSum > 0 ? `\nИтого: ${formatRub(totalSum)}` : '');
+            } else {
+                modalEstimateBox.classList.add('hidden');
+                modalEstimateBox.innerHTML = '';
+                document.getElementById('modal-estimate-text').value = '';
+            }
+
+            orderModal.classList.remove('hidden');
+            orderModal.classList.add('flex');
+        }
+
+        function closeOrderModal() {
+            orderModal.classList.add('hidden');
+            orderModal.classList.remove('flex');
+        }
+
+        orderModal.addEventListener('click', e => {
+            if (e.target === orderModal) closeOrderModal();
+        });
+
+        // Показываем имя выбранного изображения в полях загрузки фото
+        document.querySelectorAll('.photo-input').forEach(input => {
+            input.addEventListener('change', () => {
+                const label = input.parentElement.querySelector('.file-label');
+                if (!label) return;
+                if (input.files && input.files.length > 0) {
+                    label.textContent = input.files[0].name;
+                    label.classList.add('text-amber-400', 'font-semibold');
+                } else {
+                    label.textContent = 'Выбрать изображение...';
+                    label.classList.remove('text-amber-400', 'font-semibold');
+                }
+            });
+        });
+
+        // Подключаем обработчики отправки ко всем формам заявок
+        ['hero-form', 'footer-contact-form', 'modal-order-form'].forEach(formId => {
+            const form = document.getElementById(formId);
+            if (!form) return;
+
+            form.addEventListener('submit', async event => {
+                event.preventDefault();
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalLabel = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Отправка...';
+
+                const formData = new FormData(form);
+                const name = (formData.get('name') || '').trim();
+                const phone = (formData.get('phone') || '').trim();
+                const district = formData.get('district') || 'Не указан';
+                const task = (formData.get('task') || '').trim();
+                const subject = formId === 'modal-order-form' ? document.getElementById('modal-subject').value : 'Заявка с сайта';
+                const estimateText = formId === 'modal-order-form' ? document.getElementById('modal-estimate-text').value : '';
+                const photoFile = formData.get('photo');
+
+                let tgMessage = '⚡ <b>ЭЛЕКТРОМОНТАЖ 56 — ЗАЯВКА</b>\n\n';
+                if (formId === 'modal-order-form') {
+                    tgMessage += `📌 <b>Раздел:</b> ${escapeHtml(subject)}\n`;
+                }
+                tgMessage += `👤 <b>Имя:</b> ${escapeHtml(name)}\n`;
+                tgMessage += `📞 <b>Телефон:</b> ${escapeHtml(phone)}\n`;
+                tgMessage += `📍 <b>Район:</b> ${escapeHtml(district)}\n`;
+                if (task) {
+                    tgMessage += `📝 <b>Задача:</b> ${escapeHtml(task)}\n`;
+                }
+                if (estimateText) {
+                    tgMessage += `\n📋 <b>Расчёт:</b>\n${escapeHtml(estimateText)}\n`;
+                }
+
+                await sendToTelegram(tgMessage, photoFile);
+
+                form.reset();
+                form.querySelectorAll('.file-label').forEach(lbl => {
+                    lbl.textContent = 'Выбрать изображение...';
+                    lbl.classList.remove('text-amber-400', 'font-semibold');
+                });
+
+                submitBtn.disabled = false;
+                submitBtn.textContent = originalLabel;
+                closeOrderModal();
+
+                showNotification(
+                    'Заявка принята!',
+                    'Спасибо за обращение. Мастера свяжутся с вами либо звоните напрямую: <a href="tel:+79015932642" class="text-amber-400 font-bold underline">+7 (901) 593-26-42</a>'
+                );
+            });
+        });
+
+        /* =========================================================================
+           6. ОТЗЫВЫ В LOCALSTORAGE И QR-КОД
+           ========================================================================= */
+        const REVIEWS_STORAGE_KEY = 'electro56_reviews_v1';
+
+        function readStoredReviews() {
+            try {
+                const raw = localStorage.getItem(REVIEWS_STORAGE_KEY);
+                const parsed = raw ? JSON.parse(raw) : [];
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        function writeStoredReviews(items) {
+            try {
+                localStorage.setItem(REVIEWS_STORAGE_KEY, JSON.stringify(items));
+            } catch (e) {
+                // Игнорируем ошибку переполнения хранилища
+            }
+        }
+
+        let reviewsData = readStoredReviews();
+
+        function renderStarsHtml(rating) {
+            const safeRating = Math.min(5, Math.max(1, parseInt(rating, 10) || 5));
+            let stars = '';
+            for (let i = 1; i <= 5; i += 1) {
+                const activeClass = i <= safeRating ? 'text-amber-400 fill-current' : 'text-slate-300 fill-current';
+                stars += `<svg class="w-4 h-4 ${activeClass}" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>`;
+            }
+            return stars;
+        }
+
+        function renderReviewsList() {
+            const grid = document.getElementById('reviews-grid');
+            const emptyState = document.getElementById('reviews-empty-state');
+            const badge = document.getElementById('reviews-summary-badge');
+            const countText = document.getElementById('reviews-count-text');
+
+            if (!reviewsData.length) {
+                emptyState.classList.remove('hidden');
+                grid.classList.add('hidden');
+                badge.classList.add('hidden');
+                badge.classList.remove('flex');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.classList.remove('hidden');
+            badge.classList.remove('hidden');
+            badge.classList.add('flex');
+
+            const avgScore = (reviewsData.reduce((acc, item) => acc + (Number(item.rating) || 5), 0) / reviewsData.length).toFixed(1);
+            countText.textContent = `Средняя оценка ${avgScore} из 5 (${reviewsData.length} отз.)`;
+
+            grid.innerHTML = '';
+            reviewsData.forEach(item => {
+                const initials = (item.author || 'К').trim().split(/\s+/).map(part => part[0]).join('').toUpperCase().slice(0, 2) || 'К';
+                const card = document.createElement('div');
+                card.className = 'bg-slate-50 rounded-2xl p-6 border border-slate-200 flex flex-col justify-between';
+                card.innerHTML = `
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-4">
+                            <div class="flex items-center gap-1">${renderStarsHtml(item.rating)}</div>
+                            <span class="text-xs text-slate-400">${escapeHtml(item.date || '')}</span>
+                        </div>
+                        <p class="text-slate-700 text-sm sm:text-base leading-relaxed mb-6">&laquo;${escapeHtml(item.text)}&raquo;</p>
+                    </div>
+                    <div class="pt-4 border-t border-slate-200 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-slate-900 text-amber-400 font-heading font-bold text-sm flex items-center justify-center shrink-0">${escapeHtml(initials)}</div>
+                        <div>
+                            <div class="font-heading font-bold text-slate-900 text-sm">${escapeHtml(item.author)}</div>
+                            <div class="text-xs text-slate-500">${escapeHtml(item.object)}</div>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        document.querySelectorAll('.star-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const selectedRating = parseInt(btn.dataset.rating, 10) || 5;
+                document.getElementById('review-rating-value').value = selectedRating;
+                document.querySelectorAll('.star-btn').forEach(star => {
+                    const starVal = parseInt(star.dataset.rating, 10) || 5;
+                    star.classList.toggle('text-amber-400', starVal <= selectedRating);
+                    star.classList.toggle('text-slate-300', starVal > selectedRating);
+                });
+            });
+        });
+
+        document.getElementById('add-review-form').addEventListener('submit', async event => {
+            event.preventDefault();
+            const author = document.getElementById('review-author').value.trim();
+            const object = document.getElementById('review-object').value.trim();
+            const rating = parseInt(document.getElementById('review-rating-value').value, 10) || 5;
+            const text = document.getElementById('review-text').value.trim();
+
+            if (!author || !object || !text) return;
+
+            const dateStr = new Date().toLocaleDateString('ru-RU', {
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric'
+            });
+
+            reviewsData.unshift({
+                author,
+                object,
+                rating,
+                date: dateStr,
+                text
+            });
+
+            writeStoredReviews(reviewsData);
+            renderReviewsList();
+
+            await sendToTelegram(
+                `⭐ <b>НОВЫЙ ОТЗЫВ (${rating}/5)</b>\n\n👤 <b>Автор:</b> ${escapeHtml(author)}\n🏠 <b>Объект:</b> ${escapeHtml(object)}\n💬 <b>Отзыв:</b> ${escapeHtml(text)}`
+            );
+
+            event.target.reset();
+            document.getElementById('review-rating-value').value = 5;
+            document.querySelectorAll('.star-btn').forEach(star => {
+                star.classList.add('text-amber-400');
+                star.classList.remove('text-slate-300');
+            });
+
+            showNotification('Отзыв сохранён!', 'Ваш отзыв добавлен в список и сохранён в браузере.');
+        });
+
+        const qrModal = document.getElementById('qr-modal');
+        let qrCodeCreated = false;
+
+        function openQrModal() {
+            const container = document.getElementById('qrcode-container');
+            if (!qrCodeCreated && typeof QRCode !== 'undefined') {
+                container.innerHTML = '';
+                const targetUrl = window.location.href.split('#')[0] + '#reviews';
+                new QRCode(container, {
+                    text: targetUrl,
+                    width: 184,
+                    height: 184,
+                    colorDark: '#0F172A',
+                    colorLight: '#F8FAFC',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+                qrCodeCreated = true;
+            }
+            qrModal.classList.remove('hidden');
+            qrModal.classList.add('flex');
+        }
+
+        function closeQrModal() {
+            qrModal.classList.add('hidden');
+            qrModal.classList.remove('flex');
+        }
+
+        qrModal.addEventListener('click', e => {
+            if (e.target === qrModal) closeQrModal();
+        });
+
+        /* =========================================================================
+           7. ОКНО НАСТРОЙКИ TELEGRAM-БОТА
+           ========================================================================= */
+        const setupModal = document.getElementById('setup-modal');
+
+        function openSetupModal() {
+            const creds = getTelegramCredentials();
+            document.getElementById('setup-token-input').value = creds.token;
+            document.getElementById('setup-chatid-input').value = creds.chatId;
+            setupModal.classList.remove('hidden');
+            setupModal.classList.add('flex');
+        }
+
+        function closeSetupModal() {
+            setupModal.classList.add('hidden');
+            setupModal.classList.remove('flex');
+        }
+
+        setupModal.addEventListener('click', e => {
+            if (e.target === setupModal) closeSetupModal();
+        });
+
+        async function saveAndTestTelegram() {
+            const token = document.getElementById('setup-token-input').value.trim();
+            const chatId = document.getElementById('setup-chatid-input').value.trim();
+            const statusEl = document.getElementById('setup-status-text');
+
+            if (!token || !chatId) {
+                statusEl.textContent = 'Укажите TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID.';
+                statusEl.className = 'text-xs text-red-400 font-semibold';
+                return;
+            }
+
+            localStorage.setItem('electro56_tg_token', token);
+            localStorage.setItem('electro56_tg_chat_id', chatId);
+            statusEl.textContent = 'Отправка тестового сообщения...';
+            statusEl.className = 'text-xs text-amber-400';
+
+            const result = await sendToTelegram('✅ <b>Тест подключён!</b>\nСайт ЭЛЕКТРОМОНТАЖ 56 успешно связан с Telegram.');
+            if (result.ok && !result.demo) {
+                statusEl.textContent = 'Готово! Тестовое сообщение отправлено в Telegram.';
+                statusEl.className = 'text-xs text-emerald-400 font-bold';
+            } else {
+                statusEl.textContent = `Ошибка отправки: ${result.error || 'проверьте токен и Chat ID'}`;
+                statusEl.className = 'text-xs text-red-400 font-semibold';
+            }
+        }
+
+        /* =========================================================================
+           8. FAQ, МОБИЛЬНОЕ МЕНЮ И УВЕДОМЛЕНИЯ
+           ========================================================================= */
+        document.querySelectorAll('.faq-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const item = trigger.parentElement;
+                const willOpen = !item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(el => el.classList.remove('open'));
+                if (willOpen) item.classList.add('open');
+            });
+        });
+
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('.mobile-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        let notificationTimeout;
+        function showNotification(title, messageHtml) {
+            const box = document.getElementById('notification-box');
+            document.getElementById('notif-title').textContent = title;
+            document.getElementById('notif-text').innerHTML = messageHtml;
+            box.classList.remove('hidden');
+            clearTimeout(notificationTimeout);
+            notificationTimeout = setTimeout(hideNotification, 8000);
+        }
+
+        function hideNotification() {
+            document.getElementById('notification-box').classList.add('hidden');
+        }
+
+        // Инициализация интерфейса после загрузки DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            applySocialLinks();
+            updateTurnkeyCalculator();
+            renderPriceTable();
+            renderReviewsList();
+        });
+    </script>
+</body>
+</html>

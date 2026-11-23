@@ -52,7 +52,6 @@
                 <a href="#turnkey-calc" class="hover:text-amber-400 transition">Под ключ</a>
                 <a href="#price-calculator" class="hover:text-amber-400 transition">Прайс и смета</a>
                 <a href="#cable-calc" class="hover:text-amber-400 transition">Подбор кабеля</a>
-                <a href="#portfolio" class="hover:text-amber-400 transition">Примеры работ</a>
                 <a href="#reviews" class="hover:text-amber-400 transition">Отзывы</a>
                 <a href="#faq" class="hover:text-amber-400 transition">FAQ</a>
                 <a href="#contacts" class="hover:text-amber-400 transition">Контакты</a>
@@ -80,7 +79,6 @@
             <a href="#turnkey-calc" class="mobile-link block py-2 text-slate-200 hover:text-amber-400">Калькулятор «Под ключ»</a>
             <a href="#price-calculator" class="mobile-link block py-2 text-slate-200 hover:text-amber-400">Прайс-лист и смета</a>
             <a href="#cable-calc" class="mobile-link block py-2 text-slate-200 hover:text-amber-400">Расчёт кабеля и автомата</a>
-            <a href="#portfolio" class="mobile-link block py-2 text-slate-200 hover:text-amber-400">Примеры работ</a>
             <a href="#reviews" class="mobile-link block py-2 text-slate-200 hover:text-amber-400">Отзывы клиентов</a>
             <a href="#faq" class="mobile-link block py-2 text-slate-200 hover:text-amber-400">Вопросы и ответы</a>
             <a href="#contacts" class="mobile-link block py-2 text-slate-200 hover:text-amber-400">Контакты</a>
@@ -322,9 +320,12 @@
                 </div>
 
                 <div class="lg:col-span-7 bg-slate-950 border border-slate-800 rounded-2xl p-5 space-y-3">
-                    <div class="flex items-center justify-between gap-2">
+                    <div class="flex flex-wrap items-center justify-between gap-2">
                         <h3 class="font-heading font-bold text-base text-amber-400">5. Журнал заявок и смет (localStorage)</h3>
-                        <button type="button" onclick="clearLeadsHistory()" class="text-xs text-red-400 hover:underline">Очистить журнал</button>
+                        <div class="flex items-center gap-3">
+                            <button type="button" onclick="exportLeadsCsv()" class="text-xs text-emerald-400 hover:underline font-semibold">Скачать .csv</button>
+                            <button type="button" onclick="clearLeadsHistory()" class="text-xs text-red-400 hover:underline">Очистить журнал</button>
+                        </div>
                     </div>
                     <div id="owner-leads-history" class="max-h-48 overflow-y-auto space-y-2 pr-1 text-xs"></div>
                 </div>
@@ -427,9 +428,23 @@
                         </div>
                     </div>
 
-                    <button type="button" id="send-turnkey-btn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition shadow-lg shadow-amber-500/20 text-sm">
-                        Отправить этот расчёт мастерам
-                    </button>
+                    <div class="bg-slate-900/70 border border-slate-800 rounded-2xl p-3.5 text-xs space-y-2">
+                        <div class="font-bold text-slate-200">Этап работ:</div>
+                        <div class="grid grid-cols-3 gap-1.5" id="tk-stage-group">
+                            <button type="button" data-stage="full" data-mult="1.0" onclick="selectTurnkeyStage(this)" class="tk-stage-btn py-2 px-2 rounded-xl bg-amber-500 text-slate-950 font-extrabold text-[11px] transition">Под ключ</button>
+                            <button type="button" data-stage="rough" data-mult="0.68" onclick="selectTurnkeyStage(this)" class="tk-stage-btn py-2 px-2 rounded-xl bg-slate-950 text-slate-300 border border-slate-700 font-semibold text-[11px] transition">Только черновой</button>
+                            <button type="button" data-stage="finish" data-mult="0.38" onclick="selectTurnkeyStage(this)" class="tk-stage-btn py-2 px-2 rounded-xl bg-slate-950 text-slate-300 border border-slate-700 font-semibold text-[11px] transition">Только чистовой</button>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-2.5">
+                        <button type="button" onclick="copyTurnkeyCalculation()" class="px-4 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold border border-slate-700 transition text-xs sm:text-sm">
+                            Копировать
+                        </button>
+                        <button type="button" id="send-turnkey-btn" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition shadow-lg shadow-amber-500/20 text-xs sm:text-sm">
+                            Отправить расчёт мастерам
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -628,218 +643,26 @@
 
                     <div id="cable-saved-lines" class="hidden space-y-1.5 border-t border-slate-800 pt-3 text-xs"></div>
 
-                    <div class="flex flex-col sm:flex-row gap-2.5">
-                        <button type="button" onclick="addCableLineToList()" class="px-4 py-3.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold border border-slate-700 transition text-xs sm:text-sm">
-                            + Добавить линию в список
+                    <div class="flex items-center justify-between gap-2 text-xs text-slate-300">
+                        <label for="cable-install-type" class="text-slate-400">Способ прокладки:</label>
+                        <select id="cable-install-type" onchange="updateCableCalculator()" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-semibold">
+                            <option value="air">В штробе / гофре / воздухе</option>
+                            <option value="ground">В земле / трубе ПНД (запас по сечению)</option>
+                        </select>
+                    </div>
+
+                    <div class="flex flex-wrap gap-2">
+                        <button type="button" onclick="addCableLineToList()" class="px-3.5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-amber-400 font-bold border border-slate-700 transition text-xs">
+                            + В список
                         </button>
-                        <button type="button" onclick="sendCableCalculationToModal()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition text-xs sm:text-sm">
-                            Отправить расчёт мастерам
+                        <button type="button" onclick="copyCableCalculation()" class="px-3.5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold border border-slate-700 transition text-xs">
+                            Копировать
+                        </button>
+                        <button type="button" onclick="sendCableCalculationToModal()" class="flex-1 min-w-[160px] bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3 rounded-xl transition text-xs">
+                            Отправить мастерам
                         </button>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Примеры работ (До / После) -->
-    <section id="portfolio" class="py-16 sm:py-24 bg-slate-100 border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-                <div>
-                    <span class="text-amber-600 font-bold text-xs sm:text-sm uppercase tracking-wider">Реальные объекты • Оренбург и п. Покровка</span>
-                    <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-1.5">Примеры выполненных работ</h2>
-                    <p class="text-slate-600 mt-1.5 text-sm">Переключайте «ДО / ПОСЛЕ» на карточках или выберите направление работ, чтобы посмотреть подходящие объекты.</p>
-                </div>
-                <div class="flex flex-wrap gap-2" id="portfolio-filters">
-                    <button type="button" data-filter="all" class="pf-filter-btn tab-active px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-300 text-xs font-bold transition">
-                        Все объекты (4)
-                    </button>
-                    <button type="button" data-filter="house" class="pf-filter-btn px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-300 text-xs font-bold transition">
-                        Дома и 380 В
-                    </button>
-                    <button type="button" data-filter="flat" class="pf-filter-btn px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-300 text-xs font-bold transition">
-                        Квартиры
-                    </button>
-                    <button type="button" data-filter="shield" class="pf-filter-btn px-4 py-2 rounded-xl bg-white text-slate-700 border border-slate-300 text-xs font-bold transition">
-                        Щиты и витая пара
-                    </button>
-                </div>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-6">
-                <!-- Объект 1 -->
-                <article data-category="house shield" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="relative bg-slate-950 text-white p-6 min-h-[210px] flex flex-col justify-between">
-                            <div class="flex items-center justify-between gap-2 flex-wrap">
-                                <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-amber-400 text-xs font-bold">п. Покровка • Коттедж 128 м²</span>
-                                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-700">
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">ДО</button>
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-3 py-1 rounded-lg text-xs font-bold transition">ПОСЛЕ</button>
-                                </div>
-                            </div>
-                            <div class="ba-view-after space-y-2 mt-4">
-                                <div class="text-emerald-400 text-xs font-extrabold uppercase tracking-wider">Результат: Щит 380 В на 36 модулей + контур заземления</div>
-                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                                    Собрали вводной и распределительный щиты с реле контроля напряжения по каждой фазе, УЗО на мокрые зоны, вывели контур заземления и развели силовые линии + витую пару по комнатам.
-                                </p>
-                            </div>
-                            <div class="ba-view-before hidden space-y-2 mt-4">
-                                <div class="text-red-400 text-xs font-extrabold uppercase tracking-wider">Исходное состояние: Голые стены и временный щиток</div>
-                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                                    На участке был только вводной кабель от опоры без заземления, защиты от обрыва нуля и распределения нагрузки по этажам.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="p-6 space-y-3">
-                            <h3 class="font-heading font-bold text-lg text-slate-900">Электромонтаж дома 128 м² «под ключ» + 380 В</h3>
-                            <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">62 точки</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Кабель ВВГнг-LS</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Заземление</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-700">Витая пара (по договорённости)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
-                        <div class="text-xs text-slate-500">
-                            Срок: <strong class="text-slate-900">4 дня</strong> • <strong class="font-heading font-extrabold text-base text-amber-600">56 000 ₽</strong>
-                        </div>
-                        <button type="button" onclick="openTaskPreset('Нужен расчёт как в примере: Дом 380 В и разводка под ключ')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white text-xs font-bold transition">
-                            Хочу так же
-                        </button>
-                    </div>
-                </article>
-
-                <!-- Объект 2 -->
-                <article data-category="flat shield" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="relative bg-slate-950 text-white p-6 min-h-[210px] flex flex-col justify-between">
-                            <div class="flex items-center justify-between gap-2 flex-wrap">
-                                <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-amber-400 text-xs font-bold">г. Оренбург • 2-комн. квартира 64 м²</span>
-                                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-700">
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">ДО</button>
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-3 py-1 rounded-lg text-xs font-bold transition">ПОСЛЕ</button>
-                                </div>
-                            </div>
-                            <div class="ba-view-after space-y-2 mt-4">
-                                <div class="text-emerald-400 text-xs font-extrabold uppercase tracking-wider">Результат: Отдельные группы на кухню + слаботочный узел</div>
-                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                                    Вывели отдельные линии под варочную панель, духовку, посудомойку и сплит-системы. Проложили витую пару к рабочему месту и ТВ-зонам, аккуратно уложили трассы по потолку.
-                                </p>
-                            </div>
-                            <div class="ba-view-before hidden space-y-2 mt-4">
-                                <div class="text-red-400 text-xs font-extrabold uppercase tracking-wider">Исходное состояние: Черновая отделка от застройщика</div>
-                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                                    Минимальный щиток на 4 автомата у входа и нехватка розеток на кухне и в спальне.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="p-6 space-y-3">
-                            <h3 class="font-heading font-bold text-lg text-slate-900">Разводка в новостройке + интернет-линии</h3>
-                            <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">48 точек</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Щит 24 мод.</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Проходные выключатели</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-sky-50 text-sky-700">Витая пара (по договорённости)</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
-                        <div class="text-xs text-slate-500">
-                            Срок: <strong class="text-slate-900">3 дня</strong> • <strong class="font-heading font-extrabold text-base text-amber-600">42 000 ₽</strong>
-                        </div>
-                        <button type="button" onclick="openTaskPreset('Нужен расчёт как в примере: Разводка 2-комн. квартиры в новостройке')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white text-xs font-bold transition">
-                            Хочу так же
-                        </button>
-                    </div>
-                </article>
-
-                <!-- Объект 3 -->
-                <article data-category="flat" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="relative bg-slate-950 text-white p-6 min-h-[210px] flex flex-col justify-between">
-                            <div class="flex items-center justify-between gap-2 flex-wrap">
-                                <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-amber-400 text-xs font-bold">г. Оренбург • Вторичка 48 м²</span>
-                                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-700">
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">ДО</button>
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-3 py-1 rounded-lg text-xs font-bold transition">ПОСЛЕ</button>
-                                </div>
-                            </div>
-                            <div class="ba-view-after space-y-2 mt-4">
-                                <div class="text-emerald-400 text-xs font-extrabold uppercase tracking-wider">Результат: Полная замена алюминия на медь с пылеудалением</div>
-                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                                    Выполнили штробление со строительным пылесосом, перенесли розетки под новую кухню, установили современный щит с маркировкой всех линий и подключили освещение.
-                                </p>
-                            </div>
-                            <div class="ba-view-before hidden space-y-2 mt-4">
-                                <div class="text-red-400 text-xs font-extrabold uppercase tracking-wider">Исходное состояние: Старая проводка с греющимися скрутками</div>
-                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                                    При одновременном включении стиральной машины и чайника выбивало пробки, не было заземляющего проводника.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="p-6 space-y-3">
-                            <h3 class="font-heading font-bold text-lg text-slate-900">Замена старой проводки во вторичном жилье</h3>
-                            <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">34 точки</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Штробление с пылесосом</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Реле напряжения</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
-                        <div class="text-xs text-slate-500">
-                            Срок: <strong class="text-slate-900">2,5 дня</strong> • <strong class="font-heading font-extrabold text-base text-amber-600">33 500 ₽</strong>
-                        </div>
-                        <button type="button" onclick="openTaskPreset('Нужен расчёт как в примере: Замена проводки во вторичной квартире')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white text-xs font-bold transition">
-                            Хочу так же
-                        </button>
-                    </div>
-                </article>
-
-                <!-- Объект 4 -->
-                <article data-category="house shield" class="pf-card bg-white rounded-3xl border border-slate-200 overflow-hidden shadow-sm flex flex-col justify-between">
-                    <div>
-                        <div class="relative bg-slate-950 text-white p-6 min-h-[210px] flex flex-col justify-between">
-                            <div class="flex items-center justify-between gap-2 flex-wrap">
-                                <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-amber-400 text-xs font-bold">п. Покровка • Участок + Баня / Гараж</span>
-                                <div class="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-700">
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'before')" class="ba-btn px-3 py-1 rounded-lg text-xs font-bold text-slate-400 hover:text-white transition">ДО</button>
-                                    <button type="button" onclick="toggleBeforeAfter(this, 'after')" class="ba-btn bg-amber-500 text-slate-950 px-3 py-1 rounded-lg text-xs font-bold transition">ПОСЛЕ</button>
-                                </div>
-                            </div>
-                            <div class="ba-view-after space-y-2 mt-4">
-                                <div class="text-emerald-400 text-xs font-extrabold uppercase tracking-wider">Результат: Подземный ввод в ПНД + резерв под генератор</div>
-                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                                    Смонтировали трубостойку, завели кабель под землёй в гофре ПНД в дом и баню, поставили перекидной рубильник для генератора и вывели уличное освещение.
-                                </p>
-                            </div>
-                            <div class="ba-view-before hidden space-y-2 mt-4">
-                                <div class="text-red-400 text-xs font-extrabold uppercase tracking-wider">Исходное состояние: Питание через удлинитель от соседа</div>
-                                <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
-                                    Требовался полноценный ввод 15 кВт с опоры, защита насоса скважины и освещение двора.
-                                </p>
-                            </div>
-                        </div>
-                        <div class="p-6 space-y-3">
-                            <h3 class="font-heading font-bold text-lg text-slate-900">Трубостойка 15 кВт, ввод в баню и генератор</h3>
-                            <div class="flex flex-wrap gap-1.5 text-[11px] font-semibold">
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Трубостойка 380 В</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Резервный ввод</span>
-                                <span class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-700">Уличный свет</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-6 py-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between gap-3">
-                        <div class="text-xs text-slate-500">
-                            Срок: <strong class="text-slate-900">1,5 дня</strong> • <strong class="font-heading font-extrabold text-base text-amber-600">24 500 ₽</strong>
-                        </div>
-                        <button type="button" onclick="openTaskPreset('Нужен расчёт как в примере: Трубостойка, ввод в баню и генератор')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-white text-xs font-bold transition">
-                            Хочу так же
-                        </button>
-                    </div>
-                </article>
             </div>
         </div>
     </section>
@@ -982,6 +805,58 @@
                     </ul>
                     <button type="button" onclick="openOrderModal('Запись на осмотр / консультацию')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition text-sm">
                         Согласовать выезд или осмотр
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Шпаргалка для клиентов: нагрузки, автоматы и безопасность -->
+    <section id="client-guide" class="py-16 sm:py-24 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl mb-10">
+                <span class="text-amber-600 font-bold text-xs sm:text-sm uppercase tracking-wider">Полезно знать заказчику</span>
+                <h2 class="font-heading font-extrabold text-3xl sm:text-4xl text-slate-900 mt-1.5">Шпаргалка по бытовым нагрузкам и защите</h2>
+                <p class="text-slate-600 mt-2 text-sm sm:text-base">
+                    Поможет заранее спланировать отдельные линии под мощную технику и не перегружать сеть.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 space-y-3">
+                    <div class="font-heading font-bold text-lg text-slate-900">Отдельные линии — куда вести обязательно</div>
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <li>• <strong>Варочная панель / духовой шкаф</strong> (3,5–7,5 кВт) — отдельный кабель и автомат.</li>
+                        <li>• <strong>Стиральная / посудомоечная машина</strong> — своя группа + УЗО 30 мА.</li>
+                        <li>• <strong>Бойлер / водонагреватель / котёл</strong> — отдельная линия с защитой от утечки.</li>
+                        <li>• <strong>Кондиционеры и тёплый пол</strong> — выделенные линии от щита.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200 rounded-3xl p-6 space-y-3">
+                    <div class="font-heading font-bold text-lg text-slate-900">Базовые стандарты по меди (ВВГнг-LS)</div>
+                    <ul class="space-y-2 text-xs sm:text-sm text-slate-700">
+                        <li>• <strong>3×1,5 мм² + автомат 10 А</strong> — освещение, люстры, бра, подсветка.</li>
+                        <li>• <strong>3×2,5 мм² + автомат 16 А</strong> — стандартные розетки комнат и кухни.</li>
+                        <li>• <strong>3×4 мм² или 3×6 мм²</strong> — мощные кухонные приборы (по расчёту нагрузки).</li>
+                        <li>• <strong>5×4 мм² / 5×6 мм²</strong> — вводные и распределительные линии 380 В.</li>
+                    </ul>
+                </div>
+
+                <div class="bg-slate-950 text-white border border-slate-800 rounded-3xl p-6 space-y-3 flex flex-col justify-between">
+                    <div class="space-y-3">
+                        <div class="font-heading font-bold text-lg text-amber-400">Что делать при неполадке?</div>
+                        <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+                            Если искрит розетка, греется щиток или выбивает автомат:
+                        </p>
+                        <ol class="space-y-1.5 text-xs sm:text-sm text-slate-200 list-decimal pl-4">
+                            <li>Отключите проблемную группу или вводной автомат.</li>
+                            <li>Не пользуйтесь повреждённой розеткой/вилкой.</li>
+                            <li>Позвоните нам или отправьте фото щитка — работаем с 09:00 до 21:00, срочный выезд от 1 500 ₽.</li>
+                        </ol>
+                    </div>
+                    <button type="button" onclick="openOrderModal('Срочный выезд / консультация (от 1 500 ₽)', [], 0, true)" class="w-full mt-4 bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-xl text-xs transition">
+                        Вызвать мастера (09:00–21:00)
                     </button>
                 </div>
             </div>
@@ -1396,6 +1271,20 @@
         };
 
         let selectedTurnkeyExtras = [];
+        let currentStageMult = 1.0;
+        let currentStageLabel = 'Под ключ';
+
+        function selectTurnkeyStage(btn) {
+            currentStageMult = parseFloat(btn.dataset.mult) || 1.0;
+            currentStageLabel = btn.textContent.trim();
+            document.querySelectorAll('.tk-stage-btn').forEach(b => {
+                b.classList.remove('bg-amber-500', 'text-slate-950', 'font-extrabold');
+                b.classList.add('bg-slate-950', 'text-slate-300', 'border', 'border-slate-700', 'font-semibold');
+            });
+            btn.classList.remove('bg-slate-950', 'text-slate-300', 'border', 'border-slate-700', 'font-semibold');
+            btn.classList.add('bg-amber-500', 'text-slate-950', 'font-extrabold');
+            updateTurnkeyCalculator();
+        }
 
         function toggleTurnkeyExtra(btn) {
             const id = btn.dataset.extraId;
@@ -1430,21 +1319,35 @@
                 if (ex.min === 0 && ex.max === 0) hasNegotiableExtra = true;
             });
 
-            const minPrice = Math.round((obj.min * wall.mult + extraMin) / 500) * 500;
-            const maxPrice = Math.round((obj.max * wall.mult + extraMax) / 500) * 500;
+            const minPrice = Math.round(((obj.min * wall.mult) * currentStageMult + extraMin) / 500) * 500;
+            const maxPrice = Math.round(((obj.max * wall.mult) * currentStageMult + extraMax) / 500) * 500;
 
             document.getElementById('tk-price-range').textContent =
                 `${minPrice.toLocaleString('ru-RU')} – ${maxPrice.toLocaleString('ru-RU')} ₽${hasNegotiableExtra ? ' + доп.' : ''}`;
-            document.getElementById('tk-duration').textContent = `Срок: ${obj.days}`;
+            document.getElementById('tk-duration').textContent = `Срок: ${obj.days} • ${currentStageLabel}`;
             const extrasNote = selectedTurnkeyExtras.length
                 ? ` Дополнительно: ${selectedTurnkeyExtras.map(e => e.name).join(', ')}.`
                 : '';
             document.getElementById('tk-summary-desc').textContent =
-                `${obj.label} • Стены: ${wall.label}. Включает разметку, прокладку кабеля ВВГнг-LS, подрозетники и сборку щита.${extrasNote}`;
+                `${obj.label} • Этап: ${currentStageLabel} • Стены: ${wall.label}. Включает разметку, прокладку кабеля ВВГнг-LS и работу по щиту.${extrasNote}`;
             const matEl = document.getElementById('tk-materials-text');
             if (matEl) {
                 matEl.textContent = turnkeyMaterials[currentObjKey] || turnkeyMaterials['1room'];
             }
+        }
+
+        function copyTurnkeyCalculation() {
+            const obj = turnkeyObjects[currentObjKey];
+            const wall = turnkeyWalls[currentWallKey];
+            const rangeText = document.getElementById('tk-price-range').textContent;
+            const extrasText = selectedTurnkeyExtras.length ? `
+Доп. работы: ${selectedTurnkeyExtras.map(e => e.name).join(', ')}` : '';
+            const text = `ЭЛЕКТРОМОНТАЖ 56 — Расчёт (${currentStageLabel})
+Объект: ${obj.label}
+Стены: ${wall.label}${extrasText}
+Ориентир: ${rangeText}`;
+            if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).catch(() => {});
+            showNotification('Расчёт скопирован', 'Предварительный расчёт «Под ключ» скопирован в буфер обмена.');
         }
 
         document.querySelectorAll('.tk-obj-btn').forEach(btn => {
@@ -1868,7 +1771,8 @@
             if (currentAmps > 34 || breaker > 32) section = 10;
             if (currentAmps > 50 || breaker > 50) section = 16;
 
-            if (voltage === 220 && meters >= 25 && currentAmps >= 8) {
+            const installType = document.getElementById('cable-install-type')?.value || 'air';
+            if ((voltage === 220 && meters >= 25 && currentAmps >= 8) || (installType === 'ground' && currentAmps >= 10)) {
                 const sections = [1.5, 2.5, 4, 6, 10, 16];
                 const idx = sections.indexOf(section);
                 if (idx !== -1 && idx < sections.length - 1) {
@@ -1919,6 +1823,23 @@
                 `).join('');
         }
 
+        function copyCableCalculation() {
+            const kw = document.getElementById('cable-power-kw').value;
+            const meters = document.getElementById('cable-length-m').value;
+            const voltage = document.getElementById('cable-voltage').value;
+            const section = document.getElementById('cable-section-val').textContent;
+            const breaker = document.getElementById('cable-breaker-val').textContent;
+            const currentLine = `${currentCablePresetName} (${kw} кВт, ${voltage} В, ${meters} м) → кабель ${section}, автомат ${breaker}`;
+            const text = savedCableLines.length
+                ? `Подбор кабеля и автоматов:
+${savedCableLines.map((l, i) => `${i + 1}. ${l}`).join('
+')}`
+                : `Подбор кабеля и автомата:
+${currentLine}`;
+            if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).catch(() => {});
+            showNotification('Расчёт скопирован', 'Параметры кабеля и автомата скопированы.');
+        }
+
         function sendCableCalculationToModal() {
             const kw = document.getElementById('cable-power-kw').value;
             const meters = document.getElementById('cable-length-m').value;
@@ -1929,6 +1850,37 @@
 
             const lines = savedCableLines.length ? [...savedCableLines] : [currentLine];
             openOrderModal('Подбор кабеля и автомата', lines, 0);
+        }
+
+        function exportLeadsCsv() {
+            let list = [];
+            try {
+                const raw = localStorage.getItem(LEADS_HISTORY_KEY);
+                list = raw ? JSON.parse(raw) : [];
+            } catch (e) {}
+            if (!list.length) {
+                showNotification('Журнал пуст', 'Нет заявок для экспорта.');
+                return;
+            }
+            const escCsv = val => `"${String(val || '').replace(/"/g, '""').replace(/
+?
+/g, ' ')}"`;
+            const header = ['Дата/время', 'Имя', 'Телефон', 'Район', 'Раздел', 'Задача', 'Расчёт'].map(escCsv).join(';');
+            const rows = list.map(item => [
+                item.time, item.name, item.phone, item.district, item.subject, item.task, item.estimateText
+            ].map(escCsv).join(';'));
+            const csvContent = '﻿' + [header, ...rows].join('
+');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'zayavki-electromontazh56.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showNotification('CSV сохранён', 'Журнал заявок выгружен в таблицу.');
         }
 
         function toggleHeroMultiTask(btn) {

@@ -184,6 +184,89 @@
         </div>
     </header>
 
+    <!-- Закрытая панель владельца (видна только после ввода пароля) -->
+    <div id="owner-dashboard" class="hidden bg-slate-900 text-white border-b-2 border-amber-500 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-slate-800">
+                <div>
+                    <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider mb-1">Режим владельца активен</span>
+                    <h2 class="font-heading font-extrabold text-2xl">Управление сайтом ЭЛЕКТРОМОНТАЖ 56</h2>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <button type="button" onclick="downloadUpdatedHtml()" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs sm:text-sm transition">
+                        Скачать обновлённый index.html
+                    </button>
+                    <button type="button" onclick="logoutOwner()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-4 py-2.5 rounded-xl text-xs sm:text-sm border border-slate-700 transition">
+                        Выйти
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+                <!-- Редактор цен прайс-листа -->
+                <div class="lg:col-span-7 bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4">
+                    <div class="flex flex-wrap items-center justify-between gap-3">
+                        <h3 class="font-heading font-bold text-lg text-amber-400">1. Цены прайс-листа</h3>
+                        <select id="owner-price-category" class="px-3 py-2 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500">
+                            <option value="rough">Черновой монтаж и кабель</option>
+                            <option value="panels">Щиты и автоматика</option>
+                            <option value="finish">Чистовая электрика и свет</option>
+                            <option value="house">Частный дом и участок</option>
+                        </select>
+                    </div>
+
+                    <div id="owner-price-list" class="space-y-2.5 max-h-80 overflow-y-auto pr-1"></div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                        <button type="button" onclick="resetPricesToDefault()" class="text-xs text-slate-400 hover:text-white underline">
+                            Сбросить к исходным
+                        </button>
+                        <button type="button" onclick="saveOwnerPrices()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition">
+                            Сохранить цены
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Скрытые настройки Telegram-бота и ссылки -->
+                <div class="lg:col-span-5 bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4">
+                    <h3 class="font-heading font-bold text-lg text-amber-400">2. Настройки Telegram-бота и ссылок</h3>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Эти поля скрыты от посетителей. Укажите токен бота и ваш Chat ID для получения заявок и отзывов.
+                    </p>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">TELEGRAM_BOT_TOKEN</label>
+                            <input type="password" id="owner-tg-token" placeholder="123456789:ABCdef..." class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">TELEGRAM_CHAT_ID</label>
+                            <input type="text" id="owner-tg-chatid" placeholder="Например: 987654321" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div>
+                            <label class="block text-xs text-slate-400 mb-1">Ссылка на Telegram</label>
+                            <input type="text" id="owner-tg-link" placeholder="https://t.me/sevennightss" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500">
+                        </div>
+                    </div>
+                    <div id="owner-tg-status" class="text-xs text-slate-400">Настройки хранятся локально в браузере и могут быть вшиты в скачанный HTML.</div>
+                    <div class="flex flex-wrap gap-2.5 pt-1">
+                        <button type="button" onclick="saveOwnerTelegramSettings(false)" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-4 py-2.5 rounded-xl text-xs border border-slate-700 transition">
+                            Сохранить настройки
+                        </button>
+                        <button type="button" onclick="saveOwnerTelegramSettings(true)" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs transition">
+                            Сохранить и отправить тест
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Управление отзывами -->
+            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-3">
+                <h3 class="font-heading font-bold text-lg text-amber-400">3. Управление отзывами</h3>
+                <div id="owner-reviews-list" class="space-y-2.5"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Главный экран (HERO) -->
     <section class="relative bg-slate-950 text-white overflow-hidden engineering-grid">
         <div class="absolute -top-32 -right-32 w-[460px] h-[460px] bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
@@ -989,8 +1072,8 @@
                     <span>•</span>
                     <a href="tel:+79017100137" class="text-slate-300 hover:text-amber-400 font-medium">+7 (901) 710-01-37</a>
                     <span>•</span>
-                    <button type="button" onclick="openSetupModal()" class="text-amber-400 hover:underline font-semibold">
-                        Настройка Telegram-бота
+                    <button type="button" onclick="openOwnerLoginModal()" class="text-slate-600 hover:text-slate-400 transition" title="Вход для владельца (Ctrl+Shift+E)">
+                        Вход для владельца
                     </button>
                 </div>
             </div>
@@ -1069,38 +1152,22 @@
         </div>
     </div>
 
-    <!-- Модальное окно настройки Telegram-бота -->
-    <div id="setup-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm">
-        <div class="bg-slate-900 text-white rounded-3xl max-w-2xl w-full p-6 sm:p-8 border border-slate-700 shadow-2xl relative max-h-[92vh] overflow-y-auto">
-            <button type="button" onclick="closeSetupModal()" class="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition" aria-label="Закрыть">
+    <!-- Модальное окно входа в режим владельца -->
+    <div id="owner-login-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 bg-slate-950/85 backdrop-blur-sm">
+        <div class="bg-slate-900 text-white rounded-3xl max-w-sm w-full p-6 sm:p-8 border border-slate-700 shadow-2xl relative">
+            <button type="button" onclick="closeOwnerLoginModal()" class="absolute top-4 right-4 p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition" aria-label="Закрыть">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
             </button>
-
-            <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">Настройка Telegram</span>
-            <h3 class="font-heading font-extrabold text-2xl text-white mb-2">Подключение TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID</h3>
-            <p class="text-slate-300 text-sm mb-4 leading-relaxed">
-                Укажите токен бота и ваш Chat ID в объекте <code class="text-amber-400 bg-slate-950 px-1.5 py-0.5 rounded">CONFIG</code> в коде файла <code class="text-amber-400 bg-slate-950 px-1.5 py-0.5 rounded">index.html</code> либо сохраните их в браузере для проверки отправки заявок и отзывов.
-            </p>
-
-            <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2 text-xs sm:text-sm text-slate-300 mb-5">
-                <p>1. Создайте бота через <strong class="text-amber-400">@BotFather</strong> командой <code>/newbot</code> и скопируйте <strong>HTTP API Token</strong>.</p>
-                <p>2. Напишите созданному боту и нажмите <strong>Start</strong>.</p>
-                <p>3. Узнайте свой числовой ID через <strong class="text-amber-400">@userinfobot</strong> и впишите его в <code>TELEGRAM_CHAT_ID</code>.</p>
-            </div>
-
-            <div class="bg-slate-850 border border-slate-700 rounded-2xl p-4 sm:p-5 space-y-3">
-                <div class="font-heading font-bold text-sm text-white">Сохранить и отправить тестовое сообщение:</div>
-                <div class="grid sm:grid-cols-2 gap-3">
-                    <input type="text" id="setup-token-input" placeholder="TELEGRAM_BOT_TOKEN" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500">
-                    <input type="text" id="setup-chatid-input" placeholder="TELEGRAM_CHAT_ID" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white text-xs focus:outline-none focus:border-amber-500">
-                </div>
-                <div class="flex flex-wrap items-center justify-between gap-3">
-                    <span id="setup-status-text" class="text-xs text-slate-400">Используются значения из CONFIG</span>
-                    <button type="button" onclick="saveAndTestTelegram()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold px-4 py-2.5 rounded-xl text-xs transition">
-                        Сохранить и протестировать
-                    </button>
-                </div>
-            </div>
+            <span class="inline-block px-3 py-1 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold uppercase tracking-wider mb-2">Доступ для владельца</span>
+            <h3 class="font-heading font-extrabold text-xl text-white mb-2">Введите пароль</h3>
+            <p class="text-xs text-slate-400 mb-4">Откроет управление ценами, отзывами и скрытыми настройками Telegram-бота.</p>
+            <form id="owner-login-form" class="space-y-3.5">
+                <input type="password" id="owner-password-input" required placeholder="Пароль владельца" class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-700 text-white text-sm focus:outline-none focus:border-amber-500">
+                <p id="owner-login-error" class="text-xs text-red-400 hidden">Неверный пароль.</p>
+                <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3 rounded-xl text-sm transition">
+                    Войти
+                </button>
+            </form>
         </div>
     </div>
 
@@ -1120,43 +1187,50 @@
 
     <script>
         /* =========================================================================
-           1. КОНФИГУРАЦИЯ TELEGRAM И МЕССЕНДЖЕРОВ
+           1. КОНФИГУРАЦИЯ TELEGRAM, МЕССЕНДЖЕРОВ И РЕЖИМА ВЛАДЕЛЬЦА
            ========================================================================= */
         const CONFIG = {
             TELEGRAM_BOT_TOKEN: '',
             TELEGRAM_CHAT_ID: '',
             TELEGRAM_LINK: 'https://t.me/sevennightss',
-            VK_LINK: 'https://vk.ru/id557901626'
+            VK_LINK: 'https://vk.ru/id557901626',
+            OWNER_PASSWORD: ''
         };
 
-        // Применяем ссылки на Telegram и ВКонтакте ко всем элементам с атрибутами data-tg-link / data-vk-link
+        function getOwnerPassword() {
+            return (CONFIG.OWNER_PASSWORD || '5656').trim();
+        }
+
+        function getTelegramLink() {
+            const savedLink = (localStorage.getItem('electro56_tg_link') || '').trim();
+            return (savedLink || CONFIG.TELEGRAM_LINK || 'https://t.me/sevennightss').trim();
+        }
+
         function applySocialLinks() {
+            const tgHref = getTelegramLink();
             document.querySelectorAll('[data-tg-link]').forEach(link => {
-                if (CONFIG.TELEGRAM_LINK) link.href = CONFIG.TELEGRAM_LINK;
+                if (tgHref) link.href = tgHref;
             });
             document.querySelectorAll('[data-vk-link]').forEach(link => {
                 if (CONFIG.VK_LINK) link.href = CONFIG.VK_LINK;
             });
         }
 
-        // Возвращает актуальные токен и ID чата из CONFIG или сохранённых в localStorage
         function getTelegramCredentials() {
             const savedToken = localStorage.getItem('electro56_tg_token') || '';
             const savedChatId = localStorage.getItem('electro56_tg_chat_id') || '';
             return {
-                token: (CONFIG.TELEGRAM_BOT_TOKEN || savedToken).trim(),
-                chatId: (CONFIG.TELEGRAM_CHAT_ID || savedChatId).trim()
+                token: (savedToken || CONFIG.TELEGRAM_BOT_TOKEN || '').trim(),
+                chatId: (savedChatId || CONFIG.TELEGRAM_CHAT_ID || '').trim()
             };
         }
 
-        // Экранирование HTML для безопасной отправки в Telegram с parse_mode: HTML
         function escapeHtml(value) {
             const div = document.createElement('div');
             div.textContent = String(value || '');
             return div.innerHTML;
         }
 
-        // Отправка текста или фотографии в Telegram Bot API
         async function sendToTelegram(htmlMessage, photoFile = null) {
             const { token, chatId } = getTelegramCredentials();
             if (!token || !chatId) {
@@ -1277,7 +1351,7 @@
         /* =========================================================================
            3. ДЕТАЛЬНЫЙ ПРАЙС-ЛИСТ И РАСЧЁТ СМЕТЫ
            ========================================================================= */
-        const priceCatalog = {
+        const DEFAULT_PRICE_CATALOG = {
             rough: [
                 { id: 'r1', name: 'Штробление стен (газоблок / пеноблок)', unit: 'м.п.', price: 200, qty: 0 },
                 { id: 'r2', name: 'Штробление стен (кирпич / блок)', unit: 'м.п.', price: 250, qty: 0 },
@@ -1312,6 +1386,44 @@
             ]
         };
 
+        const PRICES_STORAGE_KEY = 'electro56_custom_prices_v1';
+
+        function loadPriceCatalog() {
+            const clone = JSON.parse(JSON.stringify(DEFAULT_PRICE_CATALOG));
+            try {
+                const raw = localStorage.getItem(PRICES_STORAGE_KEY);
+                const saved = raw ? JSON.parse(raw) : null;
+                if (saved && typeof saved === 'object') {
+                    Object.keys(clone).forEach(cat => {
+                        if (Array.isArray(saved[cat])) {
+                            clone[cat].forEach(item => {
+                                const found = saved[cat].find(s => s.id === item.id);
+                                if (found && Number.isFinite(Number(found.price))) {
+                                    item.price = Math.max(0, Number(found.price));
+                                }
+                            });
+                        }
+                    });
+                }
+            } catch (e) {
+                // Игнорируем ошибку чтения хранилища
+            }
+            return clone;
+        }
+
+        function savePricesToStorage() {
+            const pricesOnly = {};
+            Object.keys(priceCatalog).forEach(cat => {
+                pricesOnly[cat] = priceCatalog[cat].map(item => ({ id: item.id, price: item.price }));
+            });
+            try {
+                localStorage.setItem(PRICES_STORAGE_KEY, JSON.stringify(pricesOnly));
+            } catch (e) {
+                // Игнорируем ошибку записи
+            }
+        }
+
+        let priceCatalog = loadPriceCatalog();
         let currentPriceCategory = 'rough';
 
         function findPriceItem(itemId) {
@@ -1506,7 +1618,6 @@
             if (e.target === orderModal) closeOrderModal();
         });
 
-        // Показываем имя выбранного изображения в полях загрузки фото
         document.querySelectorAll('.photo-input').forEach(input => {
             input.addEventListener('change', () => {
                 const label = input.parentElement.querySelector('.file-label');
@@ -1521,7 +1632,6 @@
             });
         });
 
-        // Подключаем обработчики отправки ко всем формам заявок
         ['hero-form', 'footer-contact-form', 'modal-order-form'].forEach(formId => {
             const form = document.getElementById(formId);
             if (!form) return;
@@ -1621,6 +1731,7 @@
                 grid.classList.add('hidden');
                 badge.classList.add('hidden');
                 badge.classList.remove('flex');
+                renderOwnerReviewsManager();
                 return;
             }
 
@@ -1655,6 +1766,8 @@
                 `;
                 grid.appendChild(card);
             });
+
+            renderOwnerReviewsManager();
         }
 
         document.querySelectorAll('.star-btn').forEach(btn => {
@@ -1741,51 +1854,228 @@
         });
 
         /* =========================================================================
-           7. ОКНО НАСТРОЙКИ TELEGRAM-БОТА
+           7. СКРЫТЫЙ РЕЖИМ ВЛАДЕЛЬЦА (ПАРОЛЬ, ЦЕНЫ, ОТЗЫВЫ, TELEGRAM, ЭКСПОРТ)
            ========================================================================= */
-        const setupModal = document.getElementById('setup-modal');
+        const ownerLoginModal = document.getElementById('owner-login-modal');
+        const ownerDashboard = document.getElementById('owner-dashboard');
 
-        function openSetupModal() {
-            const creds = getTelegramCredentials();
-            document.getElementById('setup-token-input').value = creds.token;
-            document.getElementById('setup-chatid-input').value = creds.chatId;
-            setupModal.classList.remove('hidden');
-            setupModal.classList.add('flex');
+        function openOwnerLoginModal() {
+            document.getElementById('owner-password-input').value = '';
+            document.getElementById('owner-login-error').classList.add('hidden');
+            ownerLoginModal.classList.remove('hidden');
+            ownerLoginModal.classList.add('flex');
+            setTimeout(() => document.getElementById('owner-password-input').focus(), 50);
         }
 
-        function closeSetupModal() {
-            setupModal.classList.add('hidden');
-            setupModal.classList.remove('flex');
+        function closeOwnerLoginModal() {
+            ownerLoginModal.classList.add('hidden');
+            ownerLoginModal.classList.remove('flex');
         }
 
-        setupModal.addEventListener('click', e => {
-            if (e.target === setupModal) closeSetupModal();
+        ownerLoginModal.addEventListener('click', e => {
+            if (e.target === ownerLoginModal) closeOwnerLoginModal();
         });
 
-        async function saveAndTestTelegram() {
-            const token = document.getElementById('setup-token-input').value.trim();
-            const chatId = document.getElementById('setup-chatid-input').value.trim();
-            const statusEl = document.getElementById('setup-status-text');
+        document.addEventListener('keydown', e => {
+            if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'e') {
+                e.preventDefault();
+                openOwnerLoginModal();
+            }
+        });
+
+        document.getElementById('owner-login-form').addEventListener('submit', e => {
+            e.preventDefault();
+            const entered = document.getElementById('owner-password-input').value.trim();
+            if (entered !== getOwnerPassword()) {
+                document.getElementById('owner-login-error').classList.remove('hidden');
+                return;
+            }
+            closeOwnerLoginModal();
+            ownerDashboard.classList.remove('hidden');
+            populateOwnerDashboard();
+            ownerDashboard.scrollIntoView({ behavior: 'smooth' });
+            showNotification('Режим владельца открыт', 'Доступно управление ценами, отзывами и настройками Telegram.');
+        });
+
+        function logoutOwner() {
+            ownerDashboard.classList.add('hidden');
+            showNotification('Выход выполнен', 'Панель владельца скрыта.');
+        }
+
+        function populateOwnerDashboard() {
+            const creds = getTelegramCredentials();
+            document.getElementById('owner-tg-token').value = creds.token;
+            document.getElementById('owner-tg-chatid').value = creds.chatId;
+            document.getElementById('owner-tg-link').value = getTelegramLink();
+            renderOwnerPriceEditor();
+            renderOwnerReviewsManager();
+        }
+
+        function renderOwnerPriceEditor() {
+            const catSelect = document.getElementById('owner-price-category');
+            const container = document.getElementById('owner-price-list');
+            const items = priceCatalog[catSelect.value] || [];
+            container.innerHTML = '';
+
+            items.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-3 bg-slate-900 p-2.5 rounded-xl border border-slate-800 text-xs';
+                row.innerHTML = `
+                    <span class="text-slate-200 flex-1 truncate">${escapeHtml(item.name)} (${escapeHtml(item.unit)})</span>
+                    <input type="number" min="0" data-owner-price-id="${item.id}" value="${item.price}" class="w-24 px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-amber-400 font-bold text-right focus:outline-none focus:border-amber-500">
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        document.getElementById('owner-price-category').addEventListener('change', renderOwnerPriceEditor);
+
+        function saveOwnerPrices() {
+            document.querySelectorAll('[data-owner-price-id]').forEach(input => {
+                const item = findPriceItem(input.dataset.ownerPriceId);
+                if (item) {
+                    item.price = Math.max(0, parseInt(input.value, 10) || 0);
+                }
+            });
+            savePricesToStorage();
+            renderPriceTable();
+            showNotification('Цены сохранены', 'Прайс-лист и расчёт сметы обновлены.');
+        }
+
+        function resetPricesToDefault() {
+            localStorage.removeItem(PRICES_STORAGE_KEY);
+            priceCatalog = loadPriceCatalog();
+            renderOwnerPriceEditor();
+            renderPriceTable();
+            showNotification('Цены сброшены', 'Восстановлены исходные значения прайс-листа.');
+        }
+
+        async function saveOwnerTelegramSettings(sendTest = false) {
+            const token = document.getElementById('owner-tg-token').value.trim();
+            const chatId = document.getElementById('owner-tg-chatid').value.trim();
+            const tgLink = document.getElementById('owner-tg-link').value.trim();
+            const statusEl = document.getElementById('owner-tg-status');
+
+            localStorage.setItem('electro56_tg_token', token);
+            localStorage.setItem('electro56_tg_chat_id', chatId);
+            if (tgLink) {
+                localStorage.setItem('electro56_tg_link', tgLink);
+                applySocialLinks();
+            }
+
+            if (!sendTest) {
+                statusEl.textContent = 'Настройки сохранены в браузере.';
+                statusEl.className = 'text-xs text-emerald-400 font-semibold';
+                showNotification('Настройки сохранены', 'Параметры Telegram обновлены.');
+                return;
+            }
 
             if (!token || !chatId) {
-                statusEl.textContent = 'Укажите TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID.';
+                statusEl.textContent = 'Укажите TELEGRAM_BOT_TOKEN и TELEGRAM_CHAT_ID для теста.';
                 statusEl.className = 'text-xs text-red-400 font-semibold';
                 return;
             }
 
-            localStorage.setItem('electro56_tg_token', token);
-            localStorage.setItem('electro56_tg_chat_id', chatId);
             statusEl.textContent = 'Отправка тестового сообщения...';
             statusEl.className = 'text-xs text-amber-400';
 
-            const result = await sendToTelegram('✅ <b>Тест подключён!</b>\nСайт ЭЛЕКТРОМОНТАЖ 56 успешно связан с Telegram.');
-            if (result.ok && !result.demo) {
+            const res = await sendToTelegram('✅ <b>Тест подключён!</b>\nСайт ЭЛЕКТРОМОНТАЖ 56 успешно связан с Telegram.');
+            if (res.ok && !res.demo) {
                 statusEl.textContent = 'Готово! Тестовое сообщение отправлено в Telegram.';
                 statusEl.className = 'text-xs text-emerald-400 font-bold';
             } else {
-                statusEl.textContent = `Ошибка отправки: ${result.error || 'проверьте токен и Chat ID'}`;
+                statusEl.textContent = `Ошибка: ${res.error || 'проверьте токен и Chat ID'}`;
                 statusEl.className = 'text-xs text-red-400 font-semibold';
             }
+        }
+
+        function renderOwnerReviewsManager() {
+            const container = document.getElementById('owner-reviews-list');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (!reviewsData.length) {
+                container.innerHTML = '<p class="text-xs text-slate-400">Сохранённых отзывов нет.</p>';
+                return;
+            }
+
+            reviewsData.forEach((item, idx) => {
+                const row = document.createElement('div');
+                row.className = 'flex items-center justify-between gap-3 bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs';
+                row.innerHTML = `
+                    <div class="truncate">
+                        <strong class="text-white">${escapeHtml(item.author)}</strong>
+                        <span class="text-amber-400 ml-1.5">(${escapeHtml(item.rating)}/5)</span>
+                        <span class="text-slate-400 ml-2">${escapeHtml(item.text)}</span>
+                    </div>
+                    <button type="button" onclick="deleteOwnerReview(${idx})" class="px-3 py-1.5 rounded-lg bg-red-600/20 hover:bg-red-600 text-red-300 hover:text-white font-semibold shrink-0 transition">
+                        Удалить
+                    </button>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function deleteOwnerReview(index) {
+            reviewsData.splice(index, 1);
+            writeStoredReviews(reviewsData);
+            renderReviewsList();
+            showNotification('Отзыв удалён', 'Список отзывов обновлён.');
+        }
+
+        function downloadUpdatedHtml() {
+            const creds = getTelegramCredentials();
+            const tgLink = getTelegramLink();
+            const currentPricesMap = {};
+            Object.keys(priceCatalog).forEach(cat => {
+                currentPricesMap[cat] = {};
+                priceCatalog[cat].forEach(item => {
+                    currentPricesMap[cat][item.id] = item.price;
+                });
+            });
+
+            let htmlSource = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+
+            // Скрываем панель владельца в экспортируемом файле
+            htmlSource = htmlSource.replace(
+                'id="owner-dashboard" class="bg-slate-900',
+                'id="owner-dashboard" class="hidden bg-slate-900'
+            );
+
+            // Подставляем актуальные настройки Telegram в CONFIG
+            htmlSource = htmlSource.replace(
+                /TELEGRAM_BOT_TOKEN:\s*'[^']*'/,
+                `TELEGRAM_BOT_TOKEN: '${creds.token.replace(/'/g, "\\'")}'`
+            );
+            htmlSource = htmlSource.replace(
+                /TELEGRAM_CHAT_ID:\s*'[^']*'/,
+                `TELEGRAM_CHAT_ID: '${creds.chatId.replace(/'/g, "\\'")}'`
+            );
+            htmlSource = htmlSource.replace(
+                /TELEGRAM_LINK:\s*'[^']*'/,
+                `TELEGRAM_LINK: '${tgLink.replace(/'/g, "\\'")}'`
+            );
+
+            // Подставляем изменённые цены в DEFAULT_PRICE_CATALOG
+            Object.keys(currentPricesMap).forEach(cat => {
+                Object.keys(currentPricesMap[cat]).forEach(id => {
+                    const newPrice = currentPricesMap[cat][id];
+                    const re = new RegExp(`(\\{\\s*id:\\s*'${id}'[^}]*price:\\s*)\\d+`);
+                    htmlSource = htmlSource.replace(re, `$1${newPrice}`);
+                });
+            });
+
+            const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'index.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            showNotification('Файл index.html скачан', 'Замените им файл в репозитории GitHub для публикации изменений.');
         }
 
         /* =========================================================================
@@ -1827,7 +2117,6 @@
             document.getElementById('notification-box').classList.add('hidden');
         }
 
-        // Инициализация интерфейса после загрузки DOM
         document.addEventListener('DOMContentLoaded', () => {
             applySocialLinks();
             updateTurnkeyCalculator();

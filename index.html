@@ -1,4 +1,4 @@
-html_template = """<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -1635,7 +1635,7 @@ html_template = """<!DOCTYPE html>
                 }
                 modalEstimateBox.innerHTML = html;
                 document.getElementById('modal-estimate-text').value =
-                    estimateLines.join('\\n') + (totalSum > 0 ? `\\nИтого: ${formatRub(totalSum)}` : '');
+                    estimateLines.join('\n') + (totalSum > 0 ? `\nИтого: ${formatRub(totalSum)}` : '');
             } else {
                 modalEstimateBox.classList.add('hidden');
                 modalEstimateBox.innerHTML = '';
@@ -1689,18 +1689,18 @@ html_template = """<!DOCTYPE html>
                 const estimateText = formId === 'modal-order-form' ? document.getElementById('modal-estimate-text').value : '';
                 const photoFile = formData.get('photo');
 
-                let tgMessage = '⚡ <b>ЭЛЕКТРОМОНТАЖ 56 — ЗАЯВКА</b>\\n\\n';
+                let tgMessage = '⚡ <b>ЭЛЕКТРОМОНТАЖ 56 — ЗАЯВКА</b>\n\n';
                 if (formId === 'modal-order-form') {
-                    tgMessage += `📌 <b>Раздел:</b> ${escapeHtml(subject)}\\n`;
+                    tgMessage += `📌 <b>Раздел:</b> ${escapeHtml(subject)}\n`;
                 }
-                tgMessage += `👤 <b>Имя:</b> ${escapeHtml(name)}\\n`;
-                tgMessage += `📞 <b>Телефон:</b> ${escapeHtml(phone)}\\n`;
-                tgMessage += `📍 <b>Район:</b> ${escapeHtml(district)}\\n`;
+                tgMessage += `👤 <b>Имя:</b> ${escapeHtml(name)}\n`;
+                tgMessage += `📞 <b>Телефон:</b> ${escapeHtml(phone)}\n`;
+                tgMessage += `📍 <b>Район:</b> ${escapeHtml(district)}\n`;
                 if (task) {
-                    tgMessage += `📝 <b>Задача:</b> ${escapeHtml(task)}\\n`;
+                    tgMessage += `📝 <b>Задача:</b> ${escapeHtml(task)}\n`;
                 }
                 if (estimateText) {
-                    tgMessage += `\\n📋 <b>Расчёт:</b>\\n${escapeHtml(estimateText)}\\n`;
+                    tgMessage += `\n📋 <b>Расчёт:</b>\n${escapeHtml(estimateText)}\n`;
                 }
 
                 await sendToTelegram(tgMessage, photoFile);
@@ -1777,7 +1777,7 @@ html_template = """<!DOCTYPE html>
 
             grid.innerHTML = '';
             reviewsData.forEach(item => {
-                const initials = (item.author || 'К').trim().split(/\\s+/).map(part => part[0]).join('').toUpperCase().slice(0, 2) || 'К';
+                const initials = (item.author || 'К').trim().split(/\s+/).map(part => part[0]).join('').toUpperCase().slice(0, 2) || 'К';
                 const card = document.createElement('div');
                 card.className = 'bg-slate-50 rounded-2xl p-6 border border-slate-200 flex flex-col justify-between';
                 card.innerHTML = `
@@ -1841,7 +1841,7 @@ html_template = """<!DOCTYPE html>
             renderReviewsList();
 
             await sendToTelegram(
-                `⭐ <b>НОВЫЙ ОТЗЫВ (${rating}/5)</b>\\n\\n👤 <b>Автор:</b> ${escapeHtml(author)}\\n🏠 <b>Объект:</b> ${escapeHtml(object)}\\n💬 <b>Отзыв:</b> ${escapeHtml(text)}`
+                `⭐ <b>НОВЫЙ ОТЗЫВ (${rating}/5)</b>\n\n👤 <b>Автор:</b> ${escapeHtml(author)}\n🏠 <b>Объект:</b> ${escapeHtml(object)}\n💬 <b>Отзыв:</b> ${escapeHtml(text)}`
             );
 
             event.target.reset();
@@ -2008,7 +2008,7 @@ html_template = """<!DOCTYPE html>
             statusEl.textContent = 'Отправка тестового сообщения...';
             statusEl.className = 'text-xs text-amber-400';
 
-            const res = await sendToTelegram('✅ <b>Тест подключён!</b>\\nСайт ЭЛЕКТРОМОНТАЖ 56 успешно связан с Telegram.');
+            const res = await sendToTelegram('✅ <b>Тест подключён!</b>\nСайт ЭЛЕКТРОМОНТАЖ 56 успешно связан с Telegram.');
             if (res.ok && !res.demo) {
                 statusEl.textContent = 'Готово! Тестовое сообщение отправлено в Telegram.';
                 statusEl.className = 'text-xs text-emerald-400 font-bold';
@@ -2063,7 +2063,7 @@ html_template = """<!DOCTYPE html>
                 });
             });
 
-            let htmlSource = '<!DOCTYPE html>\\n' + document.documentElement.outerHTML;
+            let htmlSource = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
 
             htmlSource = htmlSource.replace(
                 'id="owner-dashboard" class="bg-slate-900',
@@ -2071,22 +2071,22 @@ html_template = """<!DOCTYPE html>
             );
 
             htmlSource = htmlSource.replace(
-                /TELEGRAM_BOT_TOKEN:\\s*'[^']*'/,
-                `TELEGRAM_BOT_TOKEN: '${creds.token.replace(/'/g, "\\\\'")}'`
+                /TELEGRAM_BOT_TOKEN:\s*'[^']*'/,
+                `TELEGRAM_BOT_TOKEN: '${creds.token.replace(/'/g, "\\'")}'`
             );
             htmlSource = htmlSource.replace(
-                /TELEGRAM_CHAT_ID:\\s*'[^']*'/,
-                `TELEGRAM_CHAT_ID: '${creds.chatId.replace(/'/g, "\\\\'")}'`
+                /TELEGRAM_CHAT_ID:\s*'[^']*'/,
+                `TELEGRAM_CHAT_ID: '${creds.chatId.replace(/'/g, "\\'")}'`
             );
             htmlSource = htmlSource.replace(
-                /TELEGRAM_LINK:\\s*'[^']*'/,
-                `TELEGRAM_LINK: '${tgLink.replace(/'/g, "\\\\'")}'`
+                /TELEGRAM_LINK:\s*'[^']*'/,
+                `TELEGRAM_LINK: '${tgLink.replace(/'/g, "\\'")}'`
             );
 
             Object.keys(currentPricesMap).forEach(cat => {
                 Object.keys(currentPricesMap[cat]).forEach(id => {
                     const newPrice = currentPricesMap[cat][id];
-                    const re = new RegExp(`(\\{\\s*id:\\s*'${id}'[^}]*price:\\s*)\\d+`);
+                    const re = new RegExp(`(\{\s*id:\s*'${id}'[^}]*price:\s*)\d+`);
                     htmlSource = htmlSource.replace(re, `$1${newPrice}`);
                 });
             });
@@ -2150,9 +2150,3 @@ html_template = """<!DOCTYPE html>
     </script>
 </body>
 </html>
-"""
-
-with open("index.html", "w", encoding="utf-8") as f:
-    f.write(html_template)
-
-print("Saved index.html successfully, size:", len(html_template))

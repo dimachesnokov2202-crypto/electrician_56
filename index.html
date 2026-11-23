@@ -95,8 +95,14 @@
     <section id="top" class="bg-slate-950 text-white py-14 sm:py-20 border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-10 items-center">
             <div class="lg:col-span-7 space-y-6">
-                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold">
-                    <span>⚡ Без посредников • Гарантия 5 лет • Оренбург и п. Покровка</span>
+                <div class="flex flex-wrap items-center gap-2.5">
+                    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-bold">
+                        <span>⚡ Без посредников • Гарантия 5 лет • Оренбург и п. Покровка</span>
+                    </div>
+                    <div id="master-availability-pill" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                        <span id="master-availability-text">Свободны на этой неделе • Выезд 24/7</span>
+                    </div>
                 </div>
                 <h1 class="font-heading font-black text-3xl sm:text-5xl leading-tight">
                     Электромонтаж в квартирах и частных домах <span class="text-amber-400">под ключ</span>
@@ -293,6 +299,27 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Статус занятости и журнал отправленных заявок -->
+            <div class="grid lg:grid-cols-12 gap-6 pt-2">
+                <div class="lg:col-span-5 bg-slate-950 border border-slate-800 rounded-2xl p-5 space-y-3">
+                    <h3 class="font-heading font-bold text-base text-amber-400">4. Статус занятости бригады на сайте</h3>
+                    <p class="text-xs text-slate-400">Отображается на главном экране, чтобы клиенты сразу видели актуальную запись.</p>
+                    <select id="owner-availability-select" onchange="saveMasterAvailability()" class="w-full px-3.5 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white text-xs font-semibold">
+                        <option value="Свободны на этой неделе • Выезд 24/7">Свободны на этой неделе • Выезд 24/7</option>
+                        <option value="Берём объекты со следующей недели • Авария 24/7">Берём объекты со следующей недели • Авария 24/7</option>
+                        <option value="Плотный график • Уточняйте окна по телефону">Плотный график • Уточняйте окна по телефону</option>
+                    </select>
+                </div>
+
+                <div class="lg:col-span-7 bg-slate-950 border border-slate-800 rounded-2xl p-5 space-y-3">
+                    <div class="flex items-center justify-between gap-2">
+                        <h3 class="font-heading font-bold text-base text-amber-400">5. Журнал заявок и смет (localStorage)</h3>
+                        <button type="button" onclick="clearLeadsHistory()" class="text-xs text-red-400 hover:underline">Очистить журнал</button>
+                    </div>
+                    <div id="owner-leads-history" class="max-h-48 overflow-y-auto space-y-2 pr-1 text-xs"></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -361,6 +388,13 @@
                     <p id="tk-summary-desc" class="text-xs sm:text-sm text-slate-300 leading-relaxed border-t border-slate-800 pt-4">
                         1-комн. квартира (~35–42 м²) • Стены: газоблок / пеноблок. Включает разметку, прокладку кабеля ВВГнг-LS, подрозетники и сборку щита.
                     </p>
+
+                    <div id="tk-materials-box" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-4 space-y-1.5 text-xs">
+                        <div class="font-bold text-amber-400 uppercase tracking-wider text-[11px]">Ориентир по черновим материалам:</div>
+                        <div id="tk-materials-text" class="text-slate-300 leading-relaxed">
+                            Кабель ВВГнг-LS ~160–220 м • Гофра ~150 м • Подрозетники ~28 шт. • Распредкоробки ~6 шт.
+                        </div>
+                    </div>
 
                     <button type="button" id="send-turnkey-btn" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition shadow-lg shadow-amber-500/20 text-sm">
                         Отправить этот расчёт мастерам
@@ -471,6 +505,12 @@
                     </div>
 
                     <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <button type="button" onclick="copyEstimateText()" class="px-3.5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition">
+                            Копировать
+                        </button>
+                        <button type="button" onclick="downloadEstimateTxt()" class="px-3.5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold border border-slate-700 transition">
+                            Скачать .txt
+                        </button>
                         <button type="button" id="reset-calc-btn" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs sm:text-sm font-semibold transition">
                             Сбросить
                         </button>
@@ -752,6 +792,68 @@
                         Опубликовать отзыв
                     </button>
                 </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Зоны выезда и чек-лист подготовки объекта -->
+    <section id="preparation" class="py-16 sm:py-24 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-6 space-y-5">
+                    <div>
+                        <span class="text-amber-600 font-bold text-xs sm:text-sm uppercase tracking-wider">География работы</span>
+                        <h2 class="font-heading font-extrabold text-3xl text-slate-900 mt-1.5">Зоны выезда в Оренбурге и области</h2>
+                        <p class="text-slate-600 mt-2 text-sm sm:text-base">
+                            Работаем без посредников: согласуем время заранее или выезжаем оперативно при аварийных ситуациях.
+                        </p>
+                    </div>
+                    <div class="space-y-3 text-sm">
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                            <div class="font-heading font-bold text-slate-900">г. Оренбург (все районы)</div>
+                            <p class="text-xs text-slate-600 mt-1">Квартиры в новостройках и вторичном фонде, офисы, коммерческие помещения, диагностика и аварийный выезд.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                            <div class="font-heading font-bold text-slate-900">п. Покровка и ближайший пригород</div>
+                            <p class="text-xs text-slate-600 mt-1">Частные дома и коттеджи «под ключ», ввод 15 кВт / 380 В, трубостойки, контуры заземления, резервное питание и АВР.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                            <div class="font-heading font-bold text-slate-900">СНТ, гаражи, бани и хозпостройки</div>
+                            <p class="text-xs text-slate-600 mt-1">Прокладка линий, сборка защитных щитков, уличное освещение, подключение насосов и автоматики ворот.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 bg-slate-950 text-white rounded-3xl p-6 sm:p-8 border border-slate-800 space-y-5">
+                    <div>
+                        <span class="text-amber-400 font-bold text-xs uppercase tracking-wider">Перед приездом мастеров</span>
+                        <h3 class="font-heading font-extrabold text-2xl text-white mt-1">Чек-лист подготовки объекта</h3>
+                        <p class="text-xs sm:text-sm text-slate-400 mt-1.5">
+                            Проверьте эти пункты — так мы быстрее соберём точную смету и выполним монтаж без простоев:
+                        </p>
+                    </div>
+                    <ul class="space-y-3 text-xs sm:text-sm text-slate-200">
+                        <li class="flex items-start gap-2.5">
+                            <span class="text-amber-400 font-bold">✓</span>
+                            <span><strong>План или фото объекта:</strong> пригодится планировка, фото текущего щитка или краткий список точек по комнатам.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="text-amber-400 font-bold">✓</span>
+                            <span><strong>Крупная техника и мощные нагрузки:</strong> заранее определите, где будут варочная панель, духовка, бойлер, котёл, кондиционеры или стиральная машина.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="text-amber-400 font-bold">✓</span>
+                            <span><strong>Доступ к щиту и стенам:</strong> свободный проход к распределительному щиту, вводному автомату и зонам прокладки кабеля.</span>
+                        </li>
+                        <li class="flex items-start gap-2.5">
+                            <span class="text-amber-400 font-bold">✓</span>
+                            <span><strong>Питание для инструмента (на стройке/участке):</strong> наличие временного подключения 220 В или генератора при работах на новом участке.</span>
+                        </li>
+                    </ul>
+                    <button type="button" onclick="openOrderModal('Запись на осмотр / консультацию')" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3.5 rounded-xl transition text-sm">
+                        Согласовать выезд или осмотр
+                    </button>
+                </div>
             </div>
         </div>
     </section>
@@ -1155,6 +1257,14 @@
             return Math.round(Number(amount) || 0).toLocaleString('ru-RU') + ' ₽';
         }
 
+        const turnkeyMaterials = {
+            '1room': 'Кабель ВВГнг-LS ~160–220 м • Гофра ~150 м • Подрозетники ~28 шт. • Распредкоробки ~6 шт.',
+            '2room': 'Кабель ВВГнг-LS ~240–320 м • Гофра ~220 м • Подрозетники ~40 шт. • Распредкоробки ~8 шт.',
+            '3room': 'Кабель ВВГнг-LS ~340–450 м • Гофра ~300 м • Подрозетники ~55 шт. • Распредкоробки ~11 шт.',
+            'house': 'Кабель ВВГнг-LS ~450–650 м + ввод/земля • Гофра/ПНД ~400 м • Подрозетники ~65 шт. • Щит 36+ мод.',
+            'garage': 'Кабель ВВГнг-LS ~90–140 м • Гофра ~90 м • Подрозетники/боксы ~14 шт. • Щит 12–18 мод.'
+        };
+
         function updateTurnkeyCalculator() {
             const obj = turnkeyObjects[currentObjKey] || turnkeyObjects['1room'];
             const wall = turnkeyWalls[currentWallKey] || turnkeyWalls['gasblock'];
@@ -1166,6 +1276,10 @@
             document.getElementById('tk-duration').textContent = `Срок: ${obj.days}`;
             document.getElementById('tk-summary-desc').textContent =
                 `${obj.label} • Стены: ${wall.label}. Включает разметку, прокладку кабеля ВВГнг-LS, подрозетники и сборку щита.`;
+            const matEl = document.getElementById('tk-materials-text');
+            if (matEl) {
+                matEl.textContent = turnkeyMaterials[currentObjKey] || turnkeyMaterials['1room'];
+            }
         }
 
         document.querySelectorAll('.tk-obj-btn').forEach(btn => {
@@ -1725,7 +1839,8 @@
                 const estimateText = formId === 'modal-order-form' ? document.getElementById('modal-estimate-text').value : '';
                 const photoFile = formData.get('photo');
 
-                let tgMessage = '⚡ <b>ЭЛЕКТРОМОНТАЖ 56 — ЗАЯВКА</b>\n\n';
+                const tags = buildTelegramTags(subject, district, task, estimateText);
+                let tgMessage = `⚡ <b>ЭЛЕКТРОМОНТАЖ 56 — ЗАЯВКА</b> ${tags ? `<code>${escapeHtml(tags)}</code>` : ''}\n\n`;
                 if (formId === 'modal-order-form') {
                     tgMessage += `📌 <b>Раздел:</b> ${escapeHtml(subject)}\n`;
                 }
@@ -1738,6 +1853,16 @@
                 if (estimateText) {
                     tgMessage += `\n📋 <b>Расчёт:</b>\n${escapeHtml(estimateText)}\n`;
                 }
+
+                saveLeadToHistory({
+                    time: new Date().toLocaleString('ru-RU'),
+                    name,
+                    phone,
+                    district,
+                    subject,
+                    task,
+                    estimateText
+                });
 
                 await sendToTelegram(tgMessage, photoFile);
 
@@ -2392,12 +2517,141 @@
             document.getElementById('notification-box').classList.add('hidden');
         }
 
+        const LEADS_HISTORY_KEY = 'electro56_leads_history_v1';
+        const AVAILABILITY_KEY = 'electro56_availability_v1';
+
+        function buildTelegramTags(subject, district, task, estimateText) {
+            const combined = `${subject} ${district} ${task} ${estimateText}`.toLowerCase();
+            const tags = [];
+            if (combined.includes('авар') || combined.includes('24/7') || combined.includes('неисправ')) tags.push('#авария');
+            if (combined.includes('смет') || combined.includes('прайс') || estimateText) tags.push('#смета');
+            if (combined.includes('под ключ')) tags.push('#под_ключ');
+            if (combined.includes('380') || combined.includes('заземл') || combined.includes('15 квт')) tags.push('#380В');
+            if (district.toLowerCase().includes('покровка')) tags.push('#покровка');
+            else if (district.toLowerCase().includes('оренбург')) tags.push('#оренбург');
+            else if (district.toLowerCase().includes('пригород')) tags.push('#пригород');
+            return tags.join(' ');
+        }
+
+        function saveLeadToHistory(lead) {
+            try {
+                const raw = localStorage.getItem(LEADS_HISTORY_KEY);
+                const list = raw ? JSON.parse(raw) : [];
+                list.unshift(lead);
+                localStorage.setItem(LEADS_HISTORY_KEY, JSON.stringify(list.slice(0, 50)));
+                renderLeadsHistory();
+            } catch (e) {}
+        }
+
+        function renderLeadsHistory() {
+            const box = document.getElementById('owner-leads-history');
+            if (!box) return;
+            let list = [];
+            try {
+                const raw = localStorage.getItem(LEADS_HISTORY_KEY);
+                list = raw ? JSON.parse(raw) : [];
+            } catch (e) {}
+            if (!list.length) {
+                box.innerHTML = '<p class="text-slate-500">Заявок в локальном журнале пока нет.</p>';
+                return;
+            }
+            box.innerHTML = list.map(item => `
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 space-y-1">
+                    <div class="flex items-center justify-between gap-2">
+                        <strong class="text-white">${escapeHtml(item.name)} • <span class="text-amber-400">${escapeHtml(item.phone)}</span></strong>
+                        <span class="text-[11px] text-slate-400">${escapeHtml(item.time)}</span>
+                    </div>
+                    <div class="text-slate-400">${escapeHtml(item.district)} — ${escapeHtml(item.subject || 'Заявка')}</div>
+                    ${item.task ? `<div class="text-slate-300">${escapeHtml(item.task)}</div>` : ''}
+                    ${item.estimateText ? `<pre class="text-[11px] text-emerald-300 bg-slate-950 p-2 rounded-lg overflow-x-auto whitespace-pre-wrap">${escapeHtml(item.estimateText)}</pre>` : ''}
+                </div>
+            `).join('');
+        }
+
+        function clearLeadsHistory() {
+            localStorage.removeItem(LEADS_HISTORY_KEY);
+            renderLeadsHistory();
+            showNotification('Журнал очищен', 'История заявок в localStorage удалена.');
+        }
+
+        function applyMasterAvailability() {
+            const saved = localStorage.getItem(AVAILABILITY_KEY) || 'Свободны на этой неделе • Выезд 24/7';
+            const textEl = document.getElementById('master-availability-text');
+            if (textEl) textEl.textContent = saved;
+            const selEl = document.getElementById('owner-availability-select');
+            if (selEl) selEl.value = saved;
+        }
+
+        function saveMasterAvailability() {
+            const selEl = document.getElementById('owner-availability-select');
+            if (!selEl) return;
+            localStorage.setItem(AVAILABILITY_KEY, selEl.value);
+            applyMasterAvailability();
+            showNotification('Статус обновлён', `На сайте отображается: «${escapeHtml(selEl.value)}».`);
+        }
+
+        function buildCurrentEstimatePlainText() {
+            const lines = ['ЭЛЕКТРОМОНТАЖ 56 — ПРЕДВАРИТЕЛЬНАЯ СМЕТА', 'Оренбург и п. Покровка | Д.С.: +7 (901) 593-26-42, С.В.: +7 (901) 710-01-37', '----------------------------------------'];
+            let total = 0;
+            let count = 0;
+            Object.keys(priceCatalog).forEach(cat => {
+                priceCatalog[cat].forEach(item => {
+                    if (item.qty > 0) {
+                        const sum = item.qty * item.price;
+                        total += sum;
+                        count += 1;
+                        lines.push(`${count}. ${item.name} — ${item.qty} ${item.unit} × ${item.price} ₽ = ${sum} ₽`);
+                    }
+                });
+            });
+            customClientWorks.forEach(cw => {
+                count += 1;
+                lines.push(`${count}. [Своя задача] ${cw.name} — ${cw.qty} ${cw.unit} (по согласованию)`);
+            });
+            if (!count) return null;
+            lines.push('----------------------------------------');
+            lines.push(`Итого работ по прайсу: ${formatRub(total)}`);
+            return lines.join('\n');
+        }
+
+        function copyEstimateText() {
+            const text = buildCurrentEstimatePlainText();
+            if (!text) {
+                showNotification('Смета пуста', 'Выберите хотя бы одну позицию в прайс-листе или добавьте свою задачу.');
+                return;
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).catch(() => {});
+            }
+            showNotification('Смета скопирована', 'Текст сметы скопирован в буфер обмена — можно отправить в мессенджер.');
+        }
+
+        function downloadEstimateTxt() {
+            const text = buildCurrentEstimatePlainText();
+            if (!text) {
+                showNotification('Смета пуста', 'Выберите хотя бы одну позицию в прайс-листе или добавьте свою задачу.');
+                return;
+            }
+            const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'smeta-electromontazh56.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showNotification('Смета скачана', 'Файл smeta-electromontazh56.txt сохранён на устройство.');
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             applySocialLinks();
+            applyMasterAvailability();
             updateTurnkeyCalculator();
             renderPriceTable();
             updateCableCalculator();
             renderReviewsList();
+            renderLeadsHistory();
         });
     </script>
 </body>

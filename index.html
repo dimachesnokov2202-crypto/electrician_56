@@ -1340,12 +1340,8 @@
             const obj = turnkeyObjects[currentObjKey];
             const wall = turnkeyWalls[currentWallKey];
             const rangeText = document.getElementById('tk-price-range').textContent;
-            const extrasText = selectedTurnkeyExtras.length ? `
-Доп. работы: ${selectedTurnkeyExtras.map(e => e.name).join(', ')}` : '';
-            const text = `ЭЛЕКТРОМОНТАЖ 56 — Расчёт (${currentStageLabel})
-Объект: ${obj.label}
-Стены: ${wall.label}${extrasText}
-Ориентир: ${rangeText}`;
+            const extrasText = selectedTurnkeyExtras.length ? `\nДоп. работы: ${selectedTurnkeyExtras.map(e => e.name).join(', ')}` : '';
+            const text = `ЭЛЕКТРОМОНТАЖ 56 — Расчёт (${currentStageLabel})\nОбъект: ${obj.label}\nСтены: ${wall.label}${extrasText}\nОриентир: ${rangeText}`;
             if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).catch(() => {});
             showNotification('Расчёт скопирован', 'Предварительный расчёт «Под ключ» скопирован в буфер обмена.');
         }
@@ -1831,11 +1827,8 @@
             const breaker = document.getElementById('cable-breaker-val').textContent;
             const currentLine = `${currentCablePresetName} (${kw} кВт, ${voltage} В, ${meters} м) → кабель ${section}, автомат ${breaker}`;
             const text = savedCableLines.length
-                ? `Подбор кабеля и автоматов:
-${savedCableLines.map((l, i) => `${i + 1}. ${l}`).join('
-')}`
-                : `Подбор кабеля и автомата:
-${currentLine}`;
+                ? `Подбор кабеля и автоматов:\n${savedCableLines.map((l, i) => `${i + 1}. ${l}`).join('\n')}`
+                : `Подбор кабеля и автомата:\n${currentLine}`;
             if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).catch(() => {});
             showNotification('Расчёт скопирован', 'Параметры кабеля и автомата скопированы.');
         }
@@ -1902,44 +1895,6 @@ ${currentLine}`;
                 heroTextarea.value = activeTasks.length ? `Выбранные задачи: ${activeTasks.join('; ')}.` : '';
             }
         }
-
-        function toggleBeforeAfter(btn, state) {
-            const card = btn.closest('.pf-card');
-            if (!card) return;
-
-            card.querySelectorAll('.ba-btn').forEach(b => {
-                b.classList.remove('bg-amber-500', 'text-slate-950');
-                b.classList.add('text-slate-400');
-            });
-            btn.classList.add('bg-amber-500', 'text-slate-950');
-            btn.classList.remove('text-slate-400');
-
-            const beforeView = card.querySelector('.ba-view-before');
-            const afterView = card.querySelector('.ba-view-after');
-            if (state === 'before') {
-                afterView.classList.add('hidden');
-                beforeView.classList.remove('hidden');
-            } else {
-                beforeView.classList.add('hidden');
-                afterView.classList.remove('hidden');
-            }
-        }
-
-        document.querySelectorAll('.pf-filter-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.pf-filter-btn').forEach(b => b.classList.remove('tab-active'));
-                btn.classList.add('tab-active');
-                const filter = btn.dataset.filter;
-                document.querySelectorAll('.pf-card').forEach(card => {
-                    const cats = (card.dataset.category || '').split(/\s+/);
-                    if (filter === 'all' || cats.includes(filter)) {
-                        card.classList.remove('hidden');
-                    } else {
-                        card.classList.add('hidden');
-                    }
-                });
-            });
-        });
 
         const orderModal = document.getElementById('order-modal');
         const modalEstimateBox = document.getElementById('modal-estimate-box');
